@@ -27,6 +27,7 @@ public class Listing {
         this.highestBid = 0;
         this.timeLeft = timeLeft;
         this.car = car;
+        this.bids = new ArrayList<Bid>();
     }
 
     // EFFECTS: returns title of the car
@@ -50,8 +51,8 @@ public class Listing {
     }
 
     // EFFECTS: returns number of bids
-    public int getSizeBid() {
-        return 0;   // STUB
+    public ArrayList<Bid> getBids() {
+        return this.bids;
     }
 
     // EFFECTS: returns time left

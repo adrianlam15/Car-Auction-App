@@ -15,6 +15,8 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.bids = new ArrayList<Bid>();
+        this.listingsWon = new ArrayList<Listing>();
     }
 
     // EFFECTS: returns username
@@ -27,11 +29,40 @@ public class User {
         return this.password;
     }
 
-    // REQUIRES: bid is not null
+    // REQUIRES: amount > 0, Listing is not null
     // MODIFIES: this, listing
-    // EFFECTS: adds bid to bids and adds bid to listing
-    public void makeBid(Bid bid, Listing listing) {
-        bids.add(bid);
+    // EFFECTS: adds Bid to the bids and adds bid to Listing
+    public void makeBid(int amount, Listing listing) {
+        Bid bid = new Bid(amount, this, listing);
+        this.bids.add(bid);
         listing.addBid(bid);
+    }
+
+    // REQUIRES: Listing is not null
+    // MODIFIES: this
+    // EFFECTS: removes bid from bids and removes bid from Listing if present
+    public void removeBid(Listing listing) {
+        for (Bid bid : this.bids) {
+            if (bid.getListing() == listing) {
+                this.bids.remove(bid);
+            }
+        }
+    }
+
+    // REQUIRES: Listing is not null
+    // MODIFIES: this
+    // EFFECTS: if bid is in bids, returns true, otherwise returns false
+    public boolean inList(Listing listing) {
+        for (Bid bid : this.bids) {
+            if (bid.getListing() == listing) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // EFFECTS: returns bids
+    public ArrayList<Bid> getBids() {
+        return this.bids;
     }
 }

@@ -29,7 +29,7 @@ public class ListOfListing {
     }
 
     // EFFECTS: returns the size of listings
-    public int getSize() {
-        return 0;
+    public ArrayList<Listing> getListings() {
+        return this.listings;
     }
 }
