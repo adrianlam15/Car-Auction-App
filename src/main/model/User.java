@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 // Represents a user with username, password, and bids
 public class User {
-    private String username;        // username of user
-    private String password;        // password of user
-    private ArrayList<Bid> bids;    // bids of user
+    private String username;                    // username of user
+    private String password;                    // password of user
+    private ArrayList<Bid> bids;                // bids of user
+    private ArrayList<Listing> listingsWon;     // listings won by User
 
     // REQUIRES: username and password are not null
     // MODIFIES: this
