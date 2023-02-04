@@ -24,7 +24,7 @@ public class Listing {
         this.description = description;
         this.id = nextId++;
         this.minBid = minBid;
-        this.highestBid = 0;
+        this.highestBid = 0.0;
         this.timeLeft = timeLeft;
         this.car = car;
         this.bids = new ArrayList<Bid>();
@@ -57,6 +57,6 @@ public class Listing {
 
     // EFFECTS: returns time left
     public int getTimeLeft() {
-        return 0;   // STUB
+        return this.timeLeft;
     }
 }

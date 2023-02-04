@@ -42,11 +42,13 @@ public class User {
     // MODIFIES: this
     // EFFECTS: removes bid from bids and removes bid from Listing if present
     public void removeBid(Listing listing) {
+        ArrayList<Bid> bidsToRemove = new ArrayList<Bid>();
         for (Bid bid : this.bids) {
-            if (bid.getListing() == listing) {
-                this.bids.remove(bid);
+            if (bid.getListing().equals(listing)) {
+                bidsToRemove.add(bid);
             }
         }
+        this.bids.removeAll(bidsToRemove);
     }
 
     // REQUIRES: Listing is not null
@@ -54,7 +56,7 @@ public class User {
     // EFFECTS: if bid is in bids, returns true, otherwise returns false
     public boolean inList(Listing listing) {
         for (Bid bid : this.bids) {
-            if (bid.getListing() == listing) {
+            if (bid.getListing().equals(listing)) {
                 return true;
             }
         }
