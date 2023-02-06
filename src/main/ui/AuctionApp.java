@@ -24,7 +24,6 @@ public class AuctionApp {
         user = new User();
         String command = null;
         while (keepGoing) {
-            System.out.println(loggedIn);
             displayMenu(loggedIn);
             command = input.next();
             processCommand(command);
@@ -39,7 +38,7 @@ public class AuctionApp {
             System.out.println("\t2. Login.");
             System.out.println("\t3. Exit.");
         } else {
-            System.out.println("\nMain menu");
+            System.out.println("\n==== Main menu ====");
             System.out.println("Use numbers to select choices:");
             System.out.println("\t1. Create a listing.");
             System.out.println("\t4. Place a bid.");
@@ -59,7 +58,7 @@ public class AuctionApp {
                 System.out.println("Password:");
                 String pwd = input.next();
                 loggedIn = user.login(usr, pwd);
-            } else {
+            } else if (command.equals("1")) {
                 System.out.println("Enter a username:");
                 String usr = input.next();
                 System.out.println("Enter a password:");
@@ -73,6 +72,10 @@ public class AuctionApp {
                     System.out.println("Passwords don't match.");
                     processCommand("1");
                 }
+            } else {
+                System.out.println("Invalid entry. Try again:");
+                String retry = input.next();
+                processCommand(retry);
             }
         } else {
             System.out.println("Process main menu commands...");
