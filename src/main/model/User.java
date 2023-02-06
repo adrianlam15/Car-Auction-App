@@ -8,6 +8,7 @@ public class User {
     private String password;                    // password of user
     private ArrayList<Bid> bids;                // bids of user
     private ArrayList<Listing> listingsWon;     // listings won by User
+    private ArrayList<Listing> listingsCreated; // listings created by User
 
     // REQUIRES: username and password are not null
     // MODIFIES: this
@@ -17,6 +18,7 @@ public class User {
         this.password = password;
         this.bids = new ArrayList<Bid>();
         this.listingsWon = new ArrayList<Listing>();
+        this.listingsCreated = new ArrayList<Listing>();
     }
 
     // EFFECTS: returns username
@@ -66,5 +68,9 @@ public class User {
     // EFFECTS: returns bids
     public ArrayList<Bid> getBids() {
         return this.bids;
+    }
+
+    public void createListing() {
+        this.listingsCreated.add(listing);
     }
 }

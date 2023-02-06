@@ -1,5 +1,8 @@
 package ui;
 
+import model.Car;
+import model.ListOfListing;
+import model.Listing;
 import model.User;
 
 import java.util.Locale;
@@ -10,6 +13,7 @@ public class AuctionApp {
     Scanner input;
     boolean loggedIn;
     User user = null;
+    ListOfListing listings = null;
 
     public AuctionApp() {
         runApp();
@@ -134,23 +138,23 @@ public class AuctionApp {
     }
 
     private void login() {
-
+        // TODO: implement login
     }
 
     private void createListing() {
-
+        user.createListing();
     }
 
     private void viewAllListings() {
-
+        // TODO: implement viewAllListings
     }
 
     private void viewSavedListings() {
-
+        // TODO: implement viewSavedListings
     }
 
     private void viewYourListings() {
-
+        // TODO: implement viewYourListings
     }
 
     private void viewAllBids() {

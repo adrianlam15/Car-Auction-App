@@ -14,15 +14,46 @@ public class Car {
     // REQUIRES: make has a non-zero length, model has a non-zero length, condition has a non-zero length,
     //           colour has a non-zero length, transmission has a non-zero length, driveType has a non-zero length,
     //           mileage >= 0, yearMade >= 0.
-    public Car(String make, String model, String condition, String colour, String transmission,
-               String driveType, int mileage, int yearMade) {
+    public Car() {
+        this.make = "";
+        this.model = "";
+        this.condition = "";
+        this.colour = "";
+        this.transmission = "";
+        this.driveType = "";
+        this.mileage = 0;
+        this.yearMade = 0;
+}
+
+    public void setMake(String make) {
         this.make = make;
+    }
+
+    public void setModel(String model) {
         this.model = model;
+    }
+
+    public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public void setColour(String colour) {
         this.colour = colour;
+    }
+
+    public void setTransmission(String transmission) {
         this.transmission = transmission;
+    }
+
+    public void setDriveType(String driveType) {
         this.driveType = driveType;
+    }
+
+    public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public void setYearMade(int yearMade) {
         this.yearMade = yearMade;
     }
 

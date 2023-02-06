@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 // Represents a car listing with a title...
-public class Listing {
+public class Listing extends Car {
     private String title;           // title of the car
     private String description;     // description of the car
     private int id;                 // id of the car
@@ -19,15 +19,18 @@ public class Listing {
     // MODIFIES: this
     // EFFECTS: title of the car is set to title, description of the car is set to description, mileage of the
     //          car is set to mileage, year the car was made is set to yearMade, price of the car is set to price.
-    public Listing(String title, String description, double minBid, int timeLeft, Car car) {
+    public Listing(String title, String description, double minBid, int timeLeft) {
         this.title = title;
         this.description = description;
         this.id = nextId++;
         this.minBid = minBid;
         this.highestBid = 0.0;
         this.timeLeft = timeLeft;
+        this.bids = new ArrayList<>();
+    }
+
+    public void setCar(Car car) {
         this.car = car;
-        this.bids = new ArrayList<Bid>();
     }
 
     // EFFECTS: returns title of the car
