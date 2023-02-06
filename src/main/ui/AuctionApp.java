@@ -25,14 +25,30 @@ public class AuctionApp {
             displayMenu(loggedIn);
             System.out.println(loggedIn);
             command = input.next();
-            while (!command.equals("1") && !command.equals("2") && !command.equals("3")) {
-                System.out.println("Please enter a valid command.");
-                command = input.next();
-            }
-            if (command.equals("3")) {
-                keepGoing = false;
+            if (!loggedIn) {
+                while (!command.equals("1") && !command.equals("2") && !command.equals("3")) {
+                    System.out.println("Please enter a valid command.");
+                    command = input.next();
+                }
+                if (command.equals("3")) {
+                    keepGoing = false;
+                } else {
+                    processCommand(command);
+                }
             } else {
-                processCommand(command);
+                while (!command.equals("1") && !command.equals("2") && !command.equals("3") && !command.equals("4")
+                        && !command.equals("5") && !command.equals("6") && !command.equals("7")) {
+                    System.out.println("Please enter a valid command.");
+                    command = input.next();
+                }
+                if (command.equals("6")) {
+                    loggedIn = false;
+                    user = null;
+                } else if (command.equals("7")) {
+                    keepGoing = false;
+                } else {
+                    processCommand(command);
+                }
             }
         }
         System.out.println("Goodbye!");
@@ -84,6 +100,7 @@ public class AuctionApp {
                 viewAllBids();
             } else if (command.equals("6")) {
                 loggedIn = false;
+                System.out.println("You have been logged out.");
             }
         }
     }
