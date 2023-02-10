@@ -23,8 +23,8 @@ public class User {
         }
     }
 
-    public void createCar() {
-        // TODO: implement this method
+    public void createCar(Car carToCreate) {
+        car = carToCreate;
     }
 
     public void deleteCar() {
@@ -32,6 +32,18 @@ public class User {
     }
 
     public void editCar() {
+        // TODO: implement this method
+    }
+
+    public void placeBid() {
+        // TODO: implement this method
+    }
+
+    public void viewListings() {
+        // TODO: implement this method
+    }
+
+    public void viewBids() {
         // TODO: implement this method
     }
 
