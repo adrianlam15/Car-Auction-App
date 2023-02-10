@@ -1,8 +1,10 @@
 package ui;
 
 import model.Car;
+import model.Cars;
 import model.User;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -14,6 +16,9 @@ public class AuctionApp {
     private boolean keepGoing = true;
     private boolean inListingView = false;
     private boolean viewBids = false;
+    private Cars listedCars;
+    private boolean bidView = false;
+    private ArrayList<Integer> listingID;
 
     public AuctionApp() {
         runAuctionApp();
@@ -24,7 +29,9 @@ public class AuctionApp {
         input.useDelimiter("\n");
         loggedIn = false;
         user = new User();
+        listedCars = null;
         String command = null;
+
         while (keepGoing) {
             displayMenu(loggedIn);
             command = input.next();
@@ -46,6 +53,7 @@ public class AuctionApp {
             System.out.println("\t2. Place a bid.");
             System.out.println("\t3. View listings.");
             System.out.println("\t4. View current bids.");
+            System.out.println("\t5. Logout.");
         }
     }
 
@@ -110,16 +118,67 @@ public class AuctionApp {
                 System.out.println("Listing created successfully.");
             } else if (command.equals("2")) {
                 user.placeBid();
+                bidView = true;
             } else if (command.equals("3")) {
-                user.viewListings();
+                viewListings();
             } else if (command.equals("4")) {
                 user.viewBids();
+            } else if (command.equals("5")) {
+                System.out.println("Goodbye!");
+                keepGoing = false;
             } else {
                 System.out.println("Invalid entry. Try again:");
                 String retry = input.next();
                 processCommand(retry);
             }
         }
+    }
+
+    private void viewListings() {
+        displayListings();
+        System.out.println("Would you like to place a bid? (y/n)");
+        String choice = input.next().toLowerCase();
+        if (choice.equals("y")) {
+            System.out.println("Enter the number of the listing you'd like to view:");
+            String carPos = input.next();
+            while (!bidView(carPos)) {
+                carPos = input.next();
+            }
+        }
+    }
+
+    private boolean bidView(String carPos) {
+        int choicePos = Integer.parseInt(carPos);
+        for (int pos : listingID) {
+            if (choicePos == pos) {
+                System.out.println("Enter the amount you'd like to bid:");
+                int bid = input.nextInt();
+                System.out.println("Bid placed successfully.");
+                return true;
+            }
+        }
+        System.out.println("Listing not found. Try again:");
+        return false;
+    }
+
+    private void displayListings() {
+        listingID = new ArrayList<Integer>();
+        listedCars = new Cars();
+        System.out.println("==== Listings ====");
+        for (int i = 0; i < 10; i++) {
+            Car car = new Car();
+            car.setMake("0" + i);
+            listedCars.addCar(car);
+        }
+        int id = 0;
+        int pos = 1;
+        for (Car car : listedCars.getCars()) {
+            System.out.println("\t" + pos + ". [" + car.getCondition() + "] " + car.getYear() + " " +  car.getMake() + " " + car.getModel() + " for $" + car.getPrice());
+            listingID.add(id);
+            id++;
+            pos++;
+        }
+        System.out.println("listingID: " + listingID);
     }
 
     private void handleCreateAccount() {
