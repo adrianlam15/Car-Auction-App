@@ -10,6 +10,7 @@ public class Car {
     private int year;
     private int price;
     private int mileage;
+    private String description;
 
     public void setMake(String make) {
         this.make = make;
@@ -47,6 +48,10 @@ public class Car {
         this.mileage = mileage;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getMake() {
         return make;
     }
@@ -81,5 +86,9 @@ public class Car {
 
     public int getMileage() {
         return mileage;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
