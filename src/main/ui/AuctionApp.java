@@ -61,19 +61,7 @@ public class AuctionApp {
                 String pwd = input.next();
                 loggedIn = user.login(usr, pwd);
             } else if (command.equals("1")) {
-                System.out.println("Enter a username:");
-                String usr = input.next();
-                System.out.println("Enter a password:");
-                String pwd = input.next();
-                System.out.println("Re-enter your password:");
-                String checkPwd = input.next();
-                if (user.createUser(usr, pwd, checkPwd)) {
-                    System.out.println("Account created successfully.");
-                    loggedIn = user.login(usr, pwd);
-                } else {
-                    System.out.println("Passwords don't match.");
-                    processCommand("1");
-                }
+                handleCreateAccount();
             } else {
                 System.out.println("Invalid entry. Try again:");
                 String retry = input.next();
@@ -131,6 +119,26 @@ public class AuctionApp {
                 String retry = input.next();
                 processCommand(retry);
             }
+        }
+    }
+
+    private void handleCreateAccount() {
+        System.out.println("Enter a username:");
+        String usr = input.next();
+        System.out.println("Enter a password:");
+        String pwd = input.next();
+        System.out.println("Re-enter your password:");
+        String checkPwd = input.next();
+        if (pwd.equals(checkPwd)) {
+            if (user.createUser(usr, pwd, checkPwd)) {
+                System.out.println("Account created successfully.");
+                loggedIn = user.login(usr, pwd);
+            } else {
+                System.out.println("Error creating account. Please try again.");
+            }
+        } else {
+            System.out.println("Passwords don't match. Please try again.");
+            processCommand("1");
         }
     }
 }
