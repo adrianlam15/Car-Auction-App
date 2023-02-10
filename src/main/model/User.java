@@ -39,12 +39,8 @@ public class User {
         // TODO: implement this method
     }
 
-    public void viewListings() {
-        // TODO: implement this method
-    }
-
-    public void viewBids() {
-        // TODO: implement this method
+    public Cars viewBids() {
+        return biddedCars;
     }
 
 }
