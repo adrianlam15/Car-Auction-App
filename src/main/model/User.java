@@ -1,12 +1,14 @@
 package model;
 
+import java.util.ArrayList;
+
 public class User {
     private String user;
     private String password;
     private Car car;
-    private Cars listedCars;
+    private Cars listedCars = new Cars();
     private Cars savedCars;
-    private Cars biddedCars;
+    private Cars biddedCars = new Cars();
 
     // for development purposes, returns TRUE
     public boolean login(String usr, String pwd) {
@@ -25,6 +27,7 @@ public class User {
 
     public void createCar(Car carToCreate) {
         car = carToCreate;
+        listedCars.addCar(car);
     }
 
     public void deleteCar() {
@@ -39,8 +42,16 @@ public class User {
         // TODO: implement this method
     }
 
-    public Cars viewBids() {
-        return biddedCars;
+    public void getBids() {
+        // STUB
     }
 
+    /*
+    public ArrayList<Car> getBids() {
+        //return biddedCars.getCars();
+    }*/
+
+    public ArrayList<Car> getCars() {
+        return listedCars.getCars();
+    }
 }

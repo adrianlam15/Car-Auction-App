@@ -7,10 +7,11 @@ public class Car {
     private String transmission;
     private String driveType;
     private String condition;
+    private String description;
     private int year;
     private int price;
     private int mileage;
-    private String description;
+    private int id;
 
     public void setMake(String make) {
         this.make = make;
@@ -52,6 +53,10 @@ public class Car {
         this.description = description;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getMake() {
         return make;
     }
@@ -90,5 +95,14 @@ public class Car {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getListingCar() {
+        return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour() + " " + getMake() + " " + getModel() + ", "
+                + getDriveType() + "; with " + getMileage() + "km for $" + getPrice() + ".";
+    }
+
+    public int getId() {
+        return id;
     }
 }

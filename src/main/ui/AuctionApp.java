@@ -31,6 +31,7 @@ public class AuctionApp {
         user = new User();
         listedCars = null;
         String command = null;
+        listedCars = new Cars();
 
         while (keepGoing) {
             displayMenu(loggedIn);
@@ -52,6 +53,7 @@ public class AuctionApp {
             System.out.println("\t1. Create a listing.");
             System.out.println("\t2. Place a bid.");
             System.out.println("\t3. View listings.");
+            System.out.println("\t4. View your listings.");
             System.out.println("\t4. View current bids.");
             System.out.println("\t5. Logout.");
         }
@@ -77,6 +79,7 @@ public class AuctionApp {
             }
         } else {
             if (command.equals("1")) {
+                System.out.println("==== Create a listing ==== ");
                 Car car = new Car();
                 System.out.println("Enter the car's make:");
                 car.setMake(input.next());
@@ -92,29 +95,22 @@ public class AuctionApp {
                 car.setCondition(input.next());
                 System.out.println("Enter the car's year:");
                 car.setYear(input.nextInt());
-                System.out.println("Enter the car's mileage:");
+                System.out.println("Enter the car's mileage (in kms):");
                 car.setMileage(input.nextInt());
-                System.out.println("Enter the car's price:");
+                System.out.println("Enter the car's price (in CAD):");
                 car.setPrice(input.nextInt());
                 System.out.println("Enter the car's description:");
                 car.setDescription(input.next());
-                System.out.println(car.getMake());
-                System.out.println(car.getModel());
-                System.out.println(car.getColour());
-                System.out.println(car.getTransmission());
-                System.out.println(car.getDriveType());
-                System.out.println(car.getCondition());
-                System.out.println(car.getYear());
-                System.out.println(car.getMileage());
-                System.out.println(car.getPrice());
-                System.out.println(car.getDescription());
-                System.out.println("Is this correct? (y/n):");
+                System.out.print(car.getListingCar());
+                System.out.println("Description of vehicle:\n" + car.getDescription());
+                System.out.println("\nIs this correct? (y/n):");
                 String confirm = input.next();
                 confirm = confirm.toLowerCase();
                 if (confirm.equals("n")) {
                     processCommand("1");
                 }
                 user.createCar(car);
+                listedCars.addCar(car);
                 System.out.println("Listing created successfully.");
             } else if (command.equals("2")) {
                 user.placeBid();
@@ -122,8 +118,10 @@ public class AuctionApp {
             } else if (command.equals("3")) {
                 viewListings();
             } else if (command.equals("4")) {
-                user.viewBids();
+                viewUserListings();
             } else if (command.equals("5")) {
+                user.getBids();
+            } else if (command.equals("6")) {
                 System.out.println("Goodbye!");
                 keepGoing = false;
             } else {
@@ -133,6 +131,7 @@ public class AuctionApp {
             }
         }
     }
+
 
     private void viewListings() {
         displayListings();
@@ -146,6 +145,24 @@ public class AuctionApp {
             }
         }
     }
+
+    private void viewUserListings() {
+        listingID = new ArrayList<Integer>();
+        int id = 1;
+        int pos = 1;
+        if (user.getCars().isEmpty()) {
+            System.out.println("You have no listings.");
+        } else {
+            System.out.println("==== Your Listings ====");
+            for (Car car : user.getCars()) {
+                System.out.println("\t" + pos + ". " + car.getListingCar());
+                listingID.add(id);
+                car.setId(id);
+                id++;
+                pos++;
+            }
+        }
+    } // ADD EDIT, BIDS, TIME, DELETE
 
     private boolean bidView(String carPos) {
         int choicePos = Integer.parseInt(carPos);
@@ -163,22 +180,20 @@ public class AuctionApp {
 
     private void displayListings() {
         listingID = new ArrayList<Integer>();
-        listedCars = new Cars();
-        System.out.println("==== Listings ====");
-        for (int i = 0; i < 10; i++) {
-            Car car = new Car();
-            car.setMake("0" + i);
-            listedCars.addCar(car);
-        }
-        int id = 0;
+        int id = 1;
         int pos = 1;
-        for (Car car : listedCars.getCars()) {
-            System.out.println("\t" + pos + ". [" + car.getCondition() + "] " + car.getYear() + " " +  car.getMake() + " " + car.getModel() + " for $" + car.getPrice());
-            listingID.add(id);
-            id++;
-            pos++;
+        if (listedCars.getCars().isEmpty()) {
+            System.out.println("No listings found.");
+        } else {
+            System.out.println("==== Listings ====");
+            for (Car car : listedCars.getCars()) {
+                System.out.println("\t" + pos + ". " + car.getListingCar());
+                listingID.add(id);
+                car.setId(id);
+                id++;
+                pos++;
+            }
         }
-        System.out.println("listingID: " + listingID);
     }
 
     private void handleCreateAccount() {
