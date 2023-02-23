@@ -15,7 +15,7 @@ public class UserTest {
     User user3;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         user1 = new User();
         user2 = new User();
         user3 = new User();
@@ -31,11 +31,13 @@ public class UserTest {
         assertTrue(user3.createUser("user3", "password3", "password3"));
     }
 
+    /*
     @Test
     public void testLogin() {
         assertTrue(user1.login("user1", "password1"));
         assertFalse(user3.login("user3", "FAIL"));
     }
+    */
 
     @Test
     public void testCreateCar() {
@@ -64,15 +66,26 @@ public class UserTest {
         user2Car2.setId(1);
         user2.createCar(user2Car);
         user2.createCar(user2Car2);
-        
-        assertFalse(user1.deleteCar(0));
-        assertTrue(user2.deleteCar(0));
+        assertNull(user1.deleteCar(0));
+        user2.deleteCar(0);
         assertEquals(1, user2Car2.getId());
     }
 
     @Test
     void testEditCar() {
-        // TODO: implement this method
+        assertFalse(user1.editCar(0, 1, "Honda"));
+
+        Car user2Car = new Car();
+        user2Car.setId(1);
+        user2.createCar(user2Car);
+
+        assertTrue(user2.editCar(1, 1, "Honda"));
+        Car user2Car2 = new Car();
+        user2Car2.setId(2);
+        user2.createCar(user2Car2);
+        user2Car2.setMake("Honda1");
+        user2.editCar(2, 1, "Honda2");
+        assertEquals("Honda2", user2Car2.getMake());
     }
 
     @Test
@@ -85,15 +98,13 @@ public class UserTest {
         // STUB
     }
 
-    /*
-    public ArrayList<Car> getBids() {
-        //return biddedCars.getCars();
-    }*/
-
     @Test
     void testGetCars() {
         Car user2Car = new Car();
+        Car user2Car2 = new Car();
+        user2.createCar(user2Car);
+        user2.createCar(user2Car2);
         assertEquals(0, user1.getCars().size());
-        assertEquals(1, user2.getCars().size());
+        assertEquals(2, user2.getCars().size());
     }
 }

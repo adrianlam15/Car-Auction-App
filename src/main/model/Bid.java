@@ -21,4 +21,11 @@ public class Bid {
     public int getBidAmount() {
         return bidAmount;
     }
+
+    public String getBid() {
+        if (car == null) {
+            return "Bid: $" + bidAmount;
+        }
+        return car.getListingCar() + "\nBid: $" + bidAmount;
+    }
 }

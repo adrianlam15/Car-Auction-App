@@ -31,7 +31,11 @@ public class Car {
         this.price = 0;
         this.mileage = 0;
         this.bids = new ArrayList<>();
-        }
+    }
+
+    public ArrayList<Bid> getBids() {
+        return bids;
+    }
 
     // REQUIRES: make must be non-empty string
     // MODIFIES: this
@@ -61,7 +65,7 @@ public class Car {
         this.transmission = transmission;
     }
 
-    // REQUIRES: driveType must either be "Front-Wheel Drive", "Rear-Wheel Drive", or "All-Wheel Drive"
+    // REQUIRES: driveType must either be "Front Wheel Drive"/"FWD", "Rear Wheel Drive"/"RWD", or "All Wheel Drive"/"AWD"
     // MODIFIES: this
     // EFFECTS: sets the drive type of the car
     public void setDriveType(String driveType) {
@@ -118,7 +122,7 @@ public class Car {
     // MODIFIES: this
     // EFFECTS: adds a bid to the car
     public void bid(int bid) {
-        this.bids.add(new Bid (bid));
+        this.bids.add(new Bid(bid));
         if (bid > highestBid) {
             highestBid = bid;
         }
@@ -165,11 +169,50 @@ public class Car {
     }
 
     public String getListingCar() {
-        return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour() + " " + getMake() + " " + getModel() + ", "
-                + getDriveType() + "; with " + getMileage() + "km for $" + getPrice() + ".";
+        return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour()
+                + " " + getMake() + " " + getModel() + ", " + getDriveType() + "; with "
+                + getMileage() + "km for $" + getPrice() + ".";
     }
 
     public int getId() {
         return id;
+    }
+
+    // REQUIRES: editChoice must be an integer between 1 and 7
+    public void edit(int editChoice, String value) {
+        switch (editChoice) {
+            case 1:
+                setMake(value);
+                break;
+            case 2:
+                setModel(value);
+                break;
+            case 3:
+                setColour(value);
+                break;
+            case 4:
+                setTransmission(value);
+                break;
+            case 5:
+                setDriveType(value);
+                break;
+            case 6:
+                setCondition(value);
+                break;
+            case 7:
+                setDescription(value);
+                break;
+            case 8:
+                setYear(Integer.parseInt(value));
+                break;
+            case 9:
+                setPrice(Integer.parseInt(value));
+                break;
+            case 10:
+                setMileage(Integer.parseInt(value));
+                break;
+            default:
+                break;
+        }
     }
 }
