@@ -23,5 +23,5 @@ This application will be built using Java.
 ### | **User Stories / functionality**
 - As a user, I want to be able to list a car up for auction with a minimum bid and time interval.
 - As a user, I want to be able to make bids on a car
-- As a user, I want to be able to "save" or bookmark a car listing.
 - As a user, I want to be able to buy the car after the auction time interval has ended, and I have the highest bid.
+- As a user, I want to be edit, and delete my listings on a car.
