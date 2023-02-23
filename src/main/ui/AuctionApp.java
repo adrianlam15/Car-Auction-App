@@ -51,9 +51,8 @@ public class AuctionApp {
             System.out.println("\n==== Main menu ====");
             System.out.println("Use numbers to select choices:");
             System.out.println("\t1. Create a listing.");
-            System.out.println("\t2. Place a bid.");
-            System.out.println("\t3. View listings.");
-            System.out.println("\t4. View your listings.");
+            System.out.println("\t2. View listings.");
+            System.out.println("\t3. View your listings.");
             System.out.println("\t4. View current bids.");
             System.out.println("\t5. Logout.");
         }
@@ -113,15 +112,12 @@ public class AuctionApp {
                 listedCars.addCar(car);
                 System.out.println("Listing created successfully.");
             } else if (command.equals("2")) {
-                user.placeBid();
-                bidView = true;
-            } else if (command.equals("3")) {
                 viewListings();
-            } else if (command.equals("4")) {
+            } else if (command.equals("3")) {
                 viewUserListings();
-            } else if (command.equals("5")) {
+            } else if (command.equals("4")) {
                 user.getBids();
-            } else if (command.equals("6")) {
+            } else if (command.equals("5")) {
                 System.out.println("Goodbye!");
                 keepGoing = false;
             } else {
@@ -166,16 +162,11 @@ public class AuctionApp {
 
     private boolean bidView(String carPos) {
         int choicePos = Integer.parseInt(carPos);
-        for (int pos : listingID) {
-            if (choicePos == pos) {
-                System.out.println("Enter the amount you'd like to bid:");
-                int bid = input.nextInt();
-                System.out.println("Bid placed successfully.");
-                return true;
-            }
-        }
-        System.out.println("Listing not found. Try again:");
-        return false;
+        System.out.println("Enter the amount you'd like to bid:");
+        int bid = input.nextInt();
+        boolean success = user.placeBid(choicePos, bid, listedCars);
+        System.out.println("Bid placed successfully.");
+        return success;
     }
 
     private void displayListings() {

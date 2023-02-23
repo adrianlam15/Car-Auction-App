@@ -13,6 +13,19 @@ public class Car {
     private int mileage;
     private int id;
 
+    public Car() {
+        this.make = "";
+        this.model = "";
+        this.colour = "";
+        this.transmission = "";
+        this.driveType = "";
+        this.condition = "";
+        this.description = "";
+        this.year = 0;
+        this.price = 0;
+        this.mileage = 0;
+        }
+
     public void setMake(String make) {
         this.make = make;
     }
