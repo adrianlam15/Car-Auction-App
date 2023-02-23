@@ -9,7 +9,7 @@ public class User {
     private Car car;
     private Cars listedCars = new Cars();
     private Cars savedCars;
-    private Cars biddedCars = new Cars();
+    private ArrayList<Bid> biddedCars = new ArrayList<>();
 
     // for development purposes, returns TRUE
     // REQUIRED: user and password must be non-empty strings
@@ -69,15 +69,16 @@ public class User {
     public boolean placeBid(int id, int bid, Cars listedCars) {
         for (Car car : listedCars.getCars()) {
             if (car.getId() == id) {
-                biddedCars.addCar(car);
+                biddedCars.add(new Bid(car, bid));
+                car.bid(bid);
                 return true;
             }
         }
         return false;
     }
 
-    public void getBids() {
-        // STUB
+    public ArrayList<Bid> getBids() {
+        return biddedCars;
     }
 
     /*

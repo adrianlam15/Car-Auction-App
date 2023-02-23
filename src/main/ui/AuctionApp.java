@@ -1,5 +1,6 @@
 package ui;
 
+import model.Bid;
 import model.Car;
 import model.Cars;
 import model.User;
@@ -116,7 +117,7 @@ public class AuctionApp {
             } else if (command.equals("3")) {
                 viewUserListings();
             } else if (command.equals("4")) {
-                user.getBids();
+                showBids();
             } else if (command.equals("5")) {
                 System.out.println("Goodbye!");
                 keepGoing = false;
@@ -128,6 +129,16 @@ public class AuctionApp {
         }
     }
 
+    private void showBids() {
+        if (user.getBids().isEmpty()) {
+            System.out.println("You have no bids.");
+        } else {
+            System.out.println("==== Your Bids ====");
+            for (Bid bid : user.getBids()) {
+                System.out.println(bid);
+            }
+        }
+    }
 
     private void viewListings() {
         displayListings();
