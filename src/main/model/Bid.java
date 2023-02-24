@@ -3,14 +3,17 @@ package model;
 // represents a class for a bid
 public class Bid {
     private Car car;
+    private User user;
     private int bidAmount;
 
-    public Bid(Car car, int bidAmount) {
+    public Bid(User user, Car car, int bidAmount) {
+        this.user = user;
         this.car = car;
         this.bidAmount = bidAmount;
     }
 
-    public Bid(int bidAmount) {
+    public Bid(User user,int bidAmount) {
+        this.user = user;
         this.bidAmount = bidAmount;
     }
 
@@ -20,6 +23,10 @@ public class Bid {
 
     public int getBidAmount() {
         return bidAmount;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public String getBid() {

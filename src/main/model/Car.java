@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 // class representing a car
 public class Car {
@@ -15,9 +17,14 @@ public class Car {
     private int price;
     private int mileage;
     private int id;
-
+    private int timeLeftInSeconds;
     private int highestBid = 0;
+
     private ArrayList<Bid> bids;
+
+    private Timer timer;
+
+    private boolean expired;
 
     public Car() {
         this.make = "";
@@ -31,6 +38,8 @@ public class Car {
         this.price = 0;
         this.mileage = 0;
         this.bids = new ArrayList<>();
+        this.timer = new Timer();
+        this.expired = false;
     }
 
     public ArrayList<Bid> getBids() {
@@ -65,7 +74,8 @@ public class Car {
         this.transmission = transmission;
     }
 
-    // REQUIRES: driveType must either be "Front Wheel Drive"/"FWD", "Rear Wheel Drive"/"RWD", or "All Wheel Drive"/"AWD"
+    // REQUIRES: driveType must either be "Front Wheel Drive"/"FWD", "Rear Wheel Drive"/"RWD", or
+    //           "All Wheel Drive"/"AWD"
     // MODIFIES: this
     // EFFECTS: sets the drive type of the car
     public void setDriveType(String driveType) {
@@ -114,15 +124,28 @@ public class Car {
         this.id = id;
     }
 
-    public int getHighestBid() {
-        return highestBid;
+    // MODIFIES: this
+    // EFFECTS: gets highest bid on car
+    public Bid getHighestBid() {
+        if (bids.size() == 0) {
+            return null;
+        }
+        highestBid = price;
+        Bid highestBidObj = null;
+        for (Bid bid : bids) {
+            if (bid.getBidAmount() > highestBid) {
+                highestBid = bid.getBidAmount();
+                highestBidObj = bid;
+            }
+        }
+        return highestBidObj;
     }
 
     // REQUIRES: bid must be a positive integer
     // MODIFIES: this
     // EFFECTS: adds a bid to the car
-    public void bid(int bid) {
-        this.bids.add(new Bid(bid));
+    public void bid(User user, int bid) {
+        this.bids.add(new Bid(user, bid));
         if (bid > highestBid) {
             highestBid = bid;
         }
@@ -169,16 +192,26 @@ public class Car {
     }
 
     public String getListingCar() {
-        return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour()
-                + " " + getMake() + " " + getModel() + ", " + getDriveType() + "; with "
-                + getMileage() + "km for $" + getPrice() + ".";
+        if (getTimeLeftInSeconds() == 0) {
+            return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour()
+                    + " " + getMake() + " " + getModel() + ", " + getDriveType() + "; with "
+                    + getMileage() + "km for $" + getPrice() + ".";
+        } else {
+            return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour()
+                    + " " + getMake() + " " + getModel() + ", " + getDriveType() + "; with "
+                    + getMileage() + "km for $" + getPrice() + ".\n\tTime remaining: " + getTimeLeftInSeconds()
+                    + " seconds.";
+        }
     }
 
     public int getId() {
         return id;
     }
 
-    // REQUIRES: editChoice must be an integer between 1 and 7
+    @SuppressWarnings("methodlength")
+    // REQUIRES: editChoice must be an integer between 1 and 11
+    // MODIFIES: this
+    // EFFECTS: edits the car based on the editChoice
     public void edit(int editChoice, String value) {
         switch (editChoice) {
             case 1:
@@ -200,19 +233,63 @@ public class Car {
                 setCondition(value);
                 break;
             case 7:
-                setDescription(value);
+                setYear(Integer.parseInt(value));
                 break;
             case 8:
-                setYear(Integer.parseInt(value));
+                setMileage(Integer.parseInt(value));
                 break;
             case 9:
                 setPrice(Integer.parseInt(value));
                 break;
             case 10:
-                setMileage(Integer.parseInt(value));
+                setDescription(value);
+                break;
+            case 11:
+                setTimer(Integer.parseInt(value));
                 break;
             default:
                 break;
         }
+    }
+
+    // REQUIRES: time must be a positive integer > 0
+    // MODIFIES: this
+    // EFFECTS: sets the timer for the car
+    public void setTimer(int time) {
+        this.timeLeftInSeconds = time;
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                timeLeftInSeconds--;
+                if (timeLeftInSeconds == 0) {
+                    markExpired();
+                    giveToWinner();
+                    timer.cancel();
+                }
+            }
+        }, 1000L, 1000L);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: marks the car as expired
+    public void markExpired() {
+        this.expired = true;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: gives the car to the winner
+    public void giveToWinner() {
+        if (getHighestBid() != null) {
+            User user = getHighestBid().getUser();
+            user.getWonCars().add(this);
+            this.expired = true;
+        }
+    }
+
+    public int getTimeLeftInSeconds() {
+        return timeLeftInSeconds;
+    }
+
+    public boolean isExpired() {
+        return expired;
     }
 }

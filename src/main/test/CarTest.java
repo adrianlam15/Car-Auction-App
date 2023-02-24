@@ -2,12 +2,15 @@ package test;
 
 import model.Bid;
 import model.Car;
+import model.Cars;
+import model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CarTest {
     Car car1;
@@ -175,14 +178,15 @@ public class CarTest {
 
     @Test
     void testGetHighestBid() {
-        assertEquals(0, car1.getHighestBid());
-        car2.bid(1000);
-        car2.bid(1000);
-        assertEquals(1000, car2.getHighestBid());
-        car3.bid(3000);
-        car3.bid(1000);
-        car3.bid(2000);
-        assertEquals(3000, car3.getHighestBid());
+        User u1 = new User();
+        User u2 = new User();
+
+        car1.bid(u1, 1000);
+        assertEquals(1000, car1.getHighestBid().getBidAmount());
+
+        car2.bid(u2, 2000);
+        car2.bid(u1, 3000);
+        assertEquals(3000, car2.getHighestBid().getBidAmount());
     }
 
     @Test
@@ -208,7 +212,9 @@ public class CarTest {
         car3.setCondition("Excellent");
         car3.setMileage(0);
         car3.setPrice(0);
-        assertEquals("[Excellent condition] Automatic Black Ford F-150, All Wheel Drive; with 0km for $0.",
+        car3.setTimer(10000);
+        assertEquals("[Excellent condition] Automatic Black Ford F-150, All Wheel Drive; with 0km for $0." +
+                        "\n\tTime remaining: 10000 seconds.",
                 car3.getListingCar());
     }
 
@@ -236,8 +242,14 @@ public class CarTest {
         assertEquals("Rear Wheel Drive", car1.getDriveType());
         car1.edit(6, "Used");
         assertEquals("Used", car1.getCondition());
-        car1.edit(7, "desc");
-        assertEquals("desc", car1.getDescription());
+        car1.edit(7, "1997");
+        assertEquals(1997, car1.getYear());
+        car1.edit(8, "100000");
+        assertEquals(100000, car1.getMileage());
+        car1.edit(9, "1000");
+        assertEquals(1000, car1.getPrice());
+        car1.edit(10, "editDesc");
+        assertEquals("editDesc", car1.getDescription());
 
         car2.edit(1, "Nissan");
         assertEquals("Nissan", car2.getMake());
@@ -249,20 +261,91 @@ public class CarTest {
         assertEquals("Automatic", car2.getTransmission());
         car2.edit(5, "All Wheel Drive");
         assertEquals("All Wheel Drive", car2.getDriveType());
-        car2.edit(6, "Excellent");
-        assertEquals("Excellent", car2.getCondition());
-        car2.edit(7, "desc2");
-        assertEquals("desc2", car2.getDescription());
+        car2.edit(6, "Used");
+        assertEquals("Used", car2.getCondition());
+        car2.edit(7, "1996");
+        assertEquals(1996, car2.getYear());
+        car2.edit(8, "1000");
+        assertEquals(1000, car2.getMileage());
+        car2.edit(9, "100000");
+        assertEquals(100000, car2.getPrice());
+        car2.edit(10, "editDesc2");
+        assertEquals("editDesc2", car2.getDescription());
     }
 
     @Test
     void testBid() {
+        User u1 = new User();
+        User u2 = new User();
         assertEquals(0, car1.getBids().size());
-        car2.bid(2000);
+
+        car2.bid(u1, 2000);
         assertEquals(1, car2.getBids().size());
-        car3.bid(3000);
-        car3.bid(4000);
-        car3.bid(5000);
-        assertEquals(3, car3.getBids().size());
+        assertEquals(u1, car2.getBids().get(0).getUser());
+
+        car3.bid(u1, 4000);
+        car3.bid(u2, 1000);
+        assertEquals(2, car3.getBids().size());
+        assertEquals(u1, car3.getBids().get(0).getUser());
+    }
+
+    @Test
+    void testSetTimer() {
+        car1.setTimer(0);
+        assertEquals(0, car1.getTimeLeftInSeconds());
+
+        car2.setTimer(10000);
+        assertEquals(10000, car2.getTimeLeftInSeconds());
+
+        car3.setTimer(200);
+        assertEquals(200, car3.getTimeLeftInSeconds());
+    }
+
+    @Test
+    void testMarkExpired() {
+        car2.setTimer(10000);
+        assertFalse(car2.isExpired());
+
+        car3.setTimer(20000);
+        car3.markExpired();
+        assertTrue(car3.isExpired());
+    }
+
+    @Test
+    void testGiveToWinner() {
+        User u1 = new User();
+        User u2 = new User();
+        car1.bid(u1, 1000);
+        car1.giveToWinner();
+        assertEquals(1, u1.getWonCars().size());
+        assertEquals(car1, u1.getWonCars().get(0));
+        assertTrue(car1.isExpired());
+
+        car2.bid(u1, 2000);
+        car2.bid(u2, 3000);
+        car2.giveToWinner();
+        assertEquals(1, u2.getWonCars().size());
+        assertEquals(car2, u2.getWonCars().get(0));
+        assertTrue(car2.isExpired());
+
+        car3.bid(u1, 2000);
+        car3.bid(u2, 1000);
+        car3.giveToWinner();
+        assertEquals(2, u1.getWonCars().size());
+        assertEquals(car3, u1.getWonCars().get(1));
+        assertTrue(car3.isExpired());
+
+    }
+
+    @Test
+    void testGetTimeLeftInSeconds() {
+        car1.setTimer(0);
+        assertEquals(0, car1.getTimeLeftInSeconds());
+
+        car2.setTimer(10000);
+        assertEquals(10000, car2.getTimeLeftInSeconds());
+
+        car3.setTimer(20000);
+        assertEquals(20000, car3.getTimeLeftInSeconds());
     }
 }

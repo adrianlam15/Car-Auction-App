@@ -1,6 +1,8 @@
 package test;
 
+import model.Bid;
 import model.Car;
+import model.Cars;
 import model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,21 +92,77 @@ public class UserTest {
 
     @Test
     void testPlaceBid() {
-        // TODO: implement this method
+        Car c1 = new Car();
+        c1.setId(1);
+        Car c2 = new Car();
+        c2.setId(2);
+        Car c3 = new Car();
+        c3.setId(3);
+
+        Cars cars = new Cars();
+        cars.addCar(c1);
+        cars.addCar(c2);
+        assertTrue(user1.placeBid(1, 10000, cars));
+        assertTrue(user1.placeBid(2, 20000, cars));
+        assertEquals(2, user1.getBids().size());
     }
 
     @Test
     void testGetBids() {
-        // STUB
+        Car c1 = new Car();
+        c1.setId(1);
+        Car c2 = new Car();
+        c2.setId(2);
+        Car c3 = new Car();
+        c3.setId(3);
+
+        Cars cars = new Cars();
+        cars.addCar(c1);
+        cars.addCar(c2);
+        user1.placeBid(1, 10000, cars);
+        user1.placeBid(2, 20000, cars);
+        assertEquals(2, user1.getBids().size());
+    }
+
+    @Test
+    void testGetName() {
+        assertEquals("user1", user1.getName());
+        assertNull(user2.getName());
+        assertEquals("user3", user3.getName());
     }
 
     @Test
     void testGetCars() {
-        Car user2Car = new Car();
-        Car user2Car2 = new Car();
-        user2.createCar(user2Car);
-        user2.createCar(user2Car2);
+        Car user3Car = new Car();
+        Car user3Car2 = new Car();
+        user3.createCar(user3Car);
+        user3.createCar(user3Car2);
         assertEquals(0, user1.getCars().size());
-        assertEquals(2, user2.getCars().size());
+        assertEquals(2, user3.getCars().size());
+    }
+
+    @Test
+    void testGetWonCars() {
+        Car c1 = new Car();
+        c1.setId(1);
+        Car c2 = new Car();
+        c2.setId(2);
+        Car c3 = new Car();
+        c3.setId(3);
+
+        Cars cars = new Cars();
+        cars.addCar(c1);
+        cars.addCar(c2);
+        user1.placeBid(1, 10000, cars);
+        user1.placeBid(2, 20000, cars);
+        user1.placeBid(3, 30000, cars);
+        c1.bid(user1, 10000);
+        assertEquals(2, user1.getBids().size());
+        assertEquals(0, user1.getWonCars().size());
+
+        user2.placeBid(1, 40000, cars);
+        c1.bid(user2, 40000);
+        c1.giveToWinner();
+        assertEquals(1, user2.getWonCars().size());
     }
 }

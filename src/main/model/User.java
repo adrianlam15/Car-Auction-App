@@ -9,7 +9,7 @@ public class User {
     private String password;
     private Car car;
     private Cars listedCars = new Cars();
-    private Cars savedCars;
+    private Cars wonCars = new Cars();
     private ArrayList<Bid> biddedCars = new ArrayList<>();
 
     // METHOD FOR PHASE 2:
@@ -58,7 +58,7 @@ public class User {
 
     // REQUIRES: id must be > 0, editChoice must be one of the following: "make", "model", "colour", "transmission",
     //           "year", "price", "mileage", "description", newValue must be non-empty string
-    // MODIFIES: this
+    // MODIFIES: this, car
     // EFFECTS: edits a car from the list of cars for sale
     public boolean editCar(int id, int editChoice, String newValue) {
         for (Car car : listedCars.getCars()) {
@@ -72,13 +72,13 @@ public class User {
 
     // REQUIRES: id must be > 0, bid must be > 0 and > current bid/price, and listedCars must be non-null,
     //           listedCars must not contain Car that belongs to User.
-    // MODIFIES: this
+    // MODIFIES: this, car
     // EFFECTS: bids on a car from the list of cars for sale, returns true if successful, false otherwise
     public boolean placeBid(int id, int bid, Cars listedCars) {
         for (Car car : listedCars.getCars()) {
             if (car.getId() == id) {
-                biddedCars.add(new Bid(car, bid));
-                car.bid(bid);
+                biddedCars.add(new Bid(this, car, bid));
+                car.bid(this, bid);
                 return true;
             }
         }
@@ -89,12 +89,15 @@ public class User {
         return biddedCars;
     }
 
-    /*
-    public ArrayList<Car> getBids() {
-        //return biddedCars.getCars();
-    }*/
-
     public ArrayList<Car> getCars() {
         return listedCars.getCars();
+    }
+
+    public String getName() {
+        return user;
+    }
+
+    public ArrayList<Car> getWonCars() {
+        return wonCars.getCars();
     }
 }

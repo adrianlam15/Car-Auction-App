@@ -17,6 +17,8 @@ public class Cars {
     }
 
     // REQUIRES: car must be non-null and must be in list
+    // MODIFIES: this
+    // EFFECTS: removes a car from the list of cars for sale
     public void removeCar(Car car) {
         cars.remove(car);
     }
