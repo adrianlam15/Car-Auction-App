@@ -167,7 +167,9 @@ public class Car {
         return transmission;
     }
 
-    public String getDriveType() { return driveType; }
+    public String getDriveType() {
+        return driveType;
+    }
 
     public String getCondition() {
         return condition;
