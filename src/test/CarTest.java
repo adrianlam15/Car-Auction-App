@@ -75,6 +75,14 @@ public class CarTest {
     }
 
     @Test
+    void testIsExpired() {
+        assertFalse(car1.isExpired());
+        car2.markExpired();
+        assertTrue(car2.isExpired());
+        assertFalse(car3.isExpired());
+    }
+
+    @Test
     void testSetModel() {
         car1.setModel("Civic");
         assertEquals("Civic", car1.getModel());
@@ -178,6 +186,8 @@ public class CarTest {
     void testGetHighestBid() {
         User u1 = new User();
         User u2 = new User();
+
+        assertNull(car1.getHighestBid());
 
         car1.bid(u1, 1000);
         assertEquals(1000, car1.getHighestBid().getBidAmount());
@@ -346,4 +356,112 @@ public class CarTest {
         car3.setTimer(20000);
         assertEquals(20000, car3.getTimeLeftInSeconds());
     }
+
+    @Test
+    void testGetBids() {
+        User u1 = new User();
+        User u2 = new User();
+
+        assertEquals(0, car1.getBids().size());
+
+        car2.bid(u1, 2000);
+        assertEquals(1, car2.getBids().size());
+        assertEquals(u1, car2.getBids().get(0).getUser());
+
+        car3.bid(u1, 4000);
+        car3.bid(u2, 1000);
+        assertEquals(2, car3.getBids().size());
+        assertEquals(u1, car3.getBids().get(0).getUser());
+    }
+
+    @Test
+    void testGetMake() {
+        assertEquals("", car1.getMake());
+        car2.setMake("Nissan");
+        assertEquals("Nissan", car2.getMake());
+        car3.setMake("Honda");
+        assertEquals("Honda", car3.getMake());
+    }
+
+    @Test
+    void testGetModel() {
+        assertEquals("", car1.getModel());
+        car2.setModel("R34 GTR");
+        assertEquals("R34 GTR", car2.getModel());
+        car3.setModel("Civic");
+        assertEquals("Civic", car3.getModel());
+    }
+
+    @Test
+    void testGetColour() {
+        assertEquals("", car1.getColour());
+        car2.setColour("Red");
+        assertEquals("Red", car2.getColour());
+        car3.setColour("Blue");
+        assertEquals("Blue", car3.getColour());
+    }
+
+    @Test
+    void testGetTransmission() {
+        assertEquals("", car1.getTransmission());
+        car2.setTransmission("Automatic");
+        assertEquals("Automatic", car2.getTransmission());
+        car3.setTransmission("Manual");
+        assertEquals("Manual", car3.getTransmission());
+    }
+
+    @Test
+    void testGetDriveType() {
+        assertEquals("", car1.getDriveType());
+        car2.setDriveType("All Wheel Drive");
+        assertEquals("All Wheel Drive", car2.getDriveType());
+        car3.setDriveType("Front Wheel Drive");
+        assertEquals("Front Wheel Drive", car3.getDriveType());
+    }
+
+    @Test
+    void testGetCondition() {
+        assertEquals("", car1.getCondition());
+        car2.setCondition("Used");
+        assertEquals("Used", car2.getCondition());
+        car3.setCondition("New");
+        assertEquals("New", car3.getCondition());
+    }
+
+    @Test
+    void testGetYear() {
+        assertEquals(0, car1.getYear());
+        car2.setYear(1996);
+        assertEquals(1996, car2.getYear());
+        car3.setYear(2019);
+        assertEquals(2019, car3.getYear());
+    }
+
+    @Test
+    void testGetMileage() {
+        assertEquals(0, car1.getMileage());
+        car2.setMileage(1000);
+        assertEquals(1000, car2.getMileage());
+        car3.setMileage(2);
+        assertEquals(2, car3.getMileage());
+    }
+
+    @Test
+    void testGetPrice() {
+        assertEquals(0, car1.getPrice());
+        car2.setPrice(100000);
+        assertEquals(100000, car2.getPrice());
+        car3.setPrice(10000000);
+        assertEquals(10000000, car3.getPrice());
+    }
+
+    @Test
+    void testGetDescription() {
+        assertEquals("", car1.getDescription());
+        car2.setDescription("desc2");
+        assertEquals("desc2", car2.getDescription());
+        car3.setDescription("desc3");
+        assertEquals("desc3", car3.getDescription());
+    }
 }
+
