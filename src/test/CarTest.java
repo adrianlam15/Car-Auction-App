@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -289,8 +288,14 @@ public class CarTest {
 
     @Test
     void testSetTimer() {
-        car1.setTimer(0);
-        assertEquals(0, car1.getTimeLeftInSeconds());
+        User u1 = new User();
+        car1.bid(u1, 1000);
+        car1.setTimer(1);
+        assertEquals(1, car1.getTimeLeftInSeconds());
+        car1.markExpired();
+        assertTrue(car1.isExpired());
+        car1.giveToWinner();
+        assertEquals(1, u1.getWonCars().size());
 
         car2.setTimer(10000);
         assertEquals(10000, car2.getTimeLeftInSeconds());
