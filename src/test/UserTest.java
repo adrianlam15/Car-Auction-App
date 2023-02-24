@@ -1,5 +1,3 @@
-package test;
-
 import model.Bid;
 import model.Car;
 import model.Cars;

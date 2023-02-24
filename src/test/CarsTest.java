@@ -1,5 +1,3 @@
-package test;
-
 import model.Car;
 import model.Cars;
 import org.junit.jupiter.api.BeforeEach;
