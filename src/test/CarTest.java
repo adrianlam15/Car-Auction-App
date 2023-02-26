@@ -297,11 +297,12 @@ public class CarTest {
     }
 
     @Test
-    void testSetTimer() {
+    void testSetTimer() throws InterruptedException {
         User u1 = new User();
         car1.bid(u1, 1000);
         car1.setTimer(1);
         assertEquals(1, car1.getTimeLeftInSeconds());
+        Thread.sleep(1000);
         car1.markExpired();
         assertTrue(car1.isExpired());
         car1.giveToWinner();
