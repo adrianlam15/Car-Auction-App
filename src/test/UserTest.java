@@ -114,6 +114,7 @@ public class UserTest {
         assertNull(user1.deleteCar(0));
         user2.deleteCar(0);
         assertEquals(1, user2Car2.getId());
+        assertNull(user2.deleteCar(3));
     }
 
     @Test

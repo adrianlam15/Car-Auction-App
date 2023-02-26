@@ -213,42 +213,28 @@ public class Car {
     // MODIFIES: this
     // EFFECTS: edits the car based on the editChoice
     public void edit(int editChoice, String value) {
-        switch (editChoice) {
-            case 1:
-                setMake(value);
-                break;
-            case 2:
-                setModel(value);
-                break;
-            case 3:
-                setColour(value);
-                break;
-            case 4:
-                setTransmission(value);
-                break;
-            case 5:
-                setDriveType(value);
-                break;
-            case 6:
-                setCondition(value);
-                break;
-            case 7:
-                setYear(Integer.parseInt(value));
-                break;
-            case 8:
-                setMileage(Integer.parseInt(value));
-                break;
-            case 9:
-                setPrice(Integer.parseInt(value));
-                break;
-            case 10:
-                setDescription(value);
-                break;
-            case 11:
-                setTimer(Integer.parseInt(value));
-                break;
-            default:
-                break;
+        if (editChoice == 1) {
+            setMake(value);
+        } else if (editChoice == 2) {
+            setModel(value);
+        } else if (editChoice == 3) {
+            setColour(value);
+        } else if (editChoice == 4) {
+            setTransmission(value);
+        } else if (editChoice == 5) {
+            setDriveType(value);
+        } else if (editChoice == 6) {
+            setCondition(value);
+        } else if (editChoice == 7) {
+            setYear(Integer.parseInt(value));
+        } else if (editChoice == 8) {
+            setMileage(Integer.parseInt(value));
+        } else if (editChoice == 9) {
+            setPrice(Integer.parseInt(value));
+        } else if (editChoice == 10) {
+            setDescription(value);
+        } else if (editChoice == 11) {
+            setTimer(Integer.parseInt(value));
         }
     }
 
