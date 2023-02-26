@@ -30,6 +30,7 @@ public class CarTest {
         assertEquals(0, car1.getPrice());
         assertEquals(0, car1.getMileage());
         assertEquals(0, car1.getId());
+        assertFalse(car1.isExpired());
         assertEquals(0, car1.getBids().size());
 
         assertEquals("", car2.getMake());
@@ -43,6 +44,7 @@ public class CarTest {
         assertEquals(0, car2.getPrice());
         assertEquals(0, car2.getMileage());
         assertEquals(0, car2.getId());
+        assertFalse(car2.isExpired());
         assertEquals(0, car2.getBids().size());
 
         assertEquals("", car3.getMake());
@@ -56,6 +58,7 @@ public class CarTest {
         assertEquals(0, car3.getPrice());
         assertEquals(0, car3.getMileage());
         assertEquals(0, car3.getId());
+        assertFalse(car3.isExpired());
         assertEquals(0, car3.getBids().size());
     }
 
