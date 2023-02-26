@@ -222,7 +222,7 @@ public class CarTest {
     }
 
     @Test
-    void testEdit() {
+    void testEdit() throws InterruptedException {
         car1.setMake("Opel");
         car1.setModel("Astra");
         car1.setColour("Red");
@@ -256,6 +256,7 @@ public class CarTest {
         assertEquals("editDesc", car1.getDescription());
         car1.edit(11, "1000");
         assertEquals(1000, car1.getTimer());
+        assertFalse(car1.isExpired());
 
         car2.edit(1, "Nissan");
         assertEquals("Nissan", car2.getMake());
@@ -279,6 +280,11 @@ public class CarTest {
         assertEquals("editDesc2", car2.getDescription());
         car2.edit(11, "1000");
         assertEquals(1000, car2.getTimer());
+        assertFalse(car2.isExpired());
+
+        car2.edit(11, "1");
+        Thread.sleep(1500);
+        assertTrue(car2.isExpired());
     }
 
     @Test
@@ -303,10 +309,8 @@ public class CarTest {
         car1.bid(u1, 1000);
         car1.setTimer(1);
         assertEquals(1, car1.getTimer());
-        Thread.sleep(1000);
-        car1.markExpired();
+        Thread.sleep(1500);
         assertTrue(car1.isExpired());
-        car1.giveToWinner();
         assertEquals(1, u1.getWonCars().size());
 
         car2.setTimer(10000);
@@ -349,7 +353,6 @@ public class CarTest {
         assertEquals(2, u1.getWonCars().size());
         assertEquals(car3, u1.getWonCars().get(1));
         assertTrue(car3.isExpired());
-
     }
 
     @Test
