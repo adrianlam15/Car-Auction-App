@@ -192,14 +192,14 @@ public class Car {
     }
 
     public String getListingCar() {
-        if (getTimeLeftInSeconds() == 0) {
+        if (getTimer() == 0) {
             return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour()
                     + " " + getMake() + " " + getModel() + ", " + getDriveType() + "; with "
                     + getMileage() + "km for $" + getPrice() + ".";
         } else {
             return "[" + getCondition() + " condition] " + getTransmission() + " " + getColour()
                     + " " + getMake() + " " + getModel() + ", " + getDriveType() + "; with "
-                    + getMileage() + "km for $" + getPrice() + ".\n\tTime remaining: " + getTimeLeftInSeconds()
+                    + getMileage() + "km for $" + getPrice() + ".\n\tTime remaining: " + getTimer()
                     + " seconds.";
         }
     }
@@ -285,7 +285,7 @@ public class Car {
         }
     }
 
-    public int getTimeLeftInSeconds() {
+    public int getTimer() {
         return timeLeftInSeconds;
     }
 

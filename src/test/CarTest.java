@@ -1,11 +1,7 @@
-import model.Bid;
 import model.Car;
-import model.Cars;
 import model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -237,6 +233,7 @@ public class CarTest {
         car1.setYear(2019);
         car1.setPrice(10000);
         car1.setMileage(1000);
+        car1.setTimer(10000);
         car1.edit(1, "Toyota");
         assertEquals("Toyota", car1.getMake());
         car1.edit(2, "Corolla");
@@ -257,6 +254,8 @@ public class CarTest {
         assertEquals(1000, car1.getPrice());
         car1.edit(10, "editDesc");
         assertEquals("editDesc", car1.getDescription());
+        car1.edit(11, "1000");
+        assertEquals(1000, car1.getTimer());
 
         car2.edit(1, "Nissan");
         assertEquals("Nissan", car2.getMake());
@@ -278,6 +277,8 @@ public class CarTest {
         assertEquals(100000, car2.getPrice());
         car2.edit(10, "editDesc2");
         assertEquals("editDesc2", car2.getDescription());
+        car2.edit(11, "1000");
+        assertEquals(1000, car2.getTimer());
     }
 
     @Test
@@ -301,7 +302,7 @@ public class CarTest {
         User u1 = new User();
         car1.bid(u1, 1000);
         car1.setTimer(1);
-        assertEquals(1, car1.getTimeLeftInSeconds());
+        assertEquals(1, car1.getTimer());
         Thread.sleep(1000);
         car1.markExpired();
         assertTrue(car1.isExpired());
@@ -309,10 +310,10 @@ public class CarTest {
         assertEquals(1, u1.getWonCars().size());
 
         car2.setTimer(10000);
-        assertEquals(10000, car2.getTimeLeftInSeconds());
+        assertEquals(10000, car2.getTimer());
 
         car3.setTimer(200);
-        assertEquals(200, car3.getTimeLeftInSeconds());
+        assertEquals(200, car3.getTimer());
     }
 
     @Test
@@ -354,13 +355,13 @@ public class CarTest {
     @Test
     void testGetTimeLeftInSeconds() {
         car1.setTimer(0);
-        assertEquals(0, car1.getTimeLeftInSeconds());
+        assertEquals(0, car1.getTimer());
 
         car2.setTimer(10000);
-        assertEquals(10000, car2.getTimeLeftInSeconds());
+        assertEquals(10000, car2.getTimer());
 
         car3.setTimer(20000);
-        assertEquals(20000, car3.getTimeLeftInSeconds());
+        assertEquals(20000, car3.getTimer());
     }
 
     @Test
