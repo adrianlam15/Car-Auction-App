@@ -33,15 +33,15 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: reads user from file and returns it;
-    // throws IOException if an error occurs reading data from file
+    // EFFECTS: reads users from file and returns it;
+    //          throws IOException if an error occurs reading data from file
     public ArrayList<User> readUsers() throws IOException {
         String jsonData = readFile(this.source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseUser(jsonObject);
+        return parseUsers(jsonObject);
     }
 
-    private ArrayList<User> parseUser(JSONObject jsonObject) {
+    private ArrayList<User> parseUsers(JSONObject jsonObject) {
         ArrayList<User> users = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("users");
         for (Object json : jsonArray) {
