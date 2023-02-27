@@ -1,25 +1,28 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 // User class for the Car Auction application
 public class User {
-    private String user;
+    private String username;
     private String password;
     private Car car;
     private Cars listedCars = new Cars();
     private Cars wonCars = new Cars();
     private ArrayList<Bid> biddedCars = new ArrayList<>();
 
-    // METHOD FOR PHASE 2:
-    // for development purposes, returns TRUE
-    // REQUIRED: user and password must be non-empty strings
-    // EFFECTS: returns true if user and password combination match one in stored file, false otherwise
-    /*
-    public boolean login(String usr, String pwd) {
-        return true;
-    }*/
+    // REQUIRED: user, password must be non-empty strings and HashMap must be non-null.
+    // EFFECTS: returns true if user and password combination match one in stored hashmap, false otherwise
+    public boolean login(String usr, String pwd, HashMap<String, String> users) {
+        for (String user : users.keySet()) {
+            if (user.equals(usr) && users.get(user).equals(pwd)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // REQUIRES: user, password, and checkPwd must be non-empty strings
     // MODIFIES: this
@@ -27,7 +30,7 @@ public class User {
     //          returns true, otherwise returns false
     public boolean createUser(String usr, String pwd, String checkPwd) {
         if (pwd.equals(checkPwd)) {
-            this.user = usr;
+            this.username = usr;
             this.password = pwd;
             return true;
         } else {
@@ -93,8 +96,8 @@ public class User {
         return listedCars.getCars();
     }
 
-    public String getName() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     public ArrayList<Car> getWonCars() {

@@ -4,33 +4,40 @@ import model.Bid;
 import model.Car;
 import model.Cars;
 import model.User;
+import persistence.JsonReader;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
+import java.util.*;
 
 // Represents the Car Auction App User Interface
 public class AuctionApp {
+    private static final String JSON_STORE = "./data/setting.json";
+    private JsonReader jsonReader;
     private Scanner input;
-    private User user;
+    private User currentUser;
+    private ArrayList<User> users;
     private boolean loggedIn;
     private boolean keepGoing = true;
     private Cars listedCars;
     private ArrayList<Integer> listingID;
+    private HashMap<String, String> userMap;
 
-    public AuctionApp() {
+    public AuctionApp() throws IOException {
+        jsonReader = new JsonReader(JSON_STORE);
+        users = jsonReader.readUsers();
+        userMap = jsonReader.getUserMap();
+        System.out.println("username, password: " + userMap);
         runAuctionApp();
     }
 
     // MODIFIES: this
     // EFFECTS: runs the Car Auction App
     public void runAuctionApp() {
+
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         loggedIn = false;
-        user = new User();
+        currentUser = new User();
         listedCars = null;
         String command = null;
         listedCars = new Cars();
@@ -75,7 +82,7 @@ public class AuctionApp {
                 String usr = input.next();
                 System.out.println("Password:");
                 String pwd = input.next();
-                // loggedIn = user.login(usr, pwd);  *** UNCOMMENT FOR PHASE 2 ***
+                loggedIn = currentUser.login(usr, pwd, userMap);
             } else if (command.equals("1")) {
                 handleCreateAccount();
             } else {
@@ -118,7 +125,7 @@ public class AuctionApp {
                 if (confirm.equals("n")) {
                     processCommand("1");
                 }
-                user.createCar(car);
+                currentUser.createCar(car);
                 listedCars.addCar(car);
                 System.out.println("[STATUS]: Listing created successfully.");
             } else if (command.equals("2")) {
@@ -143,11 +150,11 @@ public class AuctionApp {
     // EFFECTS: lets user view won listings
     private void viewWonListings() {
         int id = 1;
-        if (user.getWonCars().isEmpty()) {
+        if (currentUser.getWonCars().isEmpty()) {
             System.out.println("[STATUS]: You have no won listings.");
         } else {
             System.out.println("==== Your Won Listings ====");
-            for (Car car : user.getWonCars()) {
+            for (Car car : currentUser.getWonCars()) {
                 System.out.println("\t" + id + ". " + car.getListingCar());
             }
         }
@@ -155,12 +162,12 @@ public class AuctionApp {
 
     // EFFECTS: displays the user's bidded listings
     private void showBids() {
-        if (user.getBids().isEmpty()) {
+        if (currentUser.getBids().isEmpty()) {
             System.out.println("[STATUS]: You have no bids.");
         } else {
             System.out.println("==== Your Bids ====");
             int pos = 1;
-            for (Bid bid : user.getBids()) {
+            for (Bid bid : currentUser.getBids()) {
                 System.out.println("\t" + pos + ". \n\t" + bid.getBid());
             }
         }
@@ -189,11 +196,11 @@ public class AuctionApp {
         listingID = new ArrayList<Integer>();
         int id = 1;
         int pos = 1;
-        if (user.getCars().isEmpty()) {
+        if (currentUser.getCars().isEmpty()) {
             System.out.println("[STATUS]: You have no listings.");
         } else {
             System.out.println("==== Your Listings ====");
-            for (Car car : user.getCars()) {
+            for (Car car : currentUser.getCars()) {
                 System.out.println("\t" + pos + ". " + car.getListingCar());
                 if (car.isExpired()) {
                     System.out.println("\t[STATUS]: Listing expired.");
@@ -230,7 +237,7 @@ public class AuctionApp {
             int editChoiceInt = Integer.parseInt(editChoice);
             System.out.println("Enter the new value:");
             String newValue = input.next();
-            if (user.editCar(carPosInt, editChoiceInt, newValue)) {
+            if (currentUser.editCar(carPosInt, editChoiceInt, newValue)) {
                 System.out.println("[STATUS]: Listing edited successfully.");
                 return true;
             } else {
@@ -240,7 +247,7 @@ public class AuctionApp {
             System.out.println("Enter the number of the listing you'd like to delete:");
             String carPos = input.next();
             int carPosInt = Integer.parseInt(carPos);
-            Car toRemove = user.deleteCar(carPosInt);
+            Car toRemove = currentUser.deleteCar(carPosInt);
             if (toRemove != null) {
                 listedCars.removeCar(toRemove);
                 System.out.println("[STATUS]: Listing deleted successfully.");
@@ -266,7 +273,7 @@ public class AuctionApp {
         for (Car car : listedCars.getCars()) {
             car.setId(i);
             if (car.getId() == choicePos) {
-                for (Car userCar : user.getCars()) {
+                for (Car userCar : currentUser.getCars()) {
                     if (car.equals(userCar)) {
                         System.out.println("[STATUS]: You can not bid on your own listing.");
                         return true;
@@ -282,7 +289,7 @@ public class AuctionApp {
                         System.out.println("[STATUS]: No bids on this listing yet.");
                     } else if (car.getHighestBid() != null) {
                         System.out.println("[STATUS]: Current bid: $" + car.getHighestBid().getBidAmount()
-                                + " by " + car.getHighestBid().getUser().getName());
+                                + " by " + car.getHighestBid().getUser().getUsername());
                     }
                 }
             }
@@ -290,7 +297,7 @@ public class AuctionApp {
         }
         System.out.println("Enter the amount you'd like to bid:");
         int bid = input.nextInt();
-        user.placeBid(choicePos, bid, listedCars);
+        currentUser.placeBid(choicePos, bid, listedCars);
         System.out.println("[STATUS]: Bid placed successfully.");
         return true;
     }
@@ -328,10 +335,11 @@ public class AuctionApp {
         System.out.println("Re-enter your password:");
         String checkPwd = input.next();
         if (pwd.equals(checkPwd)) {
-            if (user.createUser(usr, pwd, checkPwd)) {
+            if (currentUser.createUser(usr, pwd, checkPwd)) {
                 System.out.println("[STATUS]: Account created successfully.");
+                // users.put(usr, pwd);  // add to HashMap
                 // loggedIn = user.login(usr, pwd);  // ** UNCOMMENT FOR PHASE 2 **
-                loggedIn = true;  // ** COMMENT FOR PHASE 2 **
+                // add to json file using write
             } else {
                 System.out.println("[STATUS]: Error creating account. Please try again.");
             }

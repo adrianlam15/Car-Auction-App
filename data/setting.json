@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "username": "John",
+      "password": "1234",
+      "listings": [
+        {
+          "id": "1",
+          "title": "",
+          "description": "",
+          "price": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "username": "Adrian",
+      "password": "1234"
+    }
+  ]
+}

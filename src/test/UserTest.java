@@ -1,11 +1,8 @@
-import model.Bid;
 import model.Car;
 import model.Cars;
 import model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -170,9 +167,9 @@ public class UserTest {
 
     @Test
     void testGetName() {
-        assertEquals("user1", user1.getName());
-        assertNull(user2.getName());
-        assertEquals("user3", user3.getName());
+        assertEquals("user1", user1.getUsername());
+        assertNull(user2.getUsername());
+        assertEquals("user3", user3.getUsername());
     }
 
     @Test
