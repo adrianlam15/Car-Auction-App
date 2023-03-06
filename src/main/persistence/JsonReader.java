@@ -49,6 +49,23 @@ public class JsonReader {
             User user = new User();
             user.createUser(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"),
                     ((JSONObject) json).getString("password"));
+            Car car = new Car();
+            JSONArray jsonArray1 = ((JSONObject) json).getJSONArray("listings");
+            for (Object json1 : jsonArray1) {
+                car.setId(((JSONObject) json1).getInt("id"));
+                car.setMake(((JSONObject) json1).getString("make"));
+                car.setModel(((JSONObject) json1).getString("model"));
+                car.setColour(((JSONObject) json1).getString("colour"));
+                car.setTransmission(((JSONObject) json1).getString("transmission"));
+                car.setDriveType(((JSONObject) json1).getString("driveType"));
+                car.setCondition(((JSONObject) json1).getString("condition"));
+                car.setYear(((JSONObject) json1).getInt("year"));
+                car.setPrice(((JSONObject) json1).getInt("price"));
+                car.setMileage(((JSONObject) json1).getInt("mileage"));
+                car.setDescription(((JSONObject) json1).getString("description"));
+                car.setTimer(((JSONObject) json1).getInt("timeLeftInSeconds"));
+                user.createCar(car);
+            }
             users.add(user);
         }
         return users;
@@ -69,6 +86,4 @@ public class JsonReader {
     public Cars readCars() {
         return null;
     }
-
-
 }

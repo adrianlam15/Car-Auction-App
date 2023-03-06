@@ -13,7 +13,7 @@ public class User {
     private Cars wonCars = new Cars();
     private ArrayList<Bid> biddedCars = new ArrayList<>();
 
-    // REQUIRED: user, password must be non-empty strings and HashMap must be non-null.
+    // REQUIRED: user, password must be non-empty strings and hashmap must be non-null.
     // EFFECTS: returns true if user and password combination match one in stored hashmap, false otherwise
     public boolean login(String usr, String pwd, HashMap<String, String> users) {
         for (String user : users.keySet()) {

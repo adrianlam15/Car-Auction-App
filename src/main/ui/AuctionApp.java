@@ -25,6 +25,17 @@ public class AuctionApp {
     public AuctionApp() throws IOException {
         jsonReader = new JsonReader(JSON_STORE);
         users = jsonReader.readUsers();
+        listedCars = new Cars();
+        System.out.println(users);
+        for (User user : users) {
+            ArrayList<Car> tmpCars = user.getCars();
+            for (Car car : tmpCars) {
+                listedCars.addCar(car);
+                System.out.println(car);
+                System.out.println(listedCars);
+            }
+
+        }
         userMap = jsonReader.getUserMap();
         System.out.println("username, password: " + userMap);
         runAuctionApp();
@@ -33,15 +44,14 @@ public class AuctionApp {
     // MODIFIES: this
     // EFFECTS: runs the Car Auction App
     public void runAuctionApp() {
-
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         loggedIn = false;
         currentUser = new User();
         listedCars = null;
         String command = null;
-        listedCars = new Cars();
         while (keepGoing) {
+            System.out.println(currentUser.getUsername());
             displayMenu(loggedIn);
             command = input.next();
             processCommand(command);
@@ -83,6 +93,17 @@ public class AuctionApp {
                 System.out.println("Password:");
                 String pwd = input.next();
                 loggedIn = currentUser.login(usr, pwd, userMap);
+                if (loggedIn) {
+                    for (User user : users) {
+                        if (user.getUsername().equals(usr)) {
+                            currentUser = user;
+                            ArrayList<Car> tempCars = currentUser.getCars();
+                            for (Car car : tempCars) {
+                                listedCars.addCar(car);
+                            }
+                        }
+                    }
+                }
             } else if (command.equals("1")) {
                 handleCreateAccount();
             } else {

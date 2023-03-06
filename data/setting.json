@@ -6,23 +6,53 @@
       "listings": [
         {
           "id": "1",
-          "title": "",
+          "make": "",
+          "model": "",
+          "colour": "",
+          "transmission": "",
+          "driveType": "",
+          "condition": "",
+          "year": 0,
+          "price": 0,
+          "mileage": 0,
           "description": "",
-          "price": "",
-          "time": ""
+          "timeLeftInSeconds": 0
         },
         {
           "id": "2",
-          "title": "",
+          "make": "",
+          "model": "",
+          "colour": "",
+          "transmission": "",
+          "driveType": "",
+          "condition": "",
+          "year": 0,
+          "price": 0,
+          "mileage": 0,
           "description": "",
-          "price": "",
-          "time": ""
+          "timeLeftInSeconds": 0
         }
       ]
     },
     {
       "username": "Adrian",
-      "password": "1234"
+      "password": "1234",
+      "listings": [
+        {
+          "id": "1",
+          "make": "",
+          "model": "",
+          "colour": "",
+          "transmission": "",
+          "driveType": "",
+          "condition": "",
+          "year": 0,
+          "price": 0,
+          "mileage": 0,
+          "description": "",
+          "timeLeftInSeconds": 0
+        }
+      ]
     }
   ]
 }
