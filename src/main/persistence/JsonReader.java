@@ -1,9 +1,6 @@
 package persistence;
 
-import model.Bid;
-import model.Car;
-import model.User;
-import model.Cars;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,7 +30,37 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: reads users from file and returns it;
+    public Users readUsers() throws IOException {
+        String jsonData = readFile(this.source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseUsers(jsonObject);
+    }
+
+    private Users parseUsers(JSONObject jsonObject) {
+        Users users = new Users();
+        Cars listedCars = new Cars();
+        JSONArray jsonArray = jsonObject.getJSONArray("users");
+        for (Object json : jsonArray) {
+            User user = new User();
+            userMap.put(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"));
+            user.createUser(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"),
+                    ((JSONObject) json).getString("password"));
+            // ADD LIST OF CARS (BIDDEDCARS, LISTEDCARS, WONCARS) to USER
+            mapUserCars(json, user, listedCars);
+            users.add(user);
+        }
+        for (Object json : jsonArray) {
+            User user = new User();
+            user.createUser(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"),
+                    ((JSONObject) json).getString("password"));
+            mapUserBids(json, user, listedCars);
+            mapUserWon(json, user, listedCars);
+        }
+        return users;
+    }
+
+
+    /*// EFFECTS: reads users from file and returns it;
     //          throws IOException if an error occurs reading data from file
     public ArrayList<User> readUsers() throws IOException {
         String jsonData = readFile(this.source);
@@ -63,7 +90,7 @@ public class JsonReader {
             mapUserWon(json, user, listedCars);
         }
         return users;
-    }
+    }*/
 
     private void mapUserWon(Object json, User user, Cars listedCars) {
         JSONArray jsonWon = ((JSONObject) json).getJSONArray("wonCars");
@@ -78,15 +105,15 @@ public class JsonReader {
 
     private void mapUserBids(Object json, User user, Cars listedCars) {
         JSONArray jsonBids = ((JSONObject) json).getJSONArray("bids");
-        JSONArray jsonListings = ((JSONObject) json).getJSONArray("listings");
+        JSONArray jsonListedCars = ((JSONObject) json).getJSONArray("listedCars");
         for (Object json1 : jsonBids) {
-            user.placeBid(((JSONObject) json1).getInt("carId"), ((JSONObject) json1).getInt("bidAmount"),
+            user.placeBid(((JSONObject) json1).getInt("carId"), ((JSONObject) json1).getInt("amount"),
                     listedCars);
         }
     }
 
     private void mapUserCars(Object json, User user, Cars listedCars) {
-        JSONArray jsonListings = ((JSONObject) json).getJSONArray("listings");
+        JSONArray jsonListings = ((JSONObject) json).getJSONArray("listedCars");
         for (Object json1 : jsonListings) {
             Car car = new Car();
             car.setId(((JSONObject) json1).getInt("id"));
@@ -110,15 +137,13 @@ public class JsonReader {
         return this.userMap;
     }
 
-    public Bid readBid() {
-        return null;
+    public String readDate() throws IOException {
+        String jsonData = readFile(this.source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseDate(jsonObject);
     }
 
-    public Car readCar() {
-        return null;
-    }
-
-    public Cars readCars() {
-        return null;
+    private String parseDate(JSONObject jsonObject) {
+        return jsonObject.getString("date");
     }
 }

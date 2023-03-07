@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
 // User class for the Car Auction application
-public class User {
+public class User implements Writable {
     private String username;
     private String password;
     private Car car;
@@ -100,11 +104,34 @@ public class User {
         return username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public ArrayList<Car> getWonCars() {
         return wonCars.getCars();
     }
 
     public void addWonCar(Car car) {
         wonCars.addCar(car);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("username", username);
+        json.put("password", password);
+        json.put("listedCars", listedCars.toJson());
+        json.put("wonCars", wonCars.toJson());
+        json.put("biddedCars", bidCarsToJson());
+        return json;
+    }
+
+    private JSONArray bidCarsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Bid bid : biddedCars) {
+            jsonArray.put(bid.toJson());
+        }
+        return jsonArray;
     }
 }

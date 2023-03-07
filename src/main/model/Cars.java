@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 public class Cars {
@@ -25,5 +29,18 @@ public class Cars {
 
     public ArrayList<Car> getCars() {
         return cars;
+    }
+
+    public JSONArray toJson() {
+        JSONArray json = carsToJson();
+        return json;
+    }
+
+    private JSONArray carsToJson() {
+        JSONArray json = new JSONArray();
+        for (Car c : cars) {
+            json.put(c.toJson());
+        }
+        return json;
     }
 }

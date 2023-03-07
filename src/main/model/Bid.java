@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents a class for a bid
-public class Bid {
+public class Bid implements Writable {
     private Car car;
     private User user;
     private int bidAmount;
@@ -35,4 +38,13 @@ public class Bid {
         }
         return car.getListingCar() + "\nBid: $" + bidAmount;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("car", car.toJson());
+        json.put("bidAmount", bidAmount);
+        return json;
+    }
+
 }

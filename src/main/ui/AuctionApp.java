@@ -1,41 +1,43 @@
 package ui;
 
-import model.Bid;
-import model.Car;
-import model.Cars;
-import model.User;
+import model.*;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+
 // Represents the Car Auction App User Interface
 public class AuctionApp {
-    private static final String JSON_STORE = "./data/setting.json";
+    private LocalDateTime now;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+    private ZonedDateTime zonedTime;
+
+    private static final String JSON_STORE = "./data/data.json";
     private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
     private Scanner input;
     private User currentUser;
-    private ArrayList<User> users;
+    private Users users;
     private boolean loggedIn;
     private boolean keepGoing = true;
     private Cars listedCars = null;
     private ArrayList<Integer> listingID;
     private HashMap<String, String> userMap;
 
-    public AuctionApp() throws IOException {
+    public AuctionApp() throws FileNotFoundException, IOException {
         jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         users = jsonReader.readUsers();
-        listedCars = new Cars();
         System.out.println(users);
-        for (User user : users) {
-            ArrayList<Car> tmpCars = user.getCars();
-            for (Car car : tmpCars) {
-                listedCars.addCar(car);
-            }
-
-        }
-        userMap = jsonReader.getUserMap();
-        System.out.println("username, password: " + userMap);
         runAuctionApp();
     }
 
@@ -43,10 +45,19 @@ public class AuctionApp {
     // EFFECTS: runs the Car Auction App
     public void runAuctionApp() {
         input = new Scanner(System.in);
+        listedCars = new Cars();
         input.useDelimiter("\n");
         loggedIn = false;
         currentUser = new User();
         String command = null;
+        for (User user : users.getUsers()) {
+            ArrayList<Car> tmpCars = user.getCars();
+            for (Car car : tmpCars) {
+                listedCars.addCar(car);
+            }
+        }
+        userMap = jsonReader.getUserMap();
+        System.out.println("username, password: " + userMap);
         while (keepGoing) {
             System.out.println(currentUser.getUsername());
             displayMenu(loggedIn);
@@ -60,18 +71,20 @@ public class AuctionApp {
         if (!loggedIn) {
             System.out.println("\nWelcome to the Car Auction App!");
             System.out.println("Use numbers to select choices:");
-            System.out.println("\t1. Create an account.");
-            System.out.println("\t2. Login.");
-            System.out.println("\t3. Exit.");
+            System.out.println("\t-> 1. Create an account.");
+            System.out.println("\t-> 2. Login.");
+            System.out.println("\t-> 3. Exit.");
         } else {
             System.out.println("\n==== Main menu ====");
             System.out.println("Use numbers to select choices:");
-            System.out.println("\t1. Create a listing.");
-            System.out.println("\t2. View listings.");
-            System.out.println("\t3. View your listings.");
-            System.out.println("\t4. View current bids.");
-            System.out.println("\t5. View won cars.");
-            System.out.println("\t6. Logout.");
+            System.out.println("\t-> 1. Create a listing.");
+            System.out.println("\t-> 2. View listings.");
+            System.out.println("\t-> 3. View your listings.");
+            System.out.println("\t-> 4. View current bids.");
+            System.out.println("\t-> 5. View won cars.");
+            System.out.println("\t-> 6. Load up-to-date data.");
+            System.out.println("\t-> 7. Save current data.");
+            System.out.println("\t-> 8. Logout.");
         }
     }
 
@@ -91,7 +104,7 @@ public class AuctionApp {
                 String pwd = input.next();
                 loggedIn = currentUser.login(usr, pwd, userMap);
                 if (loggedIn) {
-                    for (User user : users) {
+                    for (User user : users.getUsers()) {
                         if (user.getUsername().equals(usr)) {
                             currentUser = user;
                         }
@@ -151,8 +164,12 @@ public class AuctionApp {
             } else if (command.equals("5")) {
                 viewWonListings();
             } else if (command.equals("6")) {
-                System.out.println("[STATUS]: Goodbye!");
-                keepGoing = false;
+                load();
+            } else if (command.equals("7")) {
+                save();
+            } else if (command.equals("8")) {
+                System.out.println("[STATUS]: Logged out.");
+                loggedIn = false;
             } else {
                 System.out.println("[STATUS]: Invalid entry. Try again:");
                 String retry = input.next();
@@ -182,7 +199,7 @@ public class AuctionApp {
             System.out.println("==== Your Bids ====");
             int pos = 1;
             for (Bid bid : currentUser.getBids()) {
-                System.out.println("\t" + pos + ". \n\t" + bid.getBid());
+                System.out.println("\t-> " + pos + ". \n\t" + bid.getBid());
             }
         }
     }
@@ -215,7 +232,7 @@ public class AuctionApp {
         } else {
             System.out.println("==== Your Listings ====");
             for (Car car : currentUser.getCars()) {
-                System.out.println("\t" + pos + ". " + car.getListingCar());
+                System.out.println("\t-> " + pos + ". " + car.getListingCar());
                 if (car.isExpired()) {
                     System.out.println("\t[STATUS]: Listing expired.");
                 }
@@ -227,7 +244,7 @@ public class AuctionApp {
             System.out.println("Would you like to edit, or delete a listing? (or N to go back) (E/D/N)");
             String choice = input.next().toLowerCase();
             if (choice.equals("n")) {
-                displayListings();
+                return;
             }
             while (!editView(choice)) {
                 choice = input.next();
@@ -327,7 +344,7 @@ public class AuctionApp {
         } else {
             System.out.println("==== Listings ====");
             for (Car car : listedCars.getCars()) {
-                System.out.println("\t" + pos + ". " + car.getListingCar());
+                System.out.println("\t-> " + pos + ". " + car.getListingCar());
                 if (car.isExpired()) {
                     System.out.println("\t[STATUS]: Listing expired.");
                 }
@@ -360,6 +377,32 @@ public class AuctionApp {
         } else {
             System.out.println("[STATUS]: Passwords don't match. Please try again.");
             processCommand("1");
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void save() {
+        try {
+            jsonWriter.open();
+            now = LocalDateTime.now();
+            zonedTime = ZonedDateTime.of(now, zoneId);
+            String formattedNow = zonedTime.format(formatter);
+
+            jsonWriter.write(formattedNow, users);
+            jsonWriter.close();
+            System.out.println("Saved date from " + formattedNow + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void load() {
+        try {
+            users = jsonReader.readUsers();
+            String date = jsonReader.readDate();
+            System.out.println("Loaded data from " + JSON_STORE + " from " + date);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

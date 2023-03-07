@@ -1,0 +1,64 @@
+{
+    "date": "2023-03-06 20:58:46",
+    "users": [
+        {
+            "password": "1234",
+            "wonCars": [],
+            "biddedCars": [],
+            "listedCars": [
+                {
+                    "timeLeftInSeconds": 0,
+                    "year": 0,
+                    "driveType": "",
+                    "description": "",
+                    "colour": "",
+                    "condition": "",
+                    "transmission": "",
+                    "expired": true,
+                    "price": 0,
+                    "model": "",
+                    "id": 1,
+                    "make": "",
+                    "mileage": 0
+                },
+                {
+                    "timeLeftInSeconds": 0,
+                    "year": 0,
+                    "driveType": "",
+                    "description": "",
+                    "colour": "",
+                    "condition": "",
+                    "transmission": "",
+                    "expired": true,
+                    "price": 0,
+                    "model": "",
+                    "id": 2,
+                    "make": "",
+                    "mileage": 0
+                }
+            ],
+            "username": "John"
+        },
+        {
+            "password": "1234",
+            "wonCars": [],
+            "biddedCars": [],
+            "listedCars": [{
+                "timeLeftInSeconds": 0,
+                "year": 0,
+                "driveType": "",
+                "description": "",
+                "colour": "",
+                "condition": "",
+                "transmission": "",
+                "expired": true,
+                "price": 0,
+                "model": "",
+                "id": 3,
+                "make": "",
+                "mileage": 0
+            }],
+            "username": "Adrian"
+        }
+    ]
+}

@@ -1,11 +1,14 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 // class representing a car
-public class Car {
+public class Car implements Writable {
     private String make;
     private String model;
     private String colour;
@@ -278,5 +281,24 @@ public class Car {
 
     public boolean isExpired() {
         return expired;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("make", make);
+        json.put("model", model);
+        json.put("colour", colour);
+        json.put("transmission", transmission);
+        json.put("driveType", driveType);
+        json.put("condition", condition);
+        json.put("year", year);
+        json.put("price", price);
+        json.put("mileage", mileage);
+        json.put("description", description);
+        json.put("id", id);
+        json.put("expired", expired);
+        json.put("timeLeftInSeconds", timeLeftInSeconds);
+        return json;
     }
 }
