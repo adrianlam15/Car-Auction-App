@@ -3,6 +3,17 @@
     {
       "username": "John",
       "password": "1234",
+      "bids": [
+        {
+          "carId": "3",
+          "bidAmount": 1000
+        }
+      ],
+      "wonCars": [
+        {
+          "carId": "3"
+        }
+      ],
       "listings": [
         {
           "id": "1",
@@ -37,9 +48,11 @@
     {
       "username": "Adrian",
       "password": "1234",
+      "bids": [],
+      "wonCars": [],
       "listings": [
         {
-          "id": "1",
+          "id": "3",
           "make": "",
           "model": "",
           "colour": "",

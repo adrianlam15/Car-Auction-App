@@ -18,7 +18,7 @@ public class AuctionApp {
     private ArrayList<User> users;
     private boolean loggedIn;
     private boolean keepGoing = true;
-    private Cars listedCars;
+    private Cars listedCars = null;
     private ArrayList<Integer> listingID;
     private HashMap<String, String> userMap;
 
@@ -31,8 +31,6 @@ public class AuctionApp {
             ArrayList<Car> tmpCars = user.getCars();
             for (Car car : tmpCars) {
                 listedCars.addCar(car);
-                System.out.println(car);
-                System.out.println(listedCars);
             }
 
         }
@@ -48,7 +46,6 @@ public class AuctionApp {
         input.useDelimiter("\n");
         loggedIn = false;
         currentUser = new User();
-        listedCars = null;
         String command = null;
         while (keepGoing) {
             System.out.println(currentUser.getUsername());
@@ -97,10 +94,6 @@ public class AuctionApp {
                     for (User user : users) {
                         if (user.getUsername().equals(usr)) {
                             currentUser = user;
-                            ArrayList<Car> tempCars = currentUser.getCars();
-                            for (Car car : tempCars) {
-                                listedCars.addCar(car);
-                            }
                         }
                     }
                 }
@@ -231,10 +224,10 @@ public class AuctionApp {
                 id++;
                 pos++;
             }
-            System.out.println("Would you like to edit, or delete a listing? (E/D/N)");
+            System.out.println("Would you like to edit, or delete a listing? (or N to go back) (E/D/N)");
             String choice = input.next().toLowerCase();
             if (choice.equals("n")) {
-                processCommand("3");
+                displayListings();
             }
             while (!editView(choice)) {
                 choice = input.next();

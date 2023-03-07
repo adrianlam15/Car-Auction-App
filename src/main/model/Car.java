@@ -246,7 +246,8 @@ public class Car {
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 timeLeftInSeconds--;
-                if (timeLeftInSeconds == 0) {
+                if (timeLeftInSeconds <= 0) {
+                    timeLeftInSeconds = 0;
                     markExpired();
                     giveToWinner();
                     timer.cancel();

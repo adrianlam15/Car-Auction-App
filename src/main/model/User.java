@@ -103,4 +103,8 @@ public class User {
     public ArrayList<Car> getWonCars() {
         return wonCars.getCars();
     }
+
+    public void addWonCar(Car car) {
+        wonCars.addCar(car);
+    }
 }
