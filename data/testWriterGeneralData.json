@@ -1,0 +1,10 @@
+{
+    "date": "06-03-2023 22:15:40",
+    "users": [{
+        "password": "pass1",
+        "wonCars": [],
+        "biddedCars": [],
+        "listedCars": [],
+        "username": "user1"
+    }]
+}

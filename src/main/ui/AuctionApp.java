@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 // Represents the Car Auction App User Interface
 public class AuctionApp {
     private LocalDateTime now;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private ZoneId zoneId = ZoneId.of("America/Los_Angeles");
     private ZonedDateTime zonedTime;
 
@@ -380,7 +380,8 @@ public class AuctionApp {
         }
     }
 
-    // EFFECTS: saves the workroom to file
+    // MODIFIES: this
+    // EFFECTS: saves the data to file
     private void save() {
         try {
             jsonWriter.open();
@@ -396,6 +397,8 @@ public class AuctionApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
     private void load() {
         try {
             users = jsonReader.readUsers();

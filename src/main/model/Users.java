@@ -16,6 +16,10 @@ public class Users {
         users.add(user);
     }
 
+    public User get(int id) {
+        return users.get(id);
+    }
+
     public void remove(User user) {
         users.remove(user);
     }

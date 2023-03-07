@@ -1,71 +1,64 @@
 {
+  "date": "2023-03-06 20:58:46",
   "users": [
     {
-      "username": "user1",
       "password": "1234",
-      "bids": [
+      "wonCars": [],
+      "biddedCars": [],
+      "listedCars": [
         {
-          "carId": "3",
-          "bidAmount": 1000
-        }
-      ],
-      "wonCars": [
-        {
-          "carId": "3"
-        }
-      ],
-      "listings": [
-        {
-          "id": "1",
-          "make": "",
-          "model": "",
-          "colour": "",
-          "transmission": "",
-          "driveType": "",
-          "condition": "",
+          "timeLeftInSeconds": 0,
           "year": 0,
-          "price": 0,
-          "mileage": 0,
+          "driveType": "",
           "description": "",
-          "timeLeftInSeconds": 0
+          "colour": "",
+          "condition": "",
+          "transmission": "",
+          "expired": true,
+          "price": 0,
+          "model": "",
+          "id": 1,
+          "make": "",
+          "mileage": 0
         },
         {
-          "id": "2",
-          "make": "",
-          "model": "",
-          "colour": "",
-          "transmission": "",
-          "driveType": "",
-          "condition": "",
+          "timeLeftInSeconds": 0,
           "year": 0,
-          "price": 0,
-          "mileage": 0,
+          "driveType": "",
           "description": "",
-          "timeLeftInSeconds": 0
+          "colour": "",
+          "condition": "",
+          "transmission": "",
+          "expired": true,
+          "price": 0,
+          "model": "",
+          "id": 2,
+          "make": "",
+          "mileage": 0
         }
-      ]
+      ],
+      "username": "John"
     },
     {
-      "username": "user2",
       "password": "5678",
-      "bids": [],
       "wonCars": [],
-      "listings": [
-        {
-          "id": "3",
-          "make": "",
-          "model": "",
-          "colour": "",
-          "transmission": "",
-          "driveType": "",
-          "condition": "",
-          "year": 0,
-          "price": 0,
-          "mileage": 0,
-          "description": "",
-          "timeLeftInSeconds": 0
-        }
-      ]
+      "biddedCars": [],
+      "listedCars": [{
+        "timeLeftInSeconds": 0,
+        "year": 0,
+        "driveType": "",
+        "description": "",
+        "colour": "",
+        "condition": "",
+        "transmission": "",
+        "expired": true,
+        "price": 0,
+        "model": "",
+        "id": 3,
+        "make": "",
+        "mileage": 0
+      }],
+      "username": "Adrian"
     }
   ]
 }
