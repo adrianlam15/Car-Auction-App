@@ -268,7 +268,7 @@ public class Car implements Writable {
     // MODIFIES: this
     // EFFECTS: gives the car to the winner
     public void giveToWinner() {
-        if (getHighestBid() != null) {
+        if (getHighestBid() != null && getHighestBid().getBidAmount() >= price) {
             User user = getHighestBid().getUser();
             user.getWonCars().add(this);
             this.expired = true;

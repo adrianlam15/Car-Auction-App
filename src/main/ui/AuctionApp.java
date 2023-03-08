@@ -37,7 +37,6 @@ public class AuctionApp {
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
         users = jsonReader.readUsers();
-        System.out.println(users);
         runAuctionApp();
     }
 
@@ -62,6 +61,7 @@ public class AuctionApp {
             System.out.println(currentUser.getUsername());
             displayMenu(loggedIn);
             command = input.next();
+            System.out.println(currentUser.getBids().size());
             processCommand(command);
         }
     }
@@ -233,6 +233,7 @@ public class AuctionApp {
             System.out.println("==== Your Listings ====");
             for (Car car : currentUser.getCars()) {
                 System.out.println("\t-> " + pos + ". " + car.getListingCar());
+                System.out.println("\tHighest bid: " + car.getHighestBid().getBidAmount() + " from " + car.getHighestBid().getUser().getUsername());
                 if (car.isExpired()) {
                     System.out.println("\t[STATUS]: Listing expired.");
                 }
@@ -361,6 +362,12 @@ public class AuctionApp {
     private void handleCreateAccount() {
         System.out.println("Enter a username:");
         String usr = input.next();
+        for (User u : users.getUsers()) {
+            if (u.getUsername().equals(usr)) {
+                System.out.println("[STATUS]: Username already exists. Please try again.");
+                processCommand("1");
+            }
+        }
         System.out.println("Enter a password:");
         String pwd = input.next();
         System.out.println("Re-enter your password:");
@@ -368,9 +375,8 @@ public class AuctionApp {
         if (pwd.equals(checkPwd)) {
             if (currentUser.createUser(usr, pwd, checkPwd)) {
                 System.out.println("[STATUS]: Account created successfully.");
-                // users.put(usr, pwd);  // add to HashMap
-                // loggedIn = user.login(usr, pwd);  // ** UNCOMMENT FOR PHASE 2 **
-                // add to json file using write
+                userMap.put(usr, pwd);
+                users.add(currentUser);
             } else {
                 System.out.println("[STATUS]: Error creating account. Please try again.");
             }

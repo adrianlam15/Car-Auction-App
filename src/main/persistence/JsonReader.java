@@ -49,16 +49,16 @@ public class JsonReader {
             userMap.put(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"));
             user.createUser(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"),
                     ((JSONObject) json).getString("password"));
-            // ADD LIST OF CARS (BIDDEDCARS, LISTEDCARS, WONCARS) to USER
+            JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
+            JSONArray jsonWon = ((JSONObject) json).getJSONArray("wonCars");
             mapUserCars(json, user, listedCars);
             users.add(user);
         }
         for (Object json : jsonArray) {
-            User user = new User();
-            user.createUser(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"),
-                    ((JSONObject) json).getString("password"));
-            mapUserBids(json, user, listedCars);
-            mapUserWon(json, user, listedCars);
+            for (User u : users.getUsers()) {
+                mapUserBids(json, u, listedCars);
+                mapUserWon(json, u, listedCars);
+            }
         }
         return users;
     }
@@ -69,7 +69,7 @@ public class JsonReader {
         JSONArray jsonWon = ((JSONObject) json).getJSONArray("wonCars");
         for (Object json1 : jsonWon) {
             for (Car car : listedCars.getCars()) {
-                if (car.getId() == ((JSONObject) json1).getInt("carId")) {
+                if (car.getId() == ((JSONObject) json1).getInt("id")) {
                     user.addWonCar(car);
                 }
             }
@@ -82,8 +82,11 @@ public class JsonReader {
         JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
         JSONArray jsonListedCars = ((JSONObject) json).getJSONArray("listedCars");
         for (Object json1 : jsonBids) {
-            user.placeBid(((JSONObject) json1).getInt("carId"), ((JSONObject) json1).getInt("amount"),
-                    listedCars);
+            JSONObject json2 = (JSONObject) json1;
+            JSONObject car = (JSONObject) json2.get("car");
+            int carId = car.getInt("id");
+            int bidAmount = json2.getInt("bidAmount");
+            user.placeBid(carId, bidAmount, listedCars);
         }
     }
 

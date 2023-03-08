@@ -132,6 +132,7 @@ public class User implements Writable {
         for (Bid bid : biddedCars) {
             jsonArray.put(bid.toJson());
         }
+        System.out.println(jsonArray);
         return jsonArray;
     }
 }
