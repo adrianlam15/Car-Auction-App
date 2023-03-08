@@ -49,16 +49,24 @@ public class JsonReader {
             userMap.put(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"));
             user.createUser(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"),
                     ((JSONObject) json).getString("password"));
-            JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
             JSONArray jsonWon = ((JSONObject) json).getJSONArray("wonCars");
             mapUserCars(json, user, listedCars);
             users.add(user);
         }
         for (Object json : jsonArray) {
+            JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
+            for (Object json1 : jsonBids) {
+                JSONObject car = ((JSONObject) json1).getJSONObject("car");
+                System.out.println(car.get("id"));
+
+            }
             for (User u : users.getUsers()) {
-                mapUserBids(json, u, listedCars);
+                System.out.println(u.getUsername());
                 mapUserWon(json, u, listedCars);
             }
+        }
+        for (User u : users.getUsers()) {
+            System.out.println(u.getBids().size());
         }
         return users;
     }
@@ -76,19 +84,15 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: User
+    /*// MODIFIES: User
     // EFFECTS: parses bids from JSON object and returns it
     private void mapUserBids(Object json, User user, Cars listedCars) {
         JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
-        JSONArray jsonListedCars = ((JSONObject) json).getJSONArray("listedCars");
         for (Object json1 : jsonBids) {
             JSONObject json2 = (JSONObject) json1;
             JSONObject car = (JSONObject) json2.get("car");
-            int carId = car.getInt("id");
-            int bidAmount = json2.getInt("bidAmount");
-            user.placeBid(carId, bidAmount, listedCars);
         }
-    }
+    }*/
 
     // MODIFIES: Car, User, Cars
     // EFFECTS: parses cars from JSON object and returns it

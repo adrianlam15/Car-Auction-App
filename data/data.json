@@ -17,151 +17,7 @@
                         "expired": false,
                         "price": 10000,
                         "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
+                        "id": 1,
                         "make": "Honda",
                         "mileage": 190000
                     },
@@ -208,8 +64,8 @@
             "biddedCars": [
                 {
                     "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
+                        "timeLeftInSeconds": 1000,
+                        "year": 1000,
                         "driveType": "FWD",
                         "description": "Desc",
                         "colour": "Blue",
@@ -218,156 +74,30 @@
                         "expired": false,
                         "price": 10000,
                         "model": "Civic",
-                        "id": 5,
+                        "id": 8,
                         "make": "Honda",
                         "mileage": 190000
                     },
                     "bidAmount": 10000000
                 },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
+              {
+                "car": {
+                  "timeLeftInSeconds": 2000,
+                  "year": 1000,
+                  "driveType": "FWD",
+                  "description": "Desc",
+                  "colour": "Blue",
+                  "condition": "Excellent",
+                  "transmission": "Manual",
+                  "expired": false,
+                  "price": 10000,
+                  "model": "Civic",
+                  "id": 7,
+                  "make": "Not Honda",
+                  "mileage": 190000
                 },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99727,
-                        "year": 2000,
-                        "driveType": "FWD",
-                        "description": "Desc",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Manual",
-                        "expired": false,
-                        "price": 10000,
-                        "model": "Civic",
-                        "id": 5,
-                        "make": "Honda",
-                        "mileage": 190000
-                    },
-                    "bidAmount": 10000000
-                }
+                "bidAmount": 10000000
+              }
             ],
             "listedCars": [
                 {
