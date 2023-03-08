@@ -358,6 +358,11 @@ public class CarTest {
         assertEquals(2, u1.getWonCars().size());
         assertEquals(car3, u1.getWonCars().get(1));
         assertTrue(car3.isExpired());
+
+        Car carNull = new Car();
+        carNull.unmarkExpired();
+        carNull.giveToWinner();
+        assertFalse(carNull.isExpired());
     }
 
     @Test
