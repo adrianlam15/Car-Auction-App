@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonWriterTest extends JsonTest {
+class JsonWriterTest {
     private LocalDateTime now;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private ZoneId zoneId = ZoneId.of("America/Los_Angeles");
