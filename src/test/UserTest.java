@@ -4,6 +4,8 @@ import model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
@@ -14,6 +16,8 @@ public class UserTest {
     Car c2;
     Car c3;
 
+    HashMap<String, String> userMap;
+
     @BeforeEach
     void setUp() {
         user1 = new User();
@@ -22,9 +26,13 @@ public class UserTest {
         c1 = new Car();
         c2 = new Car();
         c3 = new Car();
+        userMap = new HashMap<>();
         user1.createUser("user1", "password1", "password1");
         user2.createUser("user2", "password2", "passwordINVALID");
         user3.createUser("user3", "password3", "password3");
+        userMap.put("user1", "password1");
+        userMap.put("user3", "password3");
+
     }
 
     @Test
@@ -73,13 +81,12 @@ public class UserTest {
         assertEquals(0, c3.getBids().size());
     }
 
-    /*
     @Test
     public void testLogin() {
-        assertTrue(user1.login("user1", "password1"));
-        assertFalse(user3.login("user3", "FAIL"));
+        assertTrue(user1.login("user1", "password1", userMap));
+        assertFalse(user3.login("user3", "password33", userMap));
     }
-    */
+
 
     @Test
     public void testCreateCar() {

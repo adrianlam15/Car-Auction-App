@@ -1,8 +1,7 @@
 package model;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-import persistence.Writable;
+
 import java.util.ArrayList;
 
 public class Users {
@@ -16,7 +15,7 @@ public class Users {
         users.add(user);
     }
 
-    public User get(int id) {
+    public User getUser(int id) {
         return users.get(id);
     }
 

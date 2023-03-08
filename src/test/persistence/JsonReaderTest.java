@@ -1,11 +1,9 @@
 package persistence;
 
-import model.User;
 import model.Users;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -41,10 +39,10 @@ public class JsonReaderTest {
         try {
             Users users = jsonReader.readUsers();
             assertEquals(2, users.getUsers().size());
-            assertEquals("John", users.get(0).getUsername());
-            assertEquals("Adrian", users.get(1).getUsername());
-            assertEquals("1234", users.get(0).getPassword());
-            assertEquals("5678", users.get(1).getPassword());
+            assertEquals("John", users.getUser(0).getUsername());
+            assertEquals("Adrian", users.getUser(1).getUsername());
+            assertEquals("1234", users.getUser(0).getPassword());
+            assertEquals("5678", users.getUser(1).getPassword());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
