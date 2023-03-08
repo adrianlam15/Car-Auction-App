@@ -3,7 +3,21 @@
   "users": [
     {
       "password": "1234",
-      "wonCars": [],
+      "wonCars": [{
+        "timeLeftInSeconds": 0,
+        "year": 0,
+        "driveType": "",
+        "description": "",
+        "colour": "",
+        "condition": "",
+        "transmission": "",
+        "expired": true,
+        "price": 0,
+        "model": "civic",
+        "id": 2,
+        "make": "honda",
+        "mileage": 0
+      }],
       "biddedCars": [],
       "listedCars": [
         {
@@ -32,7 +46,7 @@
           "expired": true,
           "price": 0,
           "model": "",
-          "id": 2,
+          "id": 3,
           "make": "",
           "mileage": 0
         }
@@ -44,20 +58,20 @@
       "wonCars": [],
       "biddedCars": [],
       "listedCars": [{
-        "timeLeftInSeconds": 0,
-        "year": 0,
-        "driveType": "",
-        "description": "",
-        "colour": "",
-        "condition": "",
-        "transmission": "",
-        "expired": true,
-        "price": 0,
-        "model": "",
-        "id": 3,
-        "make": "",
-        "mileage": 0
-      }],
+      "timeLeftInSeconds": 0,
+      "year": 0,
+      "driveType": "",
+      "description": "",
+      "colour": "",
+      "condition": "",
+      "transmission": "",
+      "expired": true,
+      "price": 0,
+      "model": "civic",
+      "id": 2,
+      "make": "honda",
+      "mileage": 0
+    }],
       "username": "Adrian"
     }
   ]

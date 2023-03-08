@@ -53,20 +53,28 @@ public class JsonReader {
             mapUserCars(json, user, listedCars);
             users.add(user);
         }
+        System.out.println(listedCars.getCars().size());
         for (Object json : jsonArray) {
-            JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
-            for (Object json1 : jsonBids) {
-                JSONObject car = ((JSONObject) json1).getJSONObject("car");
-                System.out.println(car.get("id"));
-
-            }
+            String name = ((JSONObject) json).getString("username");
             for (User u : users.getUsers()) {
-                System.out.println(u.getUsername());
                 mapUserWon(json, u, listedCars);
+                if (u.getUsername().equals(name)) {
+                    JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
+                    for (Object json1 : jsonBids) {
+                        System.out.println(name);
+                        System.out.println(json1);
+                        Object jsonCar = ((JSONObject) json1).get("car");
+                        int id = ((JSONObject) jsonCar).getInt("id");
+                        int bidAmount = ((JSONObject) json1).getInt("bidAmount");
+                        System.out.println(id + " " + bidAmount);
+                        u.placeBid(id, bidAmount, listedCars);
+                        System.out.println(u.getBids().size());
+                    }
+                }
             }
         }
         for (User u : users.getUsers()) {
-            System.out.println(u.getBids().size());
+            System.out.println(u.getUsername() + " " + u.getBids().size());
         }
         return users;
     }
@@ -83,16 +91,6 @@ public class JsonReader {
             }
         }
     }
-
-    /*// MODIFIES: User
-    // EFFECTS: parses bids from JSON object and returns it
-    private void mapUserBids(Object json, User user, Cars listedCars) {
-        JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
-        for (Object json1 : jsonBids) {
-            JSONObject json2 = (JSONObject) json1;
-            JSONObject car = (JSONObject) json2.get("car");
-        }
-    }*/
 
     // MODIFIES: Car, User, Cars
     // EFFECTS: parses cars from JSON object and returns it
@@ -112,6 +110,12 @@ public class JsonReader {
             car.setMileage(((JSONObject) json1).getInt("mileage"));
             car.setDescription(((JSONObject) json1).getString("description"));
             car.setTimer(((JSONObject) json1).getInt("timeLeftInSeconds"));
+            boolean expired = ((JSONObject) json1).getBoolean("expired");
+            if (expired) {
+                car.markExpired();
+            } else {
+                car.unmarkExpired();
+            }
             user.createCar(car);
             listedCars.addCar(car);
         }

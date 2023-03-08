@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonReaderTest {
     JsonReader jsonReader;
@@ -71,13 +70,10 @@ public class JsonReaderTest {
         try {
             Users users = jsonReader.readUsers();
             User user = users.getUser(0);
-            ArrayList<Car> listedCars = user.getCars();
-            Cars cars = new Cars();
-            for (Car car : listedCars) {
-                cars.addCar(car);
-            }
+            System.out.println(user.getWonCars().get(0).getId());
+            assertTrue(user.getWonCars().get(0).isExpired());
             assertEquals(1, user.getWonCars().size());
-            assertEquals("Honda", user.getWonCars().get(0).getMake());
+            assertEquals("honda", user.getWonCars().get(0).getMake());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

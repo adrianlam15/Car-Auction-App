@@ -266,6 +266,12 @@ public class Car implements Writable {
     }
 
     // MODIFIES: this
+    // EFFECTS: unmarks the car as expired
+    public void unmarkExpired() {
+        this.expired = false;
+    }
+
+    // MODIFIES: this
     // EFFECTS: gives the car to the winner
     public void giveToWinner() {
         if (getHighestBid() != null && getHighestBid().getBidAmount() >= price) {
