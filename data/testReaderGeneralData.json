@@ -68,6 +68,21 @@
           "id": 3,
           "make": "",
           "mileage": 0
+        },
+        {
+          "timeLeftInSeconds": 0,
+          "year": 0,
+          "driveType": "",
+          "description": "",
+          "colour": "",
+          "condition": "",
+          "transmission": "",
+          "expired": false,
+          "price": 0,
+          "model": "sierra",
+          "id": 4,
+          "make": "gmc",
+          "mileage": 0
         }
       ],
       "username": "John"

@@ -123,6 +123,21 @@ public class JsonReaderTest {
             fail("Couldn't read from file");
         }
     }
+
+    @Test
+    void testMapUserCars() {
+        jsonReader = new JsonReader("./data/testReaderGeneralData.json");
+        try {
+            Users users = jsonReader.readUsers();
+            User user = users.getUser(0);
+            assertEquals("gmc", user.getCars().get(2).getMake());
+            assertEquals(4, user.getCars().get(2).getId());
+            assertEquals(0, user.getCars().get(2).getTimer());
+            assertEquals(false, user.getCars().get(2).isExpired());
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
 }
 
 
