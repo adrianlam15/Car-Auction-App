@@ -18,7 +18,26 @@
         "make": "honda",
         "mileage": 0
       }],
-      "biddedCars": [],
+      "biddedCars": [
+        {
+          "car": {
+            "timeLeftInSeconds": 99694,
+            "year": 2000,
+            "driveType": "FWD",
+            "description": "Desc",
+            "colour": "Blue",
+            "condition": "Excellent",
+            "transmission": "Manual",
+            "expired": false,
+            "price": 10000,
+            "model": "Civic",
+            "id": 2,
+            "make": "Honda",
+            "mileage": 190000
+          },
+          "bidAmount": 10000
+        }
+      ],
       "listedCars": [
         {
           "timeLeftInSeconds": 0,
@@ -58,20 +77,20 @@
       "wonCars": [],
       "biddedCars": [],
       "listedCars": [{
-      "timeLeftInSeconds": 0,
-      "year": 0,
-      "driveType": "",
-      "description": "",
-      "colour": "",
-      "condition": "",
-      "transmission": "",
-      "expired": true,
-      "price": 0,
-      "model": "civic",
-      "id": 2,
-      "make": "honda",
-      "mileage": 0
-    }],
+          "timeLeftInSeconds": 0,
+          "year": 0,
+          "driveType": "",
+          "description": "",
+          "colour": "",
+          "condition": "",
+          "transmission": "",
+          "expired": true,
+          "price": 0,
+          "model": "civic",
+          "id": 2,
+          "make": "honda",
+          "mileage": 0
+        }],
       "username": "Adrian"
     }
   ]

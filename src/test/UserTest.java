@@ -1,9 +1,13 @@
+import model.Bid;
 import model.Car;
 import model.Cars;
 import model.User;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -212,5 +216,47 @@ public class UserTest {
         c1.bid(user2, 40000);
         c1.giveToWinner();
         assertEquals(1, user2.getWonCars().size());
+    }
+
+    @Test
+    void testBidCarsToJson() {
+
+        Car c1 = new Car();
+        c1.setId(1);
+        Car c2 = new Car();
+        c2.setId(2);
+        Car c3 = new Car();
+        c3.setId(3);
+
+        Cars cars = new Cars();
+        cars.addCar(c1);
+        cars.addCar(c2);
+
+        user1.placeBid(1, 10000, cars);
+        user1.placeBid(2, 20000, cars);
+
+        JSONObject actual = user1.toJson();
+        JSONArray actualBids = actual.getJSONArray("biddedCars");
+        JSONObject firstBid = actualBids.getJSONObject(0);
+        JSONObject inFirst = firstBid.getJSONObject("car");
+        int firstBidAmount = firstBid.getInt("bidAmount");
+
+        assertEquals(10000, firstBidAmount);
+        assertEquals(0, inFirst.getInt("timeLeftInSeconds"));
+        assertEquals(1, inFirst.getInt("id"));
+        assertEquals("", inFirst.getString("make"));
+        assertEquals("", inFirst.getString("model"));
+        assertEquals("", inFirst.getString("colour"));
+        assertEquals("", inFirst.getString("transmission"));
+        assertEquals("", inFirst.getString("driveType"));
+        assertEquals("", inFirst.getString("condition"));
+        assertEquals(0, inFirst.getInt("year"));
+        assertEquals(0, inFirst.getInt("price"));
+        assertEquals(0, inFirst.getInt("mileage"));
+        assertEquals("", inFirst.getString("description"));
+
+
+
+
     }
 }

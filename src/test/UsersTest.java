@@ -59,4 +59,10 @@ public class UsersTest {
             break;
         }
     }
+
+    @Test
+    void testGetSize() {
+        assertEquals(0, users.getSize());
+        assertEquals(1, users2.getSize());
+    }
 }

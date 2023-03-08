@@ -1,5 +1,6 @@
 import model.Car;
 import model.Cars;
+import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -70,5 +71,21 @@ public class CarsTest {
         assertEquals(1, cs1.getCars().size());
         assertEquals(2, cs2.getCars().size());
         assertEquals(3, cs3.getCars().size());
+    }
+
+    @Test
+    void testCarsToJson() {
+        cs3.addCar(c1);
+        cs3.addCar(c2);
+        cs3.addCar(c3);
+        JSONArray actual = cs3.toJson();
+        JSONArray expected = new JSONArray();
+
+        expected.put(c1.toJson());
+        expected.put(c2.toJson());
+        expected.put(c3.toJson());
+
+        assertEquals(expected.toString(), actual.toString());
+
     }
 }

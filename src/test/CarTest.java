@@ -1,5 +1,7 @@
 import model.Car;
 import model.User;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -475,6 +477,47 @@ public class CarTest {
         assertEquals("desc2", car2.getDescription());
         car3.setDescription("desc3");
         assertEquals("desc3", car3.getDescription());
+    }
+
+    @Test
+    void testUnmarkedExpired() {
+        car1.unmarkExpired();
+        assertFalse(car1.isExpired());
+        car2.unmarkExpired();
+        assertFalse(car2.isExpired());
+    }
+
+    @Test
+    void testToJson() {
+        JSONObject actual = car1.toJson();
+        JSONObject expected = new JSONObject();
+        expected.put("id", car1.getId());
+        expected.put("make", car1.getMake());
+        expected.put("model", car1.getModel());
+        expected.put("colour", car1.getColour());
+        expected.put("transmission", car1.getTransmission());
+        expected.put("driveType", car1.getDriveType());
+        expected.put("condition", car1.getCondition());
+        expected.put("year", car1.getYear());
+        expected.put("mileage", car1.getMileage());
+        expected.put("price", car1.getPrice());
+        expected.put("description", car1.getDescription());
+        expected.put("timeLeftInSeconds", car1.getTimer());
+        expected.put("expired", car1.isExpired());
+
+        assertEquals(expected.getInt("id"), actual.getInt("id"));
+        assertEquals(expected.getString("make"), actual.getString("make"));
+        assertEquals(expected.getString("model"), actual.getString("model"));
+        assertEquals(expected.getString("colour"), actual.getString("colour"));
+        assertEquals(expected.getString("transmission"), actual.getString("transmission"));
+        assertEquals(expected.getString("driveType"), actual.getString("driveType"));
+        assertEquals(expected.getString("condition"), actual.getString("condition"));
+        assertEquals(expected.getInt("year"), actual.getInt("year"));
+        assertEquals(expected.getInt("mileage"), actual.getInt("mileage"));
+        assertEquals(expected.getInt("price"), actual.getInt("price"));
+        assertEquals(expected.getString("description"), actual.getString("description"));
+        assertEquals(expected.getInt("timeLeftInSeconds"), actual.getInt("timeLeftInSeconds"));
+        assertEquals(expected.getBoolean("expired"), actual.getBoolean("expired"));
     }
 }
 

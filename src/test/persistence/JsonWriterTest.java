@@ -31,7 +31,7 @@ class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    void testWriterEmptyData() {
         try {
             now = LocalDateTime.now();
             zonedTime = ZonedDateTime.of(now, zoneId);
@@ -51,7 +51,7 @@ class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterGeneralData() {
         try {
             User user = new User();
             user.createUser("user1", "pass1", "pass1");

@@ -289,6 +289,7 @@ public class Car implements Writable {
         return expired;
     }
 
+    // EFFECTS: returns the car as a string
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

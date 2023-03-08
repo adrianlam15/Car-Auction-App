@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,20 +80,16 @@ public class JsonReaderTest {
         }
     }
 
-    /*
     @Test
     void testMapUserWonEmpty() {
         jsonReader = new JsonReader("./data/testReaderGeneralData.json");
         try {
             Users users = jsonReader.readUsers();
-            User user = users.getUser(1);
-            ArrayList<Car> listedCars = user.getCars();
-            Cars cars = new Cars();
-            for (Car car : listedCars) {
-                cars.addCar(car);
-            }
-            mapUserWon(users.getUser(1), user, cars);
-            assertEquals(0, user.getWonCars().size());
+            User user = users.getUser(0);
+            System.out.println(user.getWonCars().get(0).getId());
+            assertTrue(user.getWonCars().get(0).isExpired());
+            assertEquals(1, user.getWonCars().size());
+            assertEquals("honda", user.getWonCars().get(0).getMake());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -102,19 +99,30 @@ public class JsonReaderTest {
     void testMapUserBids() {
         jsonReader = new JsonReader("./data/testReaderGeneralData.json");
         try {
-            Users users = jsonReader.readUsers();
-            User user = users.getUser(0);
-            ArrayList<Car> listedCars = user.getCars();
-            Cars cars = new Cars();
-            for (Car car : listedCars) {
-                cars.addCar(car);
-            }
-            mapUserBids(users.getUser(0), user, cars);
+            User user = jsonReader.readUsers().getUser(0);
             assertEquals(1, user.getBids().size());
-            assertEquals("Honda", user.getBids().get(0).getCar().getMake());
+            assertEquals(10000, user.getBids().get(0).getBidAmount());
+            assertEquals(2, user.getBids().get(0).getCar().getId());
+            assertEquals("honda", user.getBids().get(0).getCar().getMake());
+            assertEquals(0, user.getBids().get(0).getCar().getTimer());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
-    }*/
+    }
+
+    @Test
+    void testGetUserMap() {
+        jsonReader = new JsonReader("./data/testReaderGeneralData.json");
+        try {
+            Users users = jsonReader.readUsers();
+            HashMap<String, String> userMap = jsonReader.getUserMap();
+            assertEquals("1234", userMap.get("John"));
+            assertEquals("5678", userMap.get("Adrian"));
+            assertEquals(2, userMap.size());
+        } catch(IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
 }
+
 

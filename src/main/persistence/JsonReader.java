@@ -49,11 +49,15 @@ public class JsonReader {
             userMap.put(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"));
             user.createUser(((JSONObject) json).getString("username"), ((JSONObject) json).getString("password"),
                     ((JSONObject) json).getString("password"));
-            JSONArray jsonWon = ((JSONObject) json).getJSONArray("wonCars");
-            mapUserCars(json, user, listedCars);
+            JSONArray jsonListings = ((JSONObject) json).getJSONArray("listedCars");
+            mapUserCars(jsonListings, user, listedCars);
             users.add(user);
         }
-        System.out.println(listedCars.getCars().size());
+        mapUserBids(jsonArray, users, listedCars);
+        return users;
+    }
+
+    private void mapUserBids(JSONArray jsonArray, Users users, Cars listedCars) {
         for (Object json : jsonArray) {
             String name = ((JSONObject) json).getString("username");
             for (User u : users.getUsers()) {
@@ -61,22 +65,14 @@ public class JsonReader {
                 if (u.getUsername().equals(name)) {
                     JSONArray jsonBids = ((JSONObject) json).getJSONArray("biddedCars");
                     for (Object json1 : jsonBids) {
-                        System.out.println(name);
-                        System.out.println(json1);
                         Object jsonCar = ((JSONObject) json1).get("car");
                         int id = ((JSONObject) jsonCar).getInt("id");
                         int bidAmount = ((JSONObject) json1).getInt("bidAmount");
-                        System.out.println(id + " " + bidAmount);
                         u.placeBid(id, bidAmount, listedCars);
-                        System.out.println(u.getBids().size());
                     }
                 }
             }
         }
-        for (User u : users.getUsers()) {
-            System.out.println(u.getUsername() + " " + u.getBids().size());
-        }
-        return users;
     }
 
     // MODIFIES: Car, User
@@ -94,8 +90,7 @@ public class JsonReader {
 
     // MODIFIES: Car, User, Cars
     // EFFECTS: parses cars from JSON object and returns it
-    private void mapUserCars(Object json, User user, Cars listedCars) {
-        JSONArray jsonListings = ((JSONObject) json).getJSONArray("listedCars");
+    private void mapUserCars(JSONArray jsonListings, User user, Cars listedCars) {
         for (Object json1 : jsonListings) {
             Car car = new Car();
             car.setId(((JSONObject) json1).getInt("id"));

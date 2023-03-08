@@ -2,6 +2,7 @@ import model.Bid;
 import model.Car;
 import model.Cars;
 import model.User;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,4 +68,14 @@ public class BidTest {
         assertEquals("Bid: $" + 2000, b2.getBid());
         assertEquals(c2.getListingCar() + "\nBid: $" + 3000, b3.getBid());
     }
+
+    @Test
+    void testToJson() {
+        JSONObject actual = b1.toJson();
+        JSONObject expected = new JSONObject();
+        expected.put("car", c1.toJson());
+        expected.put("bidAmount", 1000);
+
+        assertEquals(expected.getInt("bidAmount"), actual.getInt("bidAmount"));
+        assertEquals(expected.getJSONObject("car").getString("make"), actual.getJSONObject("car").getString("make"));}
 }
