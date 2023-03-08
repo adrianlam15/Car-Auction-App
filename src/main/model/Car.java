@@ -236,7 +236,7 @@ public class Car implements Writable {
             setPrice(Integer.parseInt(value));
         } else if (editChoice == 10) {
             setDescription(value);
-        } else if (editChoice == 11) {
+        } else {
             setTimer(Integer.parseInt(value));
         }
     }
@@ -274,10 +274,12 @@ public class Car implements Writable {
     // MODIFIES: this
     // EFFECTS: gives the car to the winner
     public void giveToWinner() {
-        if (getHighestBid() != null && getHighestBid().getBidAmount() >= price) {
-            User user = getHighestBid().getUser();
-            user.getWonCars().add(this);
-            this.expired = true;
+        if (getHighestBid() != null) {
+            if (getHighestBid().getBidAmount() >= price) {
+                User user = getHighestBid().getUser();
+                user.getWonCars().add(this);
+                this.expired = true;
+            }
         }
     }
 
