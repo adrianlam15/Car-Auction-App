@@ -233,7 +233,8 @@ public class AuctionApp {
             System.out.println("==== Your Listings ====");
             for (Car car : currentUser.getCars()) {
                 System.out.println("\t-> " + pos + ". " + car.getListingCar());
-                System.out.println("\tHighest bid: " + car.getHighestBid().getBidAmount() + " from " + car.getHighestBid().getUser().getUsername());
+                System.out.println("\tHighest bid: " + car.getHighestBid().getBidAmount()
+                        + " from " + car.getHighestBid().getUser().getUsername());
                 if (car.isExpired()) {
                     System.out.println("\t[STATUS]: Listing expired.");
                 }
@@ -357,6 +358,7 @@ public class AuctionApp {
         }
     }
 
+    @SuppressWarnings("methodlength")
     // MODIFIES: this, user
     // EFFECTS: creates a new account
     private void handleCreateAccount() {
