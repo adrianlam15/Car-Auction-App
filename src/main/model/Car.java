@@ -136,7 +136,7 @@ public class Car implements Writable {
         highestBid = price;
         Bid highestBidObj = null;
         for (Bid bid : bids) {
-            if (bid.getBidAmount() > highestBid) {
+            if (bid.getBidAmount() >= highestBid) {
                 highestBid = bid.getBidAmount();
                 highestBidObj = bid;
             }
