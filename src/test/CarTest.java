@@ -370,8 +370,8 @@ public class CarTest {
         car4.setPrice(100);
         car4.bid(noWinner, 10);
         car4.giveToWinner();
-
         assertEquals(0, noWinner.getWonCars().size());
+
         car4.bid(bidRightOn, 100);
         car4.giveToWinner();
         assertEquals(1, bidRightOn.getWonCars().size());

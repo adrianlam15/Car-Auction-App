@@ -139,6 +139,8 @@ public class Car implements Writable {
             if (bid.getBidAmount() >= highestBid) {
                 highestBid = bid.getBidAmount();
                 highestBidObj = bid;
+            } else {
+                // do nothing
             }
         }
         return highestBidObj;
