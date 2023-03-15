@@ -16,10 +16,8 @@ import java.time.ZonedDateTime;
 
 // Represents the Car Auction App User Interface
 public class AuctionApp {
-    private LocalDateTime now;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    private ZoneId zoneId = ZoneId.of("America/Los_Angeles");
-    private ZonedDateTime zonedTime;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
 
     private static final String JSON_STORE = "./data/data.json";
     private JsonReader jsonReader;
@@ -33,7 +31,7 @@ public class AuctionApp {
     private ArrayList<Integer> listingID;
     private HashMap<String, String> userMap;
 
-    public AuctionApp() throws FileNotFoundException, IOException {
+    public AuctionApp() throws IOException {
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
         users = jsonReader.readUsers();
@@ -48,7 +46,7 @@ public class AuctionApp {
         input.useDelimiter("\n");
         loggedIn = false;
         currentUser = new User();
-        String command = null;
+        String command;
         for (User user : users.getUsers()) {
             ArrayList<Car> tmpCars = user.getCars();
             for (Car car : tmpCars) {
@@ -224,7 +222,7 @@ public class AuctionApp {
     // MODIFIES: this, car
     // EFFECTS: displays the user's listings, and allows user to edit or delete listing
     private void viewUserListings() {
-        listingID = new ArrayList<Integer>();
+        listingID = new ArrayList<>();
         int id = 1;
         int pos = 1;
         if (currentUser.getCars().isEmpty()) {
@@ -367,7 +365,8 @@ public class AuctionApp {
         for (User u : users.getUsers()) {
             if (u.getUsername().equals(usr)) {
                 System.out.println("[STATUS]: Username already exists. Please try again.");
-                processCommand("1");
+                handleCreateAccount();
+                break;
             }
         }
         System.out.println("Enter a password:");
@@ -393,10 +392,9 @@ public class AuctionApp {
     private void save() {
         try {
             jsonWriter.open();
-            now = LocalDateTime.now();
-            zonedTime = ZonedDateTime.of(now, zoneId);
+            LocalDateTime now = LocalDateTime.now();
+            ZonedDateTime zonedTime = ZonedDateTime.of(now, zoneId);
             String formattedNow = zonedTime.format(formatter);
-
             jsonWriter.write(formattedNow, users);
             jsonWriter.close();
             System.out.println("Saved date from " + formattedNow + " to " + JSON_STORE);
