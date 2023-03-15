@@ -48,18 +48,15 @@ public class AuctionApp {
         currentUser = new User();
         String command;
         for (User user : users.getUsers()) {
-            ArrayList<Car> tmpCars = user.getCars();
-            for (Car car : tmpCars) {
+            for (Car car : user.getCars()) {
                 listedCars.addCar(car);
             }
         }
         userMap = jsonReader.getUserMap();
         System.out.println("username, password: " + userMap);
         while (keepGoing) {
-            System.out.println(currentUser.getUsername());
             displayMenu(loggedIn);
             command = input.next();
-            System.out.println(currentUser.getBids().size());
             processCommand(command);
         }
     }
@@ -117,42 +114,7 @@ public class AuctionApp {
             }
         } else {
             if (command.equals("1")) {
-                System.out.println("==== Create a listing ==== ");
-                Car car = new Car();
-                System.out.println("Enter the car's make:");
-                car.setMake(input.next());
-                System.out.println("Enter the car's model:");
-                car.setModel(input.next());
-                System.out.println("Enter the car's colour:");
-                car.setColour(input.next());
-                System.out.println("Enter the car's transmission:");
-                car.setTransmission(input.next());
-                System.out.println("Enter the car's drive type:");
-                car.setDriveType(input.next());
-                System.out.println("Enter the car's condition:");
-                car.setCondition(input.next());
-                System.out.println("Enter the car's year:");
-                car.setYear(input.nextInt());
-                System.out.println("Enter the car's mileage (in kms):");
-                car.setMileage(input.nextInt());
-                System.out.println("Enter the car's price (in CAD):");
-                car.setPrice(input.nextInt());
-                System.out.println("Enter the car's description:");
-                car.setDescription(input.next());
-                System.out.println("How long would you like to list the car for (in seconds)?");
-                int toSetTime = input.nextInt();
-                System.out.print(car.getListingCar());
-                System.out.println("\nDescription of vehicle:\n" + car.getDescription());
-                System.out.println("\nIs this correct? (y/n):");
-                car.setTimer(toSetTime);
-                String confirm = input.next();
-                confirm = confirm.toLowerCase();
-                if (confirm.equals("n")) {
-                    processCommand("1");
-                }
-                currentUser.createCar(car);
-                listedCars.addCar(car);
-                System.out.println("[STATUS]: Listing created successfully.");
+                createListing();
             } else if (command.equals("2")) {
                 viewListings();
             } else if (command.equals("3")) {
@@ -174,6 +136,45 @@ public class AuctionApp {
                 processCommand(retry);
             }
         }
+    }
+
+    private void createListing() {
+        Car car = new Car();
+        System.out.println("==== Create a listing ==== ");
+        System.out.println("Enter the car's make:");
+        car.setMake(input.next());
+        System.out.println("Enter the car's model:");
+        car.setModel(input.next());
+        System.out.println("Enter the car's colour:");
+        car.setColour(input.next());
+        System.out.println("Enter the car's transmission:");
+        car.setTransmission(input.next());
+        System.out.println("Enter the car's drive type:");
+        car.setDriveType(input.next());
+        System.out.println("Enter the car's condition:");
+        car.setCondition(input.next());
+        System.out.println("Enter the car's year:");
+        car.setYear(input.nextInt());
+        System.out.println("Enter the car's mileage (in kms):");
+        car.setMileage(input.nextInt());
+        System.out.println("Enter the car's price (in CAD):");
+        car.setPrice(input.nextInt());
+        System.out.println("Enter the car's description:");
+        car.setDescription(input.next());
+        System.out.println("How long would you like to list the car for (in seconds)?");
+        int toSetTime = input.nextInt();
+        System.out.print(car.getListingCar());
+        System.out.println("\nDescription of vehicle:\n" + car.getDescription());
+        System.out.println("\nIs this correct? (y/n):");
+        car.setTimer(toSetTime);
+        String confirm = input.next();
+        confirm = confirm.toLowerCase();
+        if (confirm.equals("n")) {
+            processCommand("1");
+        }
+        currentUser.createCar(car);
+        listedCars.addCar(car);
+        System.out.println("[STATUS]: Listing created successfully.");
     }
 
     // EFFECTS: lets user view won listings
@@ -231,8 +232,12 @@ public class AuctionApp {
             System.out.println("==== Your Listings ====");
             for (Car car : currentUser.getCars()) {
                 System.out.println("\t-> " + pos + ". " + car.getListingCar());
-                System.out.println("\tHighest bid: " + car.getHighestBid().getBidAmount()
-                        + " from " + car.getHighestBid().getUser().getUsername());
+                if (car.getHighestBid() == null) {
+                    System.out.println("\tNo bids yet.");
+                } else {
+                    System.out.println("\tHighest bid: " + car.getHighestBid().getBidAmount()
+                            + " from " + car.getHighestBid().getUser().getUsername());
+                }
                 if (car.isExpired()) {
                     System.out.println("\t[STATUS]: Listing expired.");
                 }
@@ -366,7 +371,7 @@ public class AuctionApp {
             if (u.getUsername().equals(usr)) {
                 System.out.println("[STATUS]: Username already exists. Please try again.");
                 handleCreateAccount();
-                break;
+                return;  // add UsernameExistsException
             }
         }
         System.out.println("Enter a password:");
