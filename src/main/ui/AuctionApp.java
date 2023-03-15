@@ -47,11 +47,6 @@ public class AuctionApp {
         loggedIn = false;
         currentUser = new User();
         String command;
-        for (User user : users.getUsers()) {
-            for (Car car : user.getCars()) {
-                listedCars.addCar(car);
-            }
-        }
         userMap = jsonReader.getUserMap();
         System.out.println("username, password: " + userMap);
         while (keepGoing) {
@@ -412,7 +407,11 @@ public class AuctionApp {
     // EFFECTS: loads workroom from file
     private void load() {
         try {
-            users = jsonReader.readUsers();
+            for (User user : users.getUsers()) {
+                for (Car car : user.getCars()) {
+                    listedCars.addCar(car);
+                }
+            }
             String date = jsonReader.readDate();
             System.out.println("Loaded data from " + JSON_STORE + " from " + date);
         } catch (IOException e) {

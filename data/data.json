@@ -1,12 +1,10 @@
 {
-    "date": "14-03-2023 22:46:30",
-    "users": [
-        {
-            "password": "1234",
-            "wonCars": [],
-            "biddedCars": [],
-            "listedCars": [],
-            "username": "Adrian"
-        }
-    ]
+    "date": "15-03-2023 00:10:39",
+    "users": [{
+        "password": "1234",
+        "wonCars": [],
+        "biddedCars": [],
+        "listedCars": [],
+        "username": "Adrian"
+    }]
 }
