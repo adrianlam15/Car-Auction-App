@@ -373,14 +373,11 @@ public class AuctionApp {
         String pwd = input.next();
         System.out.println("Re-enter your password:");
         String checkPwd = input.next();
-        if (pwd.equals(checkPwd)) {
-            if (currentUser.createUser(usr, pwd, checkPwd)) {
-                System.out.println("[STATUS]: Account created successfully.");
-                userMap.put(usr, pwd);
-                users.add(currentUser);
-            } else {
-                System.out.println("[STATUS]: Error creating account. Please try again.");
-            }
+        currentUser = new User();
+        if (currentUser.createUser(usr, pwd, checkPwd)) {
+            System.out.println("[STATUS]: Account created successfully.");
+            userMap.put(usr, pwd);
+            users.add(currentUser);
         } else {
             System.out.println("[STATUS]: Passwords don't match. Please try again.");
             processCommand("1");
