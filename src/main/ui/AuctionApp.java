@@ -4,6 +4,7 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+
+import javax.swing.*;
 
 
 // Represents the Car Auction App User Interface
@@ -30,8 +33,15 @@ public class AuctionApp {
     private Cars listedCars = null;
     private ArrayList<Integer> listingID;
     private HashMap<String, String> userMap;
+    private JFrame frame;
+    private Dimension screenSize;
+    private double width;
+    private double height;
 
     public AuctionApp() throws IOException {
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        width = screenSize.getWidth();
+        height = screenSize.getHeight();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
         users = jsonReader.readUsers();
@@ -41,6 +51,7 @@ public class AuctionApp {
     // MODIFIES: this
     // EFFECTS: runs the Car Auction App
     public void runAuctionApp() {
+        loginWindow();
         input = new Scanner(System.in);
         listedCars = new Cars();
         input.useDelimiter("\n");
@@ -54,6 +65,19 @@ public class AuctionApp {
             command = input.next();
             processCommand(command);
         }
+    }
+
+    private void loginWindow() {
+        int winWidth = (int) Math.round(width) / 2;
+        int winHeight = (int) Math.round(height) / 2;
+        frame = new JFrame();
+        frame.setLayout(null);
+        frame.setSize(winWidth, winHeight);
+        frame.getContentPane().setBackground(new java.awt.Color(15, 23, 42));
+        JButton createAccButt = new JButton("Create an account.");
+        createAccButt.setSize(100, 100);
+        frame.add(createAccButt);
+        frame.setVisible(true);
     }
 
     // EFFECTS: displays the main menu
