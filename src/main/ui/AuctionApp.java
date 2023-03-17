@@ -193,7 +193,7 @@ public class AuctionApp {
             System.out.println("==== Your Bids ====");
             int pos = 1;
             for (Bid bid : currentUser.getBids()) {
-                System.out.println("\t-> " + pos + ". \n\t" + bid.getBid());
+                System.out.println("\t-> " + bid.getBid());
             }
         }
     }

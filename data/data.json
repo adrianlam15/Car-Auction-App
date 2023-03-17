@@ -1,5 +1,5 @@
 {
-    "date": "15-03-2023 02:01:44",
+    "date": "17-03-2023 13:03:30",
     "users": [
         {
             "password": "1234",
@@ -7,7 +7,7 @@
             "biddedCars": [],
             "listedCars": [
                 {
-                    "timeLeftInSeconds": 913,
+                    "timeLeftInSeconds": 884,
                     "year": 1998,
                     "driveType": "FWD",
                     "description": "Like new",
@@ -22,7 +22,7 @@
                     "mileage": 150000
                 },
                 {
-                    "timeLeftInSeconds": 99953,
+                    "timeLeftInSeconds": 99924,
                     "year": 1998,
                     "driveType": "FWD",
                     "description": "Good",
@@ -42,24 +42,44 @@
         {
             "password": "1234",
             "wonCars": [],
-            "biddedCars": [{
-                "car": {
-                    "timeLeftInSeconds": 913,
-                    "year": 1998,
-                    "driveType": "FWD",
-                    "description": "Like new",
-                    "colour": "Blue",
-                    "condition": "Good",
-                    "transmission": "Automatic",
-                    "expired": false,
-                    "price": 20000,
-                    "model": "Civic",
-                    "id": 1,
-                    "make": "Honda",
-                    "mileage": 150000
+            "biddedCars": [
+                {
+                    "car": {
+                        "timeLeftInSeconds": 884,
+                        "year": 1998,
+                        "driveType": "FWD",
+                        "description": "Like new",
+                        "colour": "Blue",
+                        "condition": "Good",
+                        "transmission": "Automatic",
+                        "expired": false,
+                        "price": 20000,
+                        "model": "Civic",
+                        "id": 1,
+                        "make": "Honda",
+                        "mileage": 150000
+                    },
+                    "bidAmount": 100000
                 },
-                "bidAmount": 100000
-            }],
+                {
+                    "car": {
+                        "timeLeftInSeconds": 99924,
+                        "year": 1998,
+                        "driveType": "FWD",
+                        "description": "Good",
+                        "colour": "Blue",
+                        "condition": "Good",
+                        "transmission": "Automatic",
+                        "expired": false,
+                        "price": 10000,
+                        "model": "CIvic",
+                        "id": 2,
+                        "make": "Honda",
+                        "mileage": 200000
+                    },
+                    "bidAmount": 1000000
+                }
+            ],
             "listedCars": [],
             "username": "Adrian2"
         }
