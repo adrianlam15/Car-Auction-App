@@ -37,6 +37,7 @@ public class AuctionApp {
     private Dimension screenSize;
     private double width;
     private double height;
+    private Login loginState;
 
     public AuctionApp() throws IOException {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -70,14 +71,7 @@ public class AuctionApp {
     private void loginWindow() {
         int winWidth = (int) Math.round(width) / 2;
         int winHeight = (int) Math.round(height) / 2;
-        frame = new JFrame();
-        frame.setLayout(null);
-        frame.setSize(winWidth, winHeight);
-        frame.getContentPane().setBackground(new java.awt.Color(15, 23, 42));
-        JButton createAccButt = new JButton("Create an account.");
-        createAccButt.setSize(100, 100);
-        frame.add(createAccButt);
-        frame.setVisible(true);
+        loginState = new Login(winWidth, winHeight);
     }
 
     // EFFECTS: displays the main menu
