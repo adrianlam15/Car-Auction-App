@@ -46,20 +46,26 @@ public class AuctionApp {
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
         users = jsonReader.readUsers();
+        userMap = jsonReader.getUserMap();
         runAuctionApp();
     }
 
     // MODIFIES: this
     // EFFECTS: runs the Car Auction App
     public void runAuctionApp() {
-        loginWindow();
+        int winWidth = (int) Math.round(width) / 2;
+        int winHeight = (int) Math.round(height) / 2;
+        loginWindow(winWidth, winHeight);
+
+        /**
+         * Everything below this line is near irrelevant besides logic
+         */
         input = new Scanner(System.in);
         listedCars = new Cars();
         input.useDelimiter("\n");
         loggedIn = false;
         currentUser = new User();
         String command;
-        userMap = jsonReader.getUserMap();
         System.out.println("username, password: " + userMap);
         while (keepGoing) {
             displayMenu(loggedIn);
@@ -68,10 +74,8 @@ public class AuctionApp {
         }
     }
 
-    private void loginWindow() {
-        int winWidth = (int) Math.round(width) / 2;
-        int winHeight = (int) Math.round(height) / 2;
-        loginState = new Login(winWidth, winHeight);
+    private void loginWindow(int width, int height) {
+        loginState = new Login(width, height, users, userMap);
     }
 
     // EFFECTS: displays the main menu
