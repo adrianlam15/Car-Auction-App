@@ -16,6 +16,12 @@ import java.util.HashMap;
 /**
  * Login class (including UI) for the Car Auction application
  */
+
+/**
+ * TODO:
+ * 1. Add a new MainMenu class that represents UI for the main menu (state transition)
+ * 2. Create account window
+ */
 public class Login {
     private int width;
     private int height;
@@ -127,6 +133,14 @@ public class Login {
         createAcc.setFont(buttonFont);
         createAcc.setBounds((frame.getWidth() - 50) / 2 - 25, (frame.getHeight() - 40) / 2 + 80, 100,
                 40);
+        createAcc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /**
+                 * TODO: Create account window
+                 */
+            }
+        });
         toSetButtons.add(createAcc);
 
         setAttrButtons(toSetButtons);
