@@ -64,8 +64,8 @@ public class AuctionApp {
         frame.setSize(winWidth, winHeight);
         JPanel loginPanel = new Login(cardLayout, cards, users, userMap, frame).initWin();
         cards.add(loginPanel, "loginMenu");
-        cardLayout.show(cards, "loginMenu");
         frame.add(cards);
+        cardLayout.show(cards, "loginMenu");
         frame.setVisible(true);
 
         /**

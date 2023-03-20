@@ -26,6 +26,9 @@ public class Login extends UiState {
     private boolean loggedIn = false;
     private JTextField usernameTextField;
     private JPasswordField passwordTextField;
+    private ArrayList<JComponent> inputFields;
+    private ArrayList<JComponent> buttons;
+    private ArrayList<JButton> toSetButtons;
     private String username;
     private String password;
     private Users users;
@@ -37,6 +40,11 @@ public class Login extends UiState {
         super(cardLayout, cards, frame);
         this.users = users;
         this.userMap = userMap;
+        this.usernameTextField = new JTextField();
+        this.passwordTextField = new JPasswordField();
+        this.inputFields = new ArrayList<>();
+        this.buttons = new ArrayList<>();
+        this.toSetButtons = new ArrayList<>();
         initWin();
     }
 
@@ -48,22 +56,16 @@ public class Login extends UiState {
     private JPanel loadLoginPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
-        //getInputFields().forEach(inputField -> panel.add(inputField));
-        //getJButtons().forEach(button -> panel.add(button));
-        for (JComponent inputField : getInputFields()) {
-            panel.add(inputField);
-        }
-        for (JComponent buttons : getJButtons()) {
-            panel.add(buttons);
-        }
+        getInputFields().forEach(inputField -> panel.add(inputField));
+        getJButtons().forEach(button -> panel.add(button));
         return panel;
     }
 
     private ArrayList<JComponent> getInputFields() {
         Font labelFont = new Font("Roboto", Font.PLAIN, 14);
 
-        ArrayList<JComponent> inputFields = new ArrayList<>();
-        usernameTextField = new JTextField();
+        usernameTextField.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 40) / 2 - 50,
+                100, 20);
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setForeground(Color.WHITE);
         usernameLabel.setLabelFor(usernameTextField);
@@ -74,7 +76,6 @@ public class Login extends UiState {
                 100, 20);
         usernameTextField.setBorder(BorderFactory.createEmptyBorder());
 
-        passwordTextField = new JPasswordField();
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setForeground(Color.WHITE);
         passwordLabel.setLabelFor(passwordTextField);
@@ -93,8 +94,6 @@ public class Login extends UiState {
     }
 
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
-        ArrayList<JButton> toSetButtons = new ArrayList<>();
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
 
         JButton loginButton = new JButton("Login");
@@ -102,7 +101,6 @@ public class Login extends UiState {
         loginButton.setBounds((frame.getWidth() - 80) / 2, (frame.getHeight() - 40) / 2 + 10, 80, 20);
         loginButton.addActionListener(e -> {
             username = usernameTextField.getText();
-            System.out.println(username);
             password = passwordTextField.getText();
             loggedIn = currentUser.login(username, password, userMap);
             if (loggedIn) {
@@ -119,32 +117,25 @@ public class Login extends UiState {
                 JOptionPane.showMessageDialog(frame, "Incorrect username or password you goofy goober",
                         "Login Error", JOptionPane.ERROR_MESSAGE);
             }
-            System.out.println(loggedIn);
-            System.out.println(currentUser.getUsername());
-            System.out.println(username);
         });
         toSetButtons.add(loginButton);
         buttons.add(loginButton);
 
-        /**
         JButton seePass = new JButton("Show");
         seePass.setFont(buttonFont.deriveFont(10f));
         seePass.setBounds((frame.getWidth() - 100) / 2 + 110, (frame.getHeight() - 20) / 2 - 30,
                 20, 20);
         seePass.addActionListener(e -> {
             if (seePass.getText().equals("Show")) {
-                String pass = new String(passwordTextField.getPassword());
-                System.out.println("Button clicked");
+                passwordTextField.setEchoChar((char) 0);
                 seePass.setText("Hide");
             } else {
-                passwordTextField.setEchoChar('*');
-
+                passwordTextField.setEchoChar('•');
                 seePass.setText("Show");
             }
         });
         toSetButtons.add(seePass);
         buttons.add(seePass);
-         */
 
         JButton createAcc = new JButton("<html>Create an<br>account</html>");
         createAcc.setFont(buttonFont.deriveFont(10f));
