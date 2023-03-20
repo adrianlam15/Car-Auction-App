@@ -48,8 +48,14 @@ public class Login extends UiState {
     private JPanel loadLoginPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
-        getInputFields().forEach(inputField -> panel.add(inputField));
-        getJButtons().forEach(button -> panel.add(button));
+        //getInputFields().forEach(inputField -> panel.add(inputField));
+        //getJButtons().forEach(button -> panel.add(button));
+        for (JComponent inputField : getInputFields()) {
+            panel.add(inputField);
+        }
+        for (JComponent buttons : getJButtons()) {
+            panel.add(buttons);
+        }
         return panel;
     }
 
@@ -96,6 +102,7 @@ public class Login extends UiState {
         loginButton.setBounds((frame.getWidth() - 80) / 2, (frame.getHeight() - 40) / 2 + 10, 80, 20);
         loginButton.addActionListener(e -> {
             username = usernameTextField.getText();
+            System.out.println(username);
             password = passwordTextField.getText();
             loggedIn = currentUser.login(username, password, userMap);
             if (loggedIn) {
@@ -112,6 +119,9 @@ public class Login extends UiState {
                 JOptionPane.showMessageDialog(frame, "Incorrect username or password you goofy goober",
                         "Login Error", JOptionPane.ERROR_MESSAGE);
             }
+            System.out.println(loggedIn);
+            System.out.println(currentUser.getUsername());
+            System.out.println(username);
         });
         toSetButtons.add(loginButton);
         buttons.add(loginButton);
