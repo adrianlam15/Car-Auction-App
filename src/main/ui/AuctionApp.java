@@ -37,9 +37,15 @@ public class AuctionApp {
     private Dimension screenSize;
     private double width;
     private double height;
-    private Login loginState;
+    private CardLayout cardLayout;
+    private JPanel cards;
 
     public AuctionApp() throws IOException {
+        frame = new JFrame("Car Auction App");
+        cardLayout = new CardLayout();
+        cards = new JPanel(cardLayout);
+        frame.setLayout(cardLayout);
+        frame.setLocationRelativeTo(null);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         height = screenSize.getHeight();
@@ -55,7 +61,12 @@ public class AuctionApp {
     public void runAuctionApp() {
         int winWidth = (int) Math.round(width) / 2;
         int winHeight = (int) Math.round(height) / 2;
-        loginWindow(winWidth, winHeight);
+        frame.setSize(winWidth, winHeight);
+        JPanel loginPanel = new Login(cardLayout, cards, users, userMap, frame).initWin();
+        cards.add(loginPanel, "loginMenu");
+        cardLayout.show(cards, "loginMenu");
+        frame.add(cards);
+        frame.setVisible(true);
 
         /**
          * Everything below this line is near irrelevant besides logic
@@ -72,10 +83,6 @@ public class AuctionApp {
             command = input.next();
             processCommand(command);
         }
-    }
-
-    private void loginWindow(int width, int height) {
-        loginState = new Login(width, height, users, userMap);
     }
 
     // EFFECTS: displays the main menu

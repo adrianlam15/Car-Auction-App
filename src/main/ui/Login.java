@@ -22,45 +22,35 @@ import java.util.HashMap;
  * 1. Add a new MainMenu class that represents UI for the main menu (state transition)
  * 2. Create account window
  */
-public class Login {
-    private int width;
-    private int height;
-    private JFrame frame = new JFrame();
-    private JTextField usernameTextField;
-    private JTextField passwordTextField;
+public class Login extends UiState {
     private boolean loggedIn = false;
+    private JTextField usernameTextField;
+    private JPasswordField passwordTextField;
     private String username;
     private String password;
     private Users users;
     private HashMap<String, String> userMap;
     private User currentUser = new User();
 
-    public Login(int width, int height, Users users, HashMap<String, String> userMap) {
-        this.width = width;
-        this.height = height;
+    public Login(CardLayout cardLayout, JPanel cards,
+                 Users users, HashMap<String, String> userMap, JFrame frame) {
+        super(cardLayout, cards, frame);
         this.users = users;
         this.userMap = userMap;
         initWin();
     }
 
-    private void initWin() {
-        frame.setSize(width, height);
-        frame.add(loadLoginPanel());
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    protected JPanel initWin() {
+        super.initWin();
+        return loadLoginPanel();
     }
 
     private JPanel loadLoginPanel() {
-        JPanel loginPanel = new JPanel();
-        loginPanel.setLayout(null);
-        loginPanel.setBackground(new java.awt.Color(15, 23, 42));
-        for (JComponent inputField : getInputFields()) {
-            loginPanel.add(inputField);
-        }
-        for (JComponent buttons : getJButtons()) {
-            loginPanel.add(buttons);
-        }
-        return loginPanel;
+        panel.setLayout(null);
+        panel.setBackground(new java.awt.Color(15, 23, 42));
+        getInputFields().forEach(inputField -> panel.add(inputField));
+        getJButtons().forEach(button -> panel.add(button));
+        return panel;
     }
 
     private ArrayList<JComponent> getInputFields() {
@@ -104,43 +94,56 @@ public class Login {
         JButton loginButton = new JButton("Login");
         loginButton.setFont(buttonFont.deriveFont(10f));
         loginButton.setBounds((frame.getWidth() - 80) / 2, (frame.getHeight() - 40) / 2 + 10, 80, 20);
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                username = usernameTextField.getText();
-                password = passwordTextField.getText();
-                loggedIn = currentUser.login(username, password, userMap);
-                if (loggedIn) {
-                    for (User user : users.getUsers()) {
-                        if (user.getUsername().equals(username)) {
-                            currentUser = user;
-                            loggedIn = true;
-                        }
+        loginButton.addActionListener(e -> {
+            username = usernameTextField.getText();
+            password = passwordTextField.getText();
+            loggedIn = currentUser.login(username, password, userMap);
+            if (loggedIn) {
+                for (User user : users.getUsers()) {
+                    if (user.getUsername().equals(username)) {
+                        currentUser = user;
+                        loggedIn = true;
+                        break;
                     }
-                    /**
-                     * TODO: add a new MainMenu class that represents UI for the main menu (state transition)
-                     */
-                    new MainMenu();
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Incorrect username or password you goofy goober",
-                            "Login Error", JOptionPane.ERROR_MESSAGE);
                 }
+                JPanel mainPanel = new MainMenu(cardLayout, cards, frame).initWin();
+                super.switchWin(mainPanel, "mainMenu");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Incorrect username or password you goofy goober",
+                        "Login Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         toSetButtons.add(loginButton);
+        buttons.add(loginButton);
 
-        JButton createAcc = new JButton("<html>Create an<br>account</html>");
-        createAcc.setFont(buttonFont);
-        createAcc.setBounds((frame.getWidth() - 50) / 2 - 25, (frame.getHeight() - 40) / 2 + 80, 100,
-                40);
-        createAcc.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                /**
-                 * TODO: Create account window
-                 */
+        /**
+        JButton seePass = new JButton("Show");
+        seePass.setFont(buttonFont.deriveFont(10f));
+        seePass.setBounds((frame.getWidth() - 100) / 2 + 110, (frame.getHeight() - 20) / 2 - 30,
+                20, 20);
+        seePass.addActionListener(e -> {
+            if (seePass.getText().equals("Show")) {
+                String pass = new String(passwordTextField.getPassword());
+                System.out.println("Button clicked");
+                seePass.setText("Hide");
+            } else {
+                passwordTextField.setEchoChar('*');
+
+                seePass.setText("Show");
             }
         });
+        toSetButtons.add(seePass);
+        buttons.add(seePass);
+         */
+
+        JButton createAcc = new JButton("<html>Create an<br>account</html>");
+        createAcc.setFont(buttonFont.deriveFont(10f));
+        createAcc.setBounds((frame.getWidth() - 80) / 2, (frame.getHeight() - 40) / 2 + 50, 80,
+                40);
+        createAcc.addActionListener(e -> {
+            JPanel createAccPanel = new CreateAccount(cardLayout, cards, frame).initWin();
+            super.switchWin(createAccPanel, "createAccount");
+            });
         toSetButtons.add(createAcc);
 
         setAttrButtons(toSetButtons);
@@ -170,5 +173,4 @@ public class Login {
     public boolean getLoginState() {
         return loggedIn;
     }
-
 }
