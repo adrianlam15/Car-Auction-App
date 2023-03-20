@@ -9,7 +9,10 @@ import java.awt.*;
 public class MainMenu extends UiState {
 
     /**
-     * TODO: MainMenu UI
+     * Constructs a new MainMenu UI state
+     * @param cardLayout
+     * @param cards
+     * @param frame
      */
     public MainMenu(CardLayout cardLayout, JPanel cards, JFrame frame) {
         super(cardLayout, cards, frame);

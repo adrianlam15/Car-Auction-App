@@ -11,17 +11,51 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * CreateAccount class (including UI) for the Car Auction application
+ */
 public class CreateAccount extends UiState{
+    private Users users;
+    private JTextField usernameTextField;
+    private JPasswordField passwordTextField;
+    private JPasswordField retypePasswordField;
+    private String username;
+    private String password;
+    private String retypePassword;
+    private User currentUser;
+    private HashMap<String, String> userMap;
 
-    public CreateAccount(CardLayout cardLayout, JPanel cards, JFrame frame) {
+    /**
+     * Constructs a new CreateAccount UI state
+     * @param users
+     * @param cardLayout
+     * @param cards
+     * @param frame
+     * @param userMap
+     */
+    public CreateAccount(Users users, CardLayout cardLayout, JPanel cards, JFrame frame, HashMap<String, String> userMap) {
         super(cardLayout, cards, frame);
+        this.users = users;
+        this.userMap = userMap;
     }
 
+    /**
+     * Initializes the UI for the CreateAccount state
+     * @return JPanel of the CreateAccount UI
+     */
     protected JPanel initWin() {
         super.initWin();
+        this.usernameTextField = new JTextField();
+        this.passwordTextField = new JPasswordField();
+        this.retypePasswordField = new JPasswordField();
+        this.currentUser = new User();
         return loadCreateAccountPanel();
     }
 
+    /**
+     * Loads the UI for the CreateAccount state
+     * @return JPanel containing all components needed for UI
+     */
     private JPanel loadCreateAccountPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -30,11 +64,13 @@ public class CreateAccount extends UiState{
         return panel;
     }
 
+    /**
+     * Gets the input fields for the CreateAccount UI
+     * @return ArrayList of JComponents (input fields)
+     */
     private ArrayList<JComponent> getInputFields() {
         Font labelFont = new Font("Roboto", Font.PLAIN, 14);
         ArrayList<JComponent> inputFields = new ArrayList<>();
-        JTextField usernameTextField = new JTextField();
-        JTextField passwordTextField = new JTextField();
 
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setForeground(Color.WHITE);
@@ -56,6 +92,18 @@ public class CreateAccount extends UiState{
                 100, 20);
         passwordTextField.setBorder(BorderFactory.createEmptyBorder());
 
+        JLabel retypePasswordLabel = new JLabel("Re-type Password");
+        retypePasswordLabel.setForeground(Color.WHITE);
+        retypePasswordLabel.setLabelFor(passwordTextField);
+        retypePasswordLabel.setFont(labelFont);
+        retypePasswordLabel.setBounds((frame.getWidth() - 100) / 2 - 120, (frame.getHeight() - 20) / 2 - 3,
+                150, 20);
+        retypePasswordField.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 20) / 2,
+                100, 20);
+        retypePasswordField.setBorder(BorderFactory.createEmptyBorder());
+
+        inputFields.add(retypePasswordLabel);
+        inputFields.add(retypePasswordField);
         inputFields.add(usernameTextField);
         inputFields.add(passwordTextField);
         inputFields.add(usernameLabel);
@@ -64,146 +112,45 @@ public class CreateAccount extends UiState{
         return inputFields;
     }
 
-    private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
-
-        return buttons;
-    }
-}
-
-/**
- * TODO:
- * 1. Add a new MainMenu class that represents UI for the main menu (state transition)
- * 2. Create account window
-public class Login extends UiState {
-    private boolean loggedIn = false;
-    private JTextField usernameTextField;
-    private JTextField passwordTextField;
-    private String username;
-    private String password;
-    private Users users;
-    private HashMap<String, String> userMap;
-    private User currentUser = new User();
-
-    public Login(CardLayout cardLayout, JPanel cards,
-                 Users users, HashMap<String, String> userMap, JFrame frame) {
-        super(cardLayout, cards, frame);
-        this.users = users;
-        this.userMap = userMap;
-        initWin();
-    }
-
-    protected JPanel initWin() {
-        super.initWin();
-        return loadLoginPanel();
-    }
-
-    private JPanel loadLoginPanel() {
-        JPanel loginPanel = new JPanel();
-        loginPanel.setLayout(null);
-        loginPanel.setBackground(new java.awt.Color(15, 23, 42));
-        getInputFields().forEach(inputField -> loginPanel.add(inputField));
-        getJButtons().forEach(button -> loginPanel.add(button));
-        return loginPanel;
-    }
-
-    private ArrayList<JComponent> getInputFields() {
-        Font labelFont = new Font("Roboto", Font.PLAIN, 14);
-
-        ArrayList<JComponent> inputFields = new ArrayList<>();
-        usernameTextField = new JTextField();
-        JLabel usernameLabel = new JLabel("Username");
-        usernameLabel.setForeground(Color.WHITE);
-        usernameLabel.setLabelFor(usernameTextField);
-        usernameLabel.setFont(labelFont);
-        usernameLabel.setBounds((frame.getWidth() - 100) / 2 - 75, (frame.getHeight() - 40) / 2 - 53,
-                100, 20);
-        usernameTextField.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 40) / 2 - 50,
-                100, 20);
-        usernameTextField.setBorder(BorderFactory.createEmptyBorder());
-
-        passwordTextField = new JPasswordField();
-        JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setForeground(Color.WHITE);
-        passwordLabel.setLabelFor(passwordTextField);
-        passwordLabel.setFont(labelFont);
-        passwordLabel.setBounds((frame.getWidth() - 100) / 2 - 75, (frame.getHeight() - 20) / 2 - 33,
-                100, 20);
-        passwordTextField.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 20) / 2 - 30,
-                100, 20);
-        passwordTextField.setBorder(BorderFactory.createEmptyBorder());
-
-        inputFields.add(usernameTextField);
-        inputFields.add(passwordTextField);
-        inputFields.add(usernameLabel);
-        inputFields.add(passwordLabel);
-        return inputFields;
-    }
-
+    /**
+     * Makes buttons to be used for the CreateAccount UI
+     * @return ArrayList of JComponents (buttons)
+     */
     private ArrayList<JComponent> getJButtons() {
         ArrayList<JComponent> buttons = new ArrayList<>();
         ArrayList<JButton> toSetButtons = new ArrayList<>();
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
+        Font buttonFont = new Font("Roboto", Font.PLAIN, 14);
 
-        JButton loginButton = new JButton("Login");
-        loginButton.setFont(buttonFont.deriveFont(10f));
-        loginButton.setBounds((frame.getWidth() - 80) / 2, (frame.getHeight() - 40) / 2 + 10, 80, 20);
-        loginButton.addActionListener(e -> {
-            username = usernameTextField.getText();
-            password = passwordTextField.getText();
-            loggedIn = currentUser.login(username, password, userMap);
-            if (loggedIn) {
-                for (User user : users.getUsers()) {
-                    if (user.getUsername().equals(username)) {
-                        currentUser = user;
-                        loggedIn = true;
-                        break;
-                    }
-                }
-                JPanel mainPanel = new MainMenu(cardLayout, cards, frame).initWin();
-                super.switchWin(mainPanel, "mainMenu");
-            } else {
-                JOptionPane.showMessageDialog(frame, "Incorrect username or password you goofy goober",
-                        "Login Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        toSetButtons.add(loginButton);
-
-        JButton createAcc = new JButton("<html>Create an<br>account</html>");
-        createAcc.setFont(buttonFont);
-        createAcc.setBounds((frame.getWidth() - 50) / 2 - 25, (frame.getHeight() - 40) / 2 + 80, 100,
+        JButton createAcc = new JButton("Create");
+        createAcc.setFont(buttonFont.deriveFont(10f));
+        createAcc.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 20) / 2 + 30, 100,
                 40);
         createAcc.addActionListener(e -> {
-            JPanel createAccPanel = new CreateAccount(cardLayout, cards, frame).initWin();
-            super.switchWin(createAccPanel, "createAccount");
+            username = usernameTextField.getText();
+            password = passwordTextField.getText();
+            retypePassword = retypePasswordField.getText();
+            for (User u : users.getUsers()) {
+                if (u.getUsername().equals(username)) {
+                    JOptionPane.showMessageDialog(frame, "Username already exists",
+                            "Username Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            if (currentUser.createUser(username, password, retypePassword)) {
+                System.out.println("Account created");
+                userMap.put(username, password);
+                System.out.println(userMap);
+                users.add(currentUser);
+                cardLayout.show(cards, "mainMenu");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Your passwords do not match",
+                        "Password Mismatch", JOptionPane.ERROR_MESSAGE);
+            }
         });
-        toSetButtons.add(createAcc);
 
-        setAttrButtons(toSetButtons);
-        buttons.add(loginButton);
         buttons.add(createAcc);
+        toSetButtons.add(createAcc);
+        super.setAttrButtons(toSetButtons);
         return buttons;
     }
-
-    private void setAttrButtons(ArrayList<JButton> buttons) {
-        for (JButton button : buttons) {
-            button.setBackground(new Color(99, 102, 241));
-            button.setForeground(Color.WHITE);
-            button.setFocusPainted(false);
-            button.setBorderPainted(false);
-            button.addMouseListener(new MouseAdapter() {
-                public void mouseEntered(MouseEvent evt) {
-                    button.setBackground(new Color(148, 163, 184));
-                }
-
-                public void mouseExited(MouseEvent evt) {
-                    button.setBackground(new Color(99, 102, 241));
-                }
-            });
-        }
-    }
-
-    public boolean getLoginState() {
-        return loggedIn;
-    }
- */
+}
