@@ -164,7 +164,6 @@ public class CreateAccount extends UiState{
                 }
             }
             if (currentUser.createUser(username, password, retypePassword)) {
-                System.out.println("Account created");
                 userMap.put(username, password);
                 System.out.println(userMap);
                 users.add(currentUser);

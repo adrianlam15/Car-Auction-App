@@ -75,6 +75,10 @@ public class MainMenu extends UiState {
         buttons.add(saveCurrentData);
 
         JButton logout = new JButton("Logout");
+        logout.addActionListener(e -> {
+            System.out.println("Logging out...");
+            cardLayout.show(cards, "loginMenu");
+            });
         buttons.add(logout);
 
         int i = 0;
