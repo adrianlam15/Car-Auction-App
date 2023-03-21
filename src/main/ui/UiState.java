@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -49,14 +50,15 @@ public abstract class UiState {
             button.setBackground(new Color(99, 102, 241));
             button.setForeground(Color.WHITE);
             button.setFocusPainted(false);
-            button.setBorderPainted(false);
             button.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
-                    button.setBackground(new Color(148, 163, 184));
+                    button.setBackground(new Color(30,41,59));
+                    button.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
                 }
 
                 public void mouseExited(MouseEvent evt) {
-                    button.setBackground(new Color(99, 102, 241));
+                    button.setBackground(new Color(99,102,241));
+                    button.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
                 }
             });
         }

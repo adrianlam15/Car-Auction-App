@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.sound.sampled.Clip;
+import javax.swing.border.Border;
 
 /**
  * Login class (including UI) for the Car Auction application
@@ -53,7 +54,7 @@ public class Login extends UiState {
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
-        JPanel mainPanel = new MainMenu(cardLayout, cards, frame).initWin();
+        JPanel mainPanel = new MainMenu(cardLayout, cards, users, userMap, frame).initWin();
         cards.add(mainPanel, "mainMenu");
         JPanel createAccountPanel = new CreateAccount(users, cardLayout, cards, frame, userMap).initWin();
         cards.add(createAccountPanel, "createAccount");
@@ -138,30 +139,51 @@ public class Login extends UiState {
      * @return ArrayList of JComponents (input fields)
      */
     private ArrayList<JComponent> getInputFields() {
-        Font labelFont = new Font("Roboto", Font.PLAIN, 14);
+        Font labelFont = new Font("Roboto", Font.PLAIN, 10);
 
-        usernameTextField.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 40) / 2 - 50,
-                100, 20);
+        usernameTextField.setForeground(Color.WHITE);
         JLabel usernameLabel = new JLabel("Username");
-        usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setForeground(new Color(148,163,184));
         usernameLabel.setLabelFor(usernameTextField);
         usernameLabel.setFont(labelFont);
-        usernameLabel.setBounds((frame.getWidth() - 100) / 2 - 75, (frame.getHeight() - 40) / 2 - 53,
-                100, 20);
-        usernameTextField.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 40) / 2 - 50,
-                100, 20);
+        usernameLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 70,
+                200, 20);
+        usernameTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 50,
+                200, 20);
         usernameTextField.setBorder(BorderFactory.createEmptyBorder());
+        usernameTextField.setOpaque(false);
+        JLabel usernameUnderline = new JLabel("________________________________________");
+        usernameUnderline.setFont(new Font("Roboto", Font.PLAIN, 9));
+        usernameUnderline.setForeground(new Color(148,163,184));
+        usernameUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 40,
+                300, 10);
 
+        passwordTextField.setForeground(Color.WHITE);
         JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setForeground(new Color(148,163,184));
         passwordLabel.setLabelFor(passwordTextField);
         passwordLabel.setFont(labelFont);
-        passwordLabel.setBounds((frame.getWidth() - 100) / 2 - 75, (frame.getHeight() - 20) / 2 - 33,
-                100, 20);
-        passwordTextField.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 20) / 2 - 30,
-                100, 20);
+        passwordLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 20,
+                200, 20);
+        passwordTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2,
+                200, 20);
         passwordTextField.setBorder(BorderFactory.createEmptyBorder());
+        passwordTextField.setOpaque(false);
+        JLabel passwordUnderline = new JLabel("________________________________________");
+        passwordUnderline.setFont(new Font("Roboto", Font.PLAIN, 9));
+        passwordUnderline.setForeground(new Color(148,163,184));
+        passwordUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 10,
+                300, 10);
 
+        JLabel orLabel = new JLabel("OR");
+        orLabel.setForeground(new Color(148,163,184));
+        orLabel.setFont(labelFont.deriveFont(8f));
+        orLabel.setBounds((frame.getWidth() - 100) / 2 + 45, (frame.getHeight() - 40) / 2 + 40,
+                20, 20);
+
+        inputFields.add(passwordUnderline);
+        inputFields.add(usernameUnderline);
+        inputFields.add(orLabel);
         inputFields.add(usernameTextField);
         inputFields.add(passwordTextField);
         inputFields.add(usernameLabel);
@@ -175,10 +197,12 @@ public class Login extends UiState {
      */
     private ArrayList<JComponent> getJButtons() {
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
+        Border border = BorderFactory.createLineBorder(new Color(30,41,59), 2);
 
         JButton loginButton = new JButton("Login");
         loginButton.setFont(buttonFont.deriveFont(10f));
-        loginButton.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 40) / 2 + 10, 100, 20);
+        loginButton.setBounds((frame.getWidth() - 100) / 2 + 70, (frame.getHeight() - 40) / 2 + 40, 80,
+                20);
         loginButton.addActionListener(e -> {
             username = usernameTextField.getText();
             password = passwordTextField.getText();
@@ -197,12 +221,13 @@ public class Login extends UiState {
                         "Login Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+        loginButton.setBorder(border);
         toSetButtons.add(loginButton);
         buttons.add(loginButton);
 
         JButton seePass = new JButton("Show");
-        seePass.setFont(buttonFont.deriveFont(10f));
-        seePass.setBounds((frame.getWidth() - 100) / 2 + 110, (frame.getHeight() - 20) / 2 - 30,
+        seePass.setFont(buttonFont.deriveFont(14f));
+        seePass.setBounds((frame.getWidth() - 100) / 2 + 160, (frame.getHeight() - 20) / 2,
                 20, 20);
         seePass.addActionListener(e -> {
             if (seePass.getText().equals("Show")) {
@@ -213,17 +238,19 @@ public class Login extends UiState {
                 seePass.setText("Show");
             }
         });
+        seePass.setBorder(border);
         toSetButtons.add(seePass);
         buttons.add(seePass);
 
-        JButton createAcc = new JButton("<html>Create an<br>account</html>");
-        createAcc.setFont(buttonFont.deriveFont(10f));
-        createAcc.setBounds((frame.getWidth() - 100) / 2, (frame.getHeight() - 40) / 2 + 50, 100,
-                40);
-        createAcc.addActionListener(e -> {
+        JButton signUp = new JButton("Sign Up");
+        signUp.setFont(buttonFont.deriveFont(10f));
+        signUp.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40, 80,
+                20);
+        signUp.addActionListener(e -> {
             cardLayout.show(cards, "createAccount");
             });
-        toSetButtons.add(createAcc);
+        signUp.setBorder(border);
+        toSetButtons.add(signUp);
 
         JButton toggleMusic = new JButton("Mute");
         toggleMusic.setFont(buttonFont.deriveFont(10f));
@@ -238,11 +265,12 @@ public class Login extends UiState {
                 toggleMusic.setText("Mute");
             }
         });
+        toggleMusic.setBorder(border);
         toSetButtons.add(toggleMusic);
 
         super.setAttrButtons(toSetButtons);
         buttons.add(loginButton);
-        buttons.add(createAcc);
+        buttons.add(signUp);
         buttons.add(toggleMusic);
         return buttons;
     }
