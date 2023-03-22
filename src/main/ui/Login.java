@@ -216,6 +216,8 @@ public class Login extends UiState {
                     }
                 }
                 cardLayout.show(cards, "mainMenu");
+                usernameTextField.setText("");
+                passwordTextField.setText("");
             } else {
                 JOptionPane.showMessageDialog(frame, "Incorrect username or password you goofy goober",
                         "Login Error", JOptionPane.ERROR_MESSAGE);
