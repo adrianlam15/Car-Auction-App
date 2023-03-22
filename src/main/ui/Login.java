@@ -3,21 +3,16 @@ package ui;
 import model.User;
 import model.Users;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.sound.sampled.Clip;
-import javax.swing.border.Border;
 
 /**
  * Login class (including UI) for the Car Auction application
@@ -54,10 +49,6 @@ public class Login extends UiState {
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
-        JPanel mainPanel = new MainMenu(cardLayout, cards, users, userMap, frame).initWin();
-        cards.add(mainPanel, "mainMenu");
-        JPanel createAccountPanel = new CreateAccount(users, cardLayout, cards, frame, userMap).initWin();
-        cards.add(createAccountPanel, "createAccount");
         initWin();
         playMusic("./data/ZA-ZA - LOVE & MONEY.wav");
     }

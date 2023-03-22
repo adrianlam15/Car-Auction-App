@@ -48,6 +48,7 @@ public class AuctionApp {
         frame = new JFrame("Car Auction App");
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
+        frame.setResizable(false);
         frame.setLayout(cardLayout);
         frame.setLocationRelativeTo(null);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -68,6 +69,10 @@ public class AuctionApp {
         frame.setSize(winWidth, winHeight);
         JPanel loginPanel = new Login(cardLayout, cards, users, userMap, frame).initWin();
         cards.add(loginPanel, "loginMenu");
+        JPanel mainPanel = new MainMenu(cardLayout, cards, users, userMap, frame).initWin();
+        cards.add(mainPanel, "mainMenu");
+        JPanel createAccountPanel = new CreateAccount(users, cardLayout, cards, frame, userMap).initWin();
+        cards.add(createAccountPanel, "createAccount");
         frame.add(cards);
         cardLayout.show(cards, "loginMenu");
         frame.setVisible(true);
