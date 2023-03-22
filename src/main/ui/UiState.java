@@ -3,6 +3,7 @@ package ui;
 import model.Car;
 import model.Cars;
 import model.User;
+import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -79,6 +80,10 @@ public abstract class UiState {
     }
 
     public void setListedCars(Cars listedCars) {
+        this.listedCars = listedCars;
+    }
+
+    protected void setUsers(Users users) {
         this.listedCars = listedCars;
     }
 }

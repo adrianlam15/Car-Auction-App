@@ -22,6 +22,7 @@ public class CreateAccount extends UiState{
     private String retypePassword;
     private User currentUser;
     private HashMap<String, String> userMap;
+    private MainMenu mainMenuUI;
 
     /**
      * Constructs a new CreateAccount UI state
@@ -31,13 +32,13 @@ public class CreateAccount extends UiState{
      * @param users
      * @param userMap
      * @param frame
-     * @param currentUser
      */
     public CreateAccount(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                         JFrame frame, User currentUser) {
+                         JFrame frame, MainMenu mainMenuUI) {
         super(cardLayout, cards, frame);
         this.users = users;
         this.userMap = userMap;
+        this.mainMenuUI = mainMenuUI;
     }
 
     /**
@@ -165,8 +166,10 @@ public class CreateAccount extends UiState{
             }
             if (currentUser.createUser(username, password, retypePassword)) {
                 userMap.put(username, password);
-                System.out.println(userMap);
                 users.add(currentUser);
+                System.out.println(userMap);
+                mainMenuUI.setUsers(users);
+                mainMenuUI.setListedCars(listedCars);
                 cardLayout.show(cards, "mainMenu");
             } else {
                 JOptionPane.showMessageDialog(frame, "Your passwords do not match",

@@ -214,6 +214,7 @@ public class Login extends UiState {
                 }
                 System.out.println("Logged in as " + currentUser.getUsername());
                 mainMenuUI.setCurrentUser(currentUser);
+                mainMenuUI.setUsers(users);
                 mainMenuUI.setListedCars(listedCars);
                 cardLayout.show(cards, "mainMenu");
                 usernameTextField.setText("");
@@ -249,8 +250,10 @@ public class Login extends UiState {
         signUp.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40, 80,
                 20);
         signUp.addActionListener(e -> {
-            CreateAccount createAccountUI = new CreateAccount(cardLayout, cards, users, userMap, frame, currentUser);
+            CreateAccount createAccountUI = new CreateAccount(cardLayout, cards, users, userMap, frame, mainMenuUI);
             JPanel createAccountPanel = createAccountUI.initWin();
+            createAccountUI.setUsers(users);
+            createAccountUI.setListedCars(listedCars);
             cards.add(createAccountPanel, "createAccount");
             cardLayout.show(cards, "createAccount");
             });

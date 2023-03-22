@@ -139,6 +139,19 @@ public class MainMenu extends UiState {
         return buttons;
     }
 
+    public void setUsers(Users users) {
+        super.setUsers(users);
+        updateUsers();
+    }
+
+    private void updateUsers() {
+        for (UiState uiState : uiStates) {
+            System.out.println("updating users in " + uiState.getClass().getName());
+            System.out.println(users.getUsers().size());
+            uiState.setUsers(users);
+        }
+    }
+
     public void setListedCars(Cars listedCars) {
         super.setListedCars(listedCars);
         updateListedCars();
