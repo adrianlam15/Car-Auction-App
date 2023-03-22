@@ -1,5 +1,7 @@
 package ui;
 
+import model.Car;
+import model.Cars;
 import model.User;
 
 import javax.swing.*;
@@ -20,6 +22,7 @@ public abstract class UiState {
     protected JPanel cards;
     protected JPanel panel;
     protected User currentUser;
+    protected Cars listedCars;
 
     /**
      * Constructs a new UiState
@@ -71,4 +74,11 @@ public abstract class UiState {
         this.currentUser = currentUser;
     }
 
+    public void addCars(Car car) {
+        this.listedCars.addCar(car);
+    }
+
+    public void setListedCars(Cars listedCars) {
+        this.listedCars = listedCars;
+    }
 }

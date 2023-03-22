@@ -65,11 +65,18 @@ public class AuctionApp {
     // MODIFIES: this
     // EFFECTS: runs the Car Auction App
     public void runAuctionApp() {
+        listedCars = new Cars();
+        for (User user : users.getUsers()) {
+            for (Car car : user.getCars()) {
+                listedCars.addCar(car);
+            }
+        }
         int winWidth = (int) Math.round(width) / 2;
         int winHeight = (int) Math.round(height) / 2;
         frame.setSize(winWidth, winHeight);
         Login loginUI = new Login(cardLayout, cards, users, userMap, frame, currentUser);
         JPanel loginPanel = loginUI.initWin();
+        loginUI.setListedCars(listedCars);
         cards.add(loginPanel, "loginMenu");
 
         frame.add(cards);
@@ -441,11 +448,6 @@ public class AuctionApp {
     // EFFECTS: loads workroom from file
     private void load() {
         try {
-            for (User user : users.getUsers()) {
-                for (Car car : user.getCars()) {
-                    listedCars.addCar(car);
-                }
-            }
             String date = jsonReader.readDate();
             System.out.println("Loaded data from " + JSON_STORE + " from " + date);
         } catch (IOException e) {

@@ -1,5 +1,7 @@
 package ui;
 
+import model.Car;
+import model.Cars;
 import model.User;
 import model.Users;
 
@@ -13,7 +15,6 @@ import java.util.HashMap;
  * MainMenu class (including UI) for the Car Auction application
  */
 public class MainMenu extends UiState {
-    private Login login;
     private Users users;
     private HashMap<String, String> userMap;
     private ArrayList<JButton> toSetButtons;
@@ -30,7 +31,7 @@ public class MainMenu extends UiState {
         this.users = users;
         this.userMap = userMap;
         this.toSetButtons = new ArrayList<>();
-        createListingUI = new CreateListing(cardLayout, cards, users, userMap, frame);
+        createListingUI = new CreateListing(cardLayout, cards, users, userMap, frame, this);
         viewListingsUI = new ViewListings(cardLayout, cards, users, userMap, frame);
         viewYourListingsUI = new ViewYourListings(cardLayout, cards, users, userMap, frame);
         viewBidsUI = new ViewBids(cardLayout, cards, users, userMap, frame);
@@ -138,6 +139,19 @@ public class MainMenu extends UiState {
         return buttons;
     }
 
+    public void setListedCars(Cars listedCars) {
+        super.setListedCars(listedCars);
+        updateListedCars();
+    }
+
+    private void updateListedCars() {
+        for (UiState uiState : uiStates) {
+            System.out.println("updating listed cars in " + uiState.getClass().getName());
+            uiState.setListedCars(listedCars);
+            System.out.println(listedCars.getCars().size());
+        }
+    }
+
     public void setCurrentUser(User currentUser) {
         super.setCurrentUser(currentUser);
         updateCurrentUser();
@@ -147,6 +161,13 @@ public class MainMenu extends UiState {
         for (UiState uiState : uiStates) {
             System.out.println("updating current user in " + uiState.getClass().getName());
             uiState.setCurrentUser(currentUser);
+        }
+    }
+
+    public void addCars(Car carToAdd) {
+        listedCars.addCar(carToAdd);
+        for (UiState uiState : uiStates) {
+            uiState.addCars(carToAdd);
         }
     }
 }

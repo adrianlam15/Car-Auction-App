@@ -24,11 +24,13 @@ public class CreateListing extends UiState {
     private JTextField carMileage;
     private JTextField carPrice;
     private JTextField carDescription;
+    private MainMenu mainMenuUI;
 
     public CreateListing(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                         JFrame frame) {
+                         JFrame frame, MainMenu mainMenuUI) {
         super(cardLayout, cards, frame);
         this.users = users;
+        this.mainMenuUI = mainMenuUI;
         this.carToCreate = new Car();
         this.toSetButtons = new ArrayList<>();
     }
@@ -261,7 +263,7 @@ public class CreateListing extends UiState {
                         carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dialogRes == JOptionPane.YES_OPTION) {
                     currentUser.createCar(carToCreate);
-                    //update listed cars()
+                    mainMenuUI.addCars(carToCreate);
                     JOptionPane.showMessageDialog(null, "Listing created successfully.");
                 } else {
 

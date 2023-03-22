@@ -34,7 +34,7 @@ public class Login extends UiState {
 
     /**
      * Constructs a new Login UI state
-     * @param cardLayout
+     *
      * @param cards
      * @param users
      * @param userMap
@@ -214,6 +214,7 @@ public class Login extends UiState {
                 }
                 System.out.println("Logged in as " + currentUser.getUsername());
                 mainMenuUI.setCurrentUser(currentUser);
+                mainMenuUI.setListedCars(listedCars);
                 cardLayout.show(cards, "mainMenu");
                 usernameTextField.setText("");
                 passwordTextField.setText("");
