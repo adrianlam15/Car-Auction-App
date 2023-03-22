@@ -27,11 +27,10 @@ public abstract class UiState {
      * @param cards
      * @param frame
      */
-    public UiState(CardLayout cardLayout, JPanel cards, JFrame frame, User currentUser) {
+    public UiState(CardLayout cardLayout, JPanel cards, JFrame frame) {
         this.cardLayout = cardLayout;
         this.cards = cards;
         this.frame = frame;
-        this.currentUser = currentUser;
         panel = new JPanel();
     }
 
@@ -68,11 +67,8 @@ public abstract class UiState {
         }
     }
 
-    protected void setCurrentUser(User currentUser) {
+    public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
 
-    protected User getCurrentUser() {
-        return this.currentUser;
-    }
 }

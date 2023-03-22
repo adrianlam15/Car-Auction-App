@@ -29,6 +29,8 @@ public class Login extends UiState {
     private Users users;
     private HashMap<String, String> userMap;
     private Clip clip;
+    private MainMenu mainMenuUI;
+    private User currentUser;
 
     /**
      * Constructs a new Login UI state
@@ -41,14 +43,19 @@ public class Login extends UiState {
     public Login(CardLayout cardLayout, JPanel cards,
                  Users users, HashMap<String, String> userMap, JFrame frame,
                  User currentUser) {
-        super(cardLayout, cards, frame, currentUser);
+        super(cardLayout, cards, frame);
         this.users = users;
         this.userMap = userMap;
+        this.currentUser = currentUser;
         this.usernameTextField = new JTextField();
         this.passwordTextField = new JPasswordField();
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
+        this.mainMenuUI = new MainMenu(cardLayout, cards, users, userMap, frame);
+        JPanel mainPanel = mainMenuUI.initWin();
+        cards.add(mainPanel, "mainMenu");
+
     }
 
     /**
@@ -200,15 +207,13 @@ public class Login extends UiState {
             if (loggedIn) {
                 for (User user : users.getUsers()) {
                     if (user.getUsername().equals(username)) {
-                        setCurrentUser(user);
+                        currentUser = user;
                         loggedIn = true;
                         break;
                     }
                 }
                 System.out.println("Logged in as " + currentUser.getUsername());
-                MainMenu mainMenuUI = new MainMenu(cardLayout, cards, users, userMap, frame, currentUser);
-                JPanel mainPanel = mainMenuUI.initWin();
-                cards.add(mainPanel, "mainMenu");
+                mainMenuUI.setCurrentUser(currentUser);
                 cardLayout.show(cards, "mainMenu");
                 usernameTextField.setText("");
                 passwordTextField.setText("");

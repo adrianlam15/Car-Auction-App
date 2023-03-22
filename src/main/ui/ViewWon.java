@@ -14,7 +14,7 @@ public class ViewWon extends UiState {
 
     public ViewWon(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                    JFrame frame) {
-        super(cardLayout, cards, frame, null);
+        super(cardLayout, cards, frame);
         this.users = users;
         this.toSetButtons = new ArrayList<>();
     }

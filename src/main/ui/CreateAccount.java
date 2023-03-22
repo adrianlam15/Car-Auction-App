@@ -35,7 +35,7 @@ public class CreateAccount extends UiState{
      */
     public CreateAccount(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                          JFrame frame, User currentUser) {
-        super(cardLayout, cards, frame, currentUser);
+        super(cardLayout, cards, frame);
         this.users = users;
         this.userMap = userMap;
     }

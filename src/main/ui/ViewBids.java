@@ -14,7 +14,7 @@ public class ViewBids extends UiState {
 
     public ViewBids(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                     JFrame frame) {
-        super(cardLayout, cards, frame, null);
+        super(cardLayout, cards, frame);
         this.users = users;
         this.toSetButtons = new ArrayList<>();
     }

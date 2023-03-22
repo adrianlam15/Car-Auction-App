@@ -17,29 +17,36 @@ public class MainMenu extends UiState {
     private Users users;
     private HashMap<String, String> userMap;
     private ArrayList<JButton> toSetButtons;
-    private CreateListing createListing;
-    private ViewListings viewListings;
-    private ViewYourListings viewYourListings;
-    private ViewBids viewBids;
-    private ViewWon viewWon;
+    private CreateListing createListingUI;
+    private ViewListings viewListingsUI;
+    private ViewYourListings viewYourListingsUI;
+    private ViewBids viewBidsUI;
+    private ViewWon viewWonUI;
+    private ArrayList<UiState> uiStates;
 
     public MainMenu(CardLayout cardLayout, JPanel cards,
-                    Users users, HashMap<String, String> userMap, JFrame frame, User currentUser) {
-        super(cardLayout, cards, frame, currentUser);
+                    Users users, HashMap<String, String> userMap, JFrame frame) {
+        super(cardLayout, cards, frame);
         this.users = users;
         this.userMap = userMap;
         this.toSetButtons = new ArrayList<>();
-        createListing = new CreateListing(cardLayout, cards, users, userMap, frame);
-        viewListings = new ViewListings(cardLayout, cards, users, userMap, frame);
-        viewYourListings = new ViewYourListings(cardLayout, cards, users, userMap, frame);
-        viewBids = new ViewBids(cardLayout, cards, users, userMap, frame);
-        viewWon = new ViewWon(cardLayout, cards, users, userMap, frame);
+        createListingUI = new CreateListing(cardLayout, cards, users, userMap, frame);
+        viewListingsUI = new ViewListings(cardLayout, cards, users, userMap, frame);
+        viewYourListingsUI = new ViewYourListings(cardLayout, cards, users, userMap, frame);
+        viewBidsUI = new ViewBids(cardLayout, cards, users, userMap, frame);
+        viewWonUI = new ViewWon(cardLayout, cards, users, userMap, frame);
+        uiStates = new ArrayList<>();
+        uiStates.add(createListingUI);
+        uiStates.add(viewListingsUI);
+        uiStates.add(viewYourListingsUI);
+        uiStates.add(viewBidsUI);
+        uiStates.add(viewWonUI);
 
-        JPanel createListingPanel = createListing.initWin();
-        JPanel viewListingsPanel = viewListings.initWin();
-        JPanel viewYourListingsPanel = viewYourListings.initWin();
-        JPanel viewBidsPanel = viewBids.initWin();
-        JPanel viewWonPanel = viewWon.initWin();
+        JPanel createListingPanel = createListingUI.initWin();
+        JPanel viewListingsPanel = viewListingsUI.initWin();
+        JPanel viewYourListingsPanel = viewYourListingsUI.initWin();
+        JPanel viewBidsPanel = viewBidsUI.initWin();
+        JPanel viewWonPanel = viewWonUI.initWin();
         cards.add(createListingPanel, "createListing");
         cards.add(viewListingsPanel, "viewListings");
         cards.add(viewYourListingsPanel, "viewYourListings");
@@ -77,7 +84,6 @@ public class MainMenu extends UiState {
 
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
-            System.out.println("logged in as: " + currentUser.getUsername());
             cardLayout.show(cards, "createListing");
         });
         buttons.add(createListing);
@@ -133,6 +139,14 @@ public class MainMenu extends UiState {
     }
 
     public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+        super.setCurrentUser(currentUser);
+        updateCurrentUser();
+    }
+
+    public void updateCurrentUser() {
+        for (UiState uiState : uiStates) {
+            System.out.println("updating current user in " + uiState.getClass().getName());
+            uiState.setCurrentUser(currentUser);
+        }
     }
 }

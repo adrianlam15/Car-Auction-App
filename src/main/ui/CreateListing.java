@@ -1,5 +1,7 @@
 package ui;
 
+import model.Car;
+import model.User;
 import model.Users;
 
 import javax.swing.*;
@@ -8,14 +10,26 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CreateListing extends UiState{
+public class CreateListing extends UiState {
     private Users users;
     private ArrayList<JButton> toSetButtons;
+    private Car carToCreate;
+    private JTextField carMake;
+    private JTextField carModel;
+    private JTextField carColour;
+    private JTextField carTransmission;
+    private JTextField carDriveType;
+    private JTextField carCondition;
+    private JTextField carYear;
+    private JTextField carMileage;
+    private JTextField carPrice;
+    private JTextField carDescription;
 
     public CreateListing(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                          JFrame frame) {
-        super(cardLayout, cards, frame, null);
+        super(cardLayout, cards, frame);
         this.users = users;
+        this.carToCreate = new Car();
         this.toSetButtons = new ArrayList<>();
     }
 
@@ -38,7 +52,7 @@ public class CreateListing extends UiState{
         JLabel carMakeLabel = new JLabel("Car Make");
         inputFields.add(carMakeLabel);
 
-        JTextField carMake = new JTextField();
+        carMake = new JTextField();
         inputFields.add(carMake);
 
         carMakeLabel.setLabelFor(carMake);
@@ -50,7 +64,7 @@ public class CreateListing extends UiState{
         carModelLabel.setLabelFor(carMake);
         inputFields.add(carModelLabel);
 
-        JTextField carModel = new JTextField();
+        carModel = new JTextField();
         inputFields.add(carModel);
 
         JLabel carModelUnderline = new JLabel("____________________");
@@ -59,7 +73,7 @@ public class CreateListing extends UiState{
         JLabel carColourLabel = new JLabel("Car Colour");
         inputFields.add(carColourLabel);
 
-        JTextField carColour = new JTextField();
+        carColour = new JTextField();
         inputFields.add(carColour);
 
         JLabel carColourUnderline = new JLabel("____________________");
@@ -68,7 +82,7 @@ public class CreateListing extends UiState{
         JLabel carTransmissionLabel = new JLabel("Car Transmission");
         inputFields.add(carTransmissionLabel);
 
-        JTextField carTransmission = new JTextField();
+        carTransmission = new JTextField();
         inputFields.add(carTransmission);
 
         JLabel carTransmissionUnderline = new JLabel("____________________");
@@ -77,7 +91,7 @@ public class CreateListing extends UiState{
         JLabel carDriveTypeLabel = new JLabel("Car Drive Type");
         inputFields.add(carDriveTypeLabel);
 
-        JTextField carDriveType = new JTextField();
+        carDriveType = new JTextField();
         inputFields.add(carDriveType);
 
         JLabel carDriveTypeUnderline = new JLabel("____________________");
@@ -86,7 +100,7 @@ public class CreateListing extends UiState{
         JLabel carConditionLabel = new JLabel("Car Condition");
         inputFields.add(carConditionLabel);
 
-        JTextField carCondition = new JTextField();
+        carCondition = new JTextField();
         inputFields.add(carCondition);
 
         JLabel carConditionUnderline = new JLabel("____________________");
@@ -95,7 +109,7 @@ public class CreateListing extends UiState{
         JLabel carYearLabel = new JLabel("Car Year");
         inputFields.add(carYearLabel);
 
-        JTextField carYear = new JTextField();
+        carYear = new JTextField();
         inputFields.add(carYear);
 
         JLabel carYearUnderline = new JLabel("____________________");
@@ -104,7 +118,7 @@ public class CreateListing extends UiState{
         JLabel carMileageLabel = new JLabel("Car Mileage");
         inputFields.add(carMileageLabel);
 
-        JTextField carMileage = new JTextField();
+        carMileage = new JTextField();
         inputFields.add(carMileage);
 
         JLabel carMileageUnderline = new JLabel("____________________");
@@ -113,7 +127,7 @@ public class CreateListing extends UiState{
         JLabel carPriceLabel = new JLabel("Car Price");
         inputFields.add(carPriceLabel);
 
-        JTextField carPrice = new JTextField();
+        carPrice = new JTextField();
         inputFields.add(carPrice);
 
         JLabel carPriceUnderline = new JLabel("____________________");
@@ -122,7 +136,7 @@ public class CreateListing extends UiState{
         JLabel carDescriptionLabel = new JLabel("Car Description");
         inputFields.add(carDescriptionLabel);
 
-        JTextField carDescription = new JTextField();
+        carDescription = new JTextField();
         inputFields.add(carDescription);
 
         JLabel carDescriptionUnderline = new JLabel("____________________");
@@ -192,18 +206,21 @@ public class CreateListing extends UiState{
 
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
+            System.out.println(currentUser.getUsername());
             cardLayout.show(cards, "viewListings");
         });
          buttons.add(viewListings);
 
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
+            System.out.println(currentUser.getUsername());
             cardLayout.show(cards, "viewYourListings");
         });
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
+            System.out.println(currentUser.getUsername());
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
@@ -229,8 +246,30 @@ public class CreateListing extends UiState{
 
         JButton create = new JButton("Create");
         create.addActionListener(e -> {
-            System.out.println("Creating...");
-            cardLayout.show(cards, "mainMenu");
+            try {
+                carToCreate.setMake(carMake.getText());
+                carToCreate.setModel(carModel.getText());
+                carToCreate.setColour(carColour.getText());
+                carToCreate.setTransmission(carTransmission.getText());
+                carToCreate.setDriveType(carDriveType.getText());
+                carToCreate.setCondition(carCondition.getText());
+                carToCreate.setYear(Integer.parseInt(carYear.getText()));
+                carToCreate.setMileage(Integer.parseInt(carMileage.getText()));
+                carToCreate.setPrice(Integer.parseInt(carPrice.getText()));
+                carToCreate.setDescription(carDescription.getText());
+                int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() + "\n" +
+                        carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
+                if (dialogRes == JOptionPane.YES_OPTION) {
+                    currentUser.createCar(carToCreate);
+                    //update listed cars()
+                    JOptionPane.showMessageDialog(null, "Listing created successfully.");
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
+                }
+            } catch (NumberFormatException err) {
+                JOptionPane.showMessageDialog(null, "Invalid year, mileage, or price.");
+            }
         });
         buttons.add(create);
 
