@@ -1,5 +1,7 @@
 package ui;
 
+import model.User;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -17,6 +19,7 @@ public abstract class UiState {
     protected CardLayout cardLayout;
     protected JPanel cards;
     protected JPanel panel;
+    protected User currentUser;
 
     /**
      * Constructs a new UiState
@@ -24,10 +27,11 @@ public abstract class UiState {
      * @param cards
      * @param frame
      */
-    public UiState(CardLayout cardLayout, JPanel cards, JFrame frame) {
+    public UiState(CardLayout cardLayout, JPanel cards, JFrame frame, User currentUser) {
         this.cardLayout = cardLayout;
         this.cards = cards;
         this.frame = frame;
+        this.currentUser = currentUser;
         panel = new JPanel();
     }
 
@@ -62,5 +66,13 @@ public abstract class UiState {
                 }
             });
         }
+    }
+
+    protected void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    protected User getCurrentUser() {
+        return this.currentUser;
     }
 }

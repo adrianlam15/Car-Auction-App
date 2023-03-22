@@ -28,7 +28,6 @@ public class Login extends UiState {
     private String password;
     private Users users;
     private HashMap<String, String> userMap;
-    private User currentUser = new User();
     private Clip clip;
 
     /**
@@ -40,8 +39,9 @@ public class Login extends UiState {
      * @param frame
      */
     public Login(CardLayout cardLayout, JPanel cards,
-                 Users users, HashMap<String, String> userMap, JFrame frame) {
-        super(cardLayout, cards, frame);
+                 Users users, HashMap<String, String> userMap, JFrame frame,
+                 User currentUser) {
+        super(cardLayout, cards, frame, currentUser);
         this.users = users;
         this.userMap = userMap;
         this.usernameTextField = new JTextField();
@@ -49,8 +49,6 @@ public class Login extends UiState {
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
-        initWin();
-        playMusic("./data/ZA-ZA - LOVE & MONEY.wav");
     }
 
     /**
@@ -74,6 +72,7 @@ public class Login extends UiState {
      * @return JPanel of the login window
      */
     protected JPanel initWin() {
+        playMusic("./data/ZA-ZA - LOVE & MONEY.wav");
         super.initWin();
         return loadLoginPanel();
     }
@@ -201,11 +200,15 @@ public class Login extends UiState {
             if (loggedIn) {
                 for (User user : users.getUsers()) {
                     if (user.getUsername().equals(username)) {
-                        currentUser = user;
+                        setCurrentUser(user);
                         loggedIn = true;
                         break;
                     }
                 }
+                System.out.println("Logged in as " + currentUser.getUsername());
+                MainMenu mainMenuUI = new MainMenu(cardLayout, cards, users, userMap, frame, currentUser);
+                JPanel mainPanel = mainMenuUI.initWin();
+                cards.add(mainPanel, "mainMenu");
                 cardLayout.show(cards, "mainMenu");
                 usernameTextField.setText("");
                 passwordTextField.setText("");
@@ -240,6 +243,9 @@ public class Login extends UiState {
         signUp.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40, 80,
                 20);
         signUp.addActionListener(e -> {
+            CreateAccount createAccountUI = new CreateAccount(cardLayout, cards, users, userMap, frame, currentUser);
+            JPanel createAccountPanel = createAccountUI.initWin();
+            cards.add(createAccountPanel, "createAccount");
             cardLayout.show(cards, "createAccount");
             });
         signUp.setBorder(border);
@@ -266,9 +272,5 @@ public class Login extends UiState {
         buttons.add(signUp);
         buttons.add(toggleMusic);
         return buttons;
-    }
-
-    public boolean getLoginState() {
-        return loggedIn;
     }
 }

@@ -14,7 +14,7 @@ public class ViewYourListings extends UiState {
 
     public ViewYourListings(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                             JFrame frame) {
-        super(cardLayout, cards, frame);
+        super(cardLayout, cards, frame, null);
         this.users = users;
         this.toSetButtons = new ArrayList<>();
     }

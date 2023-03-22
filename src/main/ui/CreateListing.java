@@ -14,7 +14,7 @@ public class CreateListing extends UiState{
 
     public CreateListing(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                          JFrame frame) {
-        super(cardLayout, cards, frame);
+        super(cardLayout, cards, frame, null);
         this.users = users;
         this.toSetButtons = new ArrayList<>();
     }
@@ -42,150 +42,90 @@ public class CreateListing extends UiState{
         inputFields.add(carMake);
 
         carMakeLabel.setLabelFor(carMake);
-        carMakeLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 180,
-                200, 20);
-        carMake.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 160,
-                100, 20);
 
         JLabel carMakeUnderline = new JLabel("____________________");
-        carMakeUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 150,
-                100, 10);
         inputFields.add(carMakeUnderline);
 
         JLabel carModelLabel = new JLabel("Car Model");
-        carModelLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 140,
-                200, 20);
         carModelLabel.setLabelFor(carMake);
         inputFields.add(carModelLabel);
 
         JTextField carModel = new JTextField();
-        carModel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 120,
-                100, 20);
         inputFields.add(carModel);
 
         JLabel carModelUnderline = new JLabel("____________________");
-        carModelUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 110,
-                100, 10);
         inputFields.add(carModelUnderline);
 
         JLabel carColourLabel = new JLabel("Car Colour");
-        carColourLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 100,
-                200, 20);
         inputFields.add(carColourLabel);
 
         JTextField carColour = new JTextField();
-        carColour.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 80,
-                100, 20);
         inputFields.add(carColour);
 
         JLabel carColourUnderline = new JLabel("____________________");
-        carColourUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 70,
-                100, 10);
         inputFields.add(carColourUnderline);
 
         JLabel carTransmissionLabel = new JLabel("Car Transmission");
-        carTransmissionLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 60,
-                200, 20);
         inputFields.add(carTransmissionLabel);
 
         JTextField carTransmission = new JTextField();
-        carTransmission.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 40,
-                100, 20);
         inputFields.add(carTransmission);
 
         JLabel carTransmissionUnderline = new JLabel("____________________");
-        carTransmissionUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 30,
-                100, 10);
         inputFields.add(carTransmissionUnderline);
 
         JLabel carDriveTypeLabel = new JLabel("Car Drive Type");
-        carDriveTypeLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 20,
-                200, 20);
         inputFields.add(carDriveTypeLabel);
 
         JTextField carDriveType = new JTextField();
-        carDriveType.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2,
-                100, 20);
         inputFields.add(carDriveType);
 
         JLabel carDriveTypeUnderline = new JLabel("____________________");
-        carDriveTypeUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 10,
-                100, 10);
         inputFields.add(carDriveTypeUnderline);
 
         JLabel carConditionLabel = new JLabel("Car Condition");
-        carConditionLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 20,
-                200, 20);
         inputFields.add(carConditionLabel);
 
         JTextField carCondition = new JTextField();
-        carCondition.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40,
-                100, 20);
         inputFields.add(carCondition);
 
         JLabel carConditionUnderline = new JLabel("____________________");
-        carConditionUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 50,
-                100, 10);
         inputFields.add(carConditionUnderline);
 
         JLabel carYearLabel = new JLabel("Car Year");
-        carYearLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 60,
-                200, 20);
         inputFields.add(carYearLabel);
 
         JTextField carYear = new JTextField();
-        carYear.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 80,
-                100, 20);
         inputFields.add(carYear);
 
         JLabel carYearUnderline = new JLabel("____________________");
-        carYearUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 90,
-                100, 10);
         inputFields.add(carYearUnderline);
 
         JLabel carMileageLabel = new JLabel("Car Mileage");
-        carMileageLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 100,
-                200, 20);
         inputFields.add(carMileageLabel);
 
         JTextField carMileage = new JTextField();
-        carMileage.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 120,
-                100, 20);
         inputFields.add(carMileage);
 
         JLabel carMileageUnderline = new JLabel("____________________");
-        carMileageUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 130,
-                100, 10);
         inputFields.add(carMileageUnderline);
 
         JLabel carPriceLabel = new JLabel("Car Price");
-        carPriceLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 140,
-                200, 20);
         inputFields.add(carPriceLabel);
 
         JTextField carPrice = new JTextField();
-        carPrice.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 160,
-                100, 20);
         inputFields.add(carPrice);
 
         JLabel carPriceUnderline = new JLabel("____________________");
-        carPriceUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 170,
-                100, 10);
         inputFields.add(carPriceUnderline);
 
         JLabel carDescriptionLabel = new JLabel("Car Description");
-        carDescriptionLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 180,
-                200, 20);
         inputFields.add(carDescriptionLabel);
 
         JTextField carDescription = new JTextField();
-        carDescription.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 200,
-                100, 20);
         inputFields.add(carDescription);
 
         JLabel carDescriptionUnderline = new JLabel("____________________");
-        carDescriptionUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 210,
-                100, 10);
         inputFields.add(carDescriptionUnderline);
         setInputFields(inputFields);
         return inputFields;
@@ -287,16 +227,29 @@ public class CreateListing extends UiState{
         });
         buttons.add(logout);
 
+        JButton create = new JButton("Create");
+        create.addActionListener(e -> {
+            System.out.println("Creating...");
+            cardLayout.show(cards, "mainMenu");
+        });
+        buttons.add(create);
+
         Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
         int i = 0;
         for (JComponent button : buttons) {
-            button.setFont(buttonFont.deriveFont(10f));
-            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
             button.setBorder(border);
-            if ((JButton) button != createListing) {
+            button.setFont(buttonFont.deriveFont(10f));
+            if (button == create) {
+                button.setBounds((frame.getWidth() - 100) / 2 + 100, (frame.getHeight() - 40) / 2,
+                        100, 40);
                 toSetButtons.add((JButton) button);
             } else {
-                createListing.setForeground(Color.WHITE);
+                if (button != createListing) {
+                    toSetButtons.add((JButton) button);
+                } else {
+                    createListing.setForeground(Color.WHITE);
+                }
+                button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
             }
             i++;
         }

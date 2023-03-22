@@ -56,6 +56,7 @@ public class AuctionApp {
         height = screenSize.getHeight();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
+        currentUser = new User();
         users = jsonReader.readUsers();
         userMap = jsonReader.getUserMap();
         runAuctionApp();
@@ -67,12 +68,10 @@ public class AuctionApp {
         int winWidth = (int) Math.round(width) / 2;
         int winHeight = (int) Math.round(height) / 2;
         frame.setSize(winWidth, winHeight);
-        JPanel loginPanel = new Login(cardLayout, cards, users, userMap, frame).initWin();
+        Login loginUI = new Login(cardLayout, cards, users, userMap, frame, currentUser);
+        JPanel loginPanel = loginUI.initWin();
         cards.add(loginPanel, "loginMenu");
-        JPanel mainPanel = new MainMenu(cardLayout, cards, users, userMap, frame).initWin();
-        cards.add(mainPanel, "mainMenu");
-        JPanel createAccountPanel = new CreateAccount(users, cardLayout, cards, frame, userMap).initWin();
-        cards.add(createAccountPanel, "createAccount");
+
         frame.add(cards);
         cardLayout.show(cards, "loginMenu");
         frame.setVisible(true);

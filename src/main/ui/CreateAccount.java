@@ -6,9 +6,6 @@ import model.Users;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,14 +25,17 @@ public class CreateAccount extends UiState{
 
     /**
      * Constructs a new CreateAccount UI state
-     * @param users
+     *
      * @param cardLayout
      * @param cards
-     * @param frame
+     * @param users
      * @param userMap
+     * @param frame
+     * @param currentUser
      */
-    public CreateAccount(Users users, CardLayout cardLayout, JPanel cards, JFrame frame, HashMap<String, String> userMap) {
-        super(cardLayout, cards, frame);
+    public CreateAccount(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
+                         JFrame frame, User currentUser) {
+        super(cardLayout, cards, frame, currentUser);
         this.users = users;
         this.userMap = userMap;
     }

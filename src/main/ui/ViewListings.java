@@ -11,11 +11,13 @@ import java.util.HashMap;
 public class ViewListings extends UiState{
     private Users users;
     private ArrayList<JButton> toSetButtons;
+    private MainMenu mainMenu;
 
     public ViewListings(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                    JFrame frame) {
-        super(cardLayout, cards, frame);
+                        JFrame frame) {
+        super(cardLayout, cards, frame, null);
         this.users = users;
+        this.mainMenu = mainMenu;
         this.toSetButtons = new ArrayList<>();
     }
 

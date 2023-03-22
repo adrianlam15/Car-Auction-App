@@ -1,12 +1,11 @@
 package ui;
 
+import model.User;
 import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,29 +13,38 @@ import java.util.HashMap;
  * MainMenu class (including UI) for the Car Auction application
  */
 public class MainMenu extends UiState {
+    private Login login;
     private Users users;
     private HashMap<String, String> userMap;
     private ArrayList<JButton> toSetButtons;
-    private boolean activePanel;
+    private CreateListing createListing;
+    private ViewListings viewListings;
+    private ViewYourListings viewYourListings;
+    private ViewBids viewBids;
+    private ViewWon viewWon;
 
     public MainMenu(CardLayout cardLayout, JPanel cards,
-                    Users users, HashMap<String, String> userMap, JFrame frame) {
-        super(cardLayout, cards, frame);
+                    Users users, HashMap<String, String> userMap, JFrame frame, User currentUser) {
+        super(cardLayout, cards, frame, currentUser);
         this.users = users;
         this.userMap = userMap;
-        this.activePanel = false;
         this.toSetButtons = new ArrayList<>();
-        JPanel createListing = new CreateListing(cardLayout, cards, users, userMap, frame).initWin();
-        JPanel viewListings = new ViewListings(cardLayout, cards, users, userMap, frame).initWin();
-        JPanel viewYourListings = new ViewYourListings(cardLayout, cards, users, userMap, frame).initWin();
-        JPanel viewBids = new ViewBids(cardLayout, cards, users, userMap, frame).initWin();
-        JPanel viewWon = new ViewWon(cardLayout, cards, users, userMap, frame).initWin();
-        cards.add(createListing, "createListing");
-        cards.add(viewListings, "viewListings");
-        cards.add(viewYourListings, "viewYourListings");
-        cards.add(viewBids, "viewBids");
-        cards.add(viewWon, "viewWon");
+        createListing = new CreateListing(cardLayout, cards, users, userMap, frame);
+        viewListings = new ViewListings(cardLayout, cards, users, userMap, frame);
+        viewYourListings = new ViewYourListings(cardLayout, cards, users, userMap, frame);
+        viewBids = new ViewBids(cardLayout, cards, users, userMap, frame);
+        viewWon = new ViewWon(cardLayout, cards, users, userMap, frame);
 
+        JPanel createListingPanel = createListing.initWin();
+        JPanel viewListingsPanel = viewListings.initWin();
+        JPanel viewYourListingsPanel = viewYourListings.initWin();
+        JPanel viewBidsPanel = viewBids.initWin();
+        JPanel viewWonPanel = viewWon.initWin();
+        cards.add(createListingPanel, "createListing");
+        cards.add(viewListingsPanel, "viewListings");
+        cards.add(viewYourListingsPanel, "viewYourListings");
+        cards.add(viewBidsPanel, "viewBids");
+        cards.add(viewWonPanel, "viewWon");
     }
 
     /**
@@ -69,6 +77,7 @@ public class MainMenu extends UiState {
 
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
+            System.out.println("logged in as: " + currentUser.getUsername());
             cardLayout.show(cards, "createListing");
         });
         buttons.add(createListing);
@@ -121,5 +130,9 @@ public class MainMenu extends UiState {
         }
         super.setAttrButtons(toSetButtons);
         return buttons;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 }

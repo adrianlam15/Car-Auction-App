@@ -13,8 +13,8 @@ public class ViewWon extends UiState {
     private ArrayList<JButton> toSetButtons;
 
     public ViewWon(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                        JFrame frame) {
-        super(cardLayout, cards, frame);
+                   JFrame frame) {
+        super(cardLayout, cards, frame, null);
         this.users = users;
         this.toSetButtons = new ArrayList<>();
     }
