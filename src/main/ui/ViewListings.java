@@ -1,10 +1,12 @@
 package ui;
 
+import model.Car;
 import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,7 +30,16 @@ public class ViewListings extends UiState{
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getJButtons().forEach(button -> panel.add(button));
+        getListings().forEach(listing -> panel.add(listing));
         return panel;
+    }
+
+    private ArrayList<JComponent> getListings() {
+        ArrayList<JComponent> listings = new ArrayList<>();
+        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
+
+        // TODO: get listings
+        return listings;
     }
 
     /**

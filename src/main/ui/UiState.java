@@ -35,6 +35,7 @@ public abstract class UiState {
         this.cardLayout = cardLayout;
         this.cards = cards;
         this.frame = frame;
+        this.listedCars = new Cars();
         panel = new JPanel();
     }
 
