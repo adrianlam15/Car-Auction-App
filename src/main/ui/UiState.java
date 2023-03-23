@@ -24,6 +24,7 @@ public abstract class UiState {
     protected JPanel panel;
     protected User currentUser;
     protected Cars listedCars;
+    protected Users users;
 
     /**
      * Constructs a new UiState
@@ -36,6 +37,7 @@ public abstract class UiState {
         this.cards = cards;
         this.frame = frame;
         this.listedCars = new Cars();
+        this.currentUser = new User();
         panel = new JPanel();
     }
 
@@ -76,7 +78,7 @@ public abstract class UiState {
         this.currentUser = currentUser;
     }
 
-    public void addCars(Car car) {
+    public void addCar(Car car) {
         this.listedCars.addCar(car);
     }
 
@@ -85,6 +87,6 @@ public abstract class UiState {
     }
 
     protected void setUsers(Users users) {
-        this.listedCars = listedCars;
+        this.users = users;
     }
 }

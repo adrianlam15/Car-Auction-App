@@ -263,10 +263,9 @@ public class CreateListing extends UiState {
                         carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dialogRes == JOptionPane.YES_OPTION) {
                     currentUser.createCar(carToCreate);
-                    mainMenuUI.addCars(carToCreate);
+                    mainMenuUI.addCar(carToCreate);
                     JOptionPane.showMessageDialog(null, "Listing created successfully.");
                 } else {
-
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
                 }
             } catch (NumberFormatException err) {

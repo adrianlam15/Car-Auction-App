@@ -166,8 +166,10 @@ public class MainMenu extends UiState {
     }
 
     public void setCurrentUser(User currentUser) {
-        super.setCurrentUser(currentUser);
-        updateCurrentUser();
+
+        for (UiState uiState : uiStates) {
+            System.out.println(uiState.currentUser.getUsername());
+        }
     }
 
     public void updateCurrentUser() {
@@ -177,10 +179,17 @@ public class MainMenu extends UiState {
         }
     }
 
-    public void addCars(Car carToAdd) {
-        listedCars.addCar(carToAdd);
+    public void addCar(Car carToAdd) {
+        super.addCar(carToAdd);
         for (UiState uiState : uiStates) {
-            uiState.addCars(carToAdd);
+            uiState.addCar(carToAdd);
+            System.out.println(uiState.listedCars.getCars().size());
         }
+        /**for (UiState uiState : uiStates) {
+            uiState.addCars(carToAdd);
+            System.out.println("adding car to " + uiState.getClass().getName());
+            System.out.println(listedCars.getCars().size());
+        }
+         */
     }
 }
