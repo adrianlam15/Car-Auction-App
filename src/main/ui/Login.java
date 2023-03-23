@@ -30,7 +30,6 @@ public class Login extends UiState {
     private HashMap<String, String> userMap;
     private Clip clip;
     private MainMenu mainMenuUI;
-    private User currentUser;
 
     /**
      * Constructs a new Login UI state
@@ -41,12 +40,10 @@ public class Login extends UiState {
      * @param frame
      */
     public Login(CardLayout cardLayout, JPanel cards,
-                 Users users, HashMap<String, String> userMap, JFrame frame,
-                 User currentUser) {
+                 Users users, HashMap<String, String> userMap, JFrame frame) {
         super(cardLayout, cards, frame);
         this.users = users;
         this.userMap = userMap;
-        this.currentUser = currentUser;
         this.usernameTextField = new JTextField();
         this.passwordTextField = new JPasswordField();
         this.inputFields = new ArrayList<>();
@@ -207,18 +204,14 @@ public class Login extends UiState {
             if (loggedIn) {
                 for (User user : users.getUsers()) {
                     if (user.getUsername().equals(username)) {
-                        currentUser = user;
-                        loggedIn = true;
+                        UiState.currentUser = user;
+                        System.out.println("Logged in as " + currentUser.getUsername());
+                        cardLayout.show(cards, "mainMenu");
+                        usernameTextField.setText("");
+                        passwordTextField.setText("");
                         break;
                     }
                 }
-                System.out.println("Logged in as " + currentUser.getUsername());
-                mainMenuUI.setCurrentUser(currentUser);
-                mainMenuUI.setUsers(users);
-                mainMenuUI.setListedCars(listedCars);
-                cardLayout.show(cards, "mainMenu");
-                usernameTextField.setText("");
-                passwordTextField.setText("");
             } else {
                 JOptionPane.showMessageDialog(frame, "Incorrect username or password you goofy goober",
                         "Login Error", JOptionPane.ERROR_MESSAGE);
@@ -252,8 +245,8 @@ public class Login extends UiState {
         signUp.addActionListener(e -> {
             CreateAccount createAccountUI = new CreateAccount(cardLayout, cards, users, userMap, frame, mainMenuUI);
             JPanel createAccountPanel = createAccountUI.initWin();
-            createAccountUI.setUsers(users);
-            createAccountUI.setListedCars(listedCars);
+            UiState.users = users;
+            UiState.listedCars = listedCars;
             cards.add(createAccountPanel, "createAccount");
             cardLayout.show(cards, "createAccount");
             });

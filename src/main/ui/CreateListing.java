@@ -248,6 +248,7 @@ public class CreateListing extends UiState {
 
         JButton create = new JButton("Create");
         create.addActionListener(e -> {
+            System.out.println(UiState.listedCars.getCars().size());
             try {
                 carToCreate.setMake(carMake.getText());
                 carToCreate.setModel(carModel.getText());
@@ -263,7 +264,7 @@ public class CreateListing extends UiState {
                         carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dialogRes == JOptionPane.YES_OPTION) {
                     currentUser.createCar(carToCreate);
-                    mainMenuUI.addCar(carToCreate);
+                    UiState.listedCars.addCar(carToCreate);
                     JOptionPane.showMessageDialog(null, "Listing created successfully.");
                 } else {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");

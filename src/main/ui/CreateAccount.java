@@ -168,8 +168,8 @@ public class CreateAccount extends UiState{
                 userMap.put(username, password);
                 users.add(currentUser);
                 System.out.println(userMap);
-                mainMenuUI.setUsers(users);
-                mainMenuUI.setListedCars(listedCars);
+                UiState.users = users;
+                UiState.listedCars = listedCars;
                 cardLayout.show(cards, "mainMenu");
             } else {
                 JOptionPane.showMessageDialog(frame, "Your passwords do not match",

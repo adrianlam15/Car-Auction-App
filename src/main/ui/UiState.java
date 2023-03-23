@@ -22,9 +22,9 @@ public abstract class UiState {
     protected CardLayout cardLayout;
     protected JPanel cards;
     protected JPanel panel;
-    protected User currentUser;
-    protected Cars listedCars;
-    protected Users users;
+    protected static User currentUser = new User();
+    protected static Cars listedCars;
+    protected static Users users;
 
     /**
      * Constructs a new UiState
@@ -36,8 +36,6 @@ public abstract class UiState {
         this.cardLayout = cardLayout;
         this.cards = cards;
         this.frame = frame;
-        this.listedCars = new Cars();
-        this.currentUser = new User();
         panel = new JPanel();
     }
 
@@ -74,19 +72,21 @@ public abstract class UiState {
         }
     }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+    /**
+    public void setCurrentUser(User toSetCurrentUser) {
+        this.currentUser = toSetCurrentUser;
     }
 
     public void addCar(Car car) {
         this.listedCars.addCar(car);
     }
 
-    public void setListedCars(Cars listedCars) {
-        this.listedCars = listedCars;
+    public void setListedCars(Cars toSetCars) {
+        this.listedCars = toSetCars;
     }
 
-    protected void setUsers(Users users) {
-        this.users = users;
+    protected void setUsers(Users toSetUsers) {
+        this.users = toSetUsers;
     }
+     */
 }

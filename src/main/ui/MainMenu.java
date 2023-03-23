@@ -139,6 +139,7 @@ public class MainMenu extends UiState {
         return buttons;
     }
 
+    /**
     public void setUsers(Users users) {
         super.setUsers(users);
         updateUsers();
@@ -154,42 +155,14 @@ public class MainMenu extends UiState {
 
     public void setListedCars(Cars listedCars) {
         super.setListedCars(listedCars);
-        updateListedCars();
-    }
-
-    private void updateListedCars() {
-        for (UiState uiState : uiStates) {
-            System.out.println("updating listed cars in " + uiState.getClass().getName());
-            uiState.setListedCars(listedCars);
-            System.out.println(listedCars.getCars().size());
-        }
     }
 
     public void setCurrentUser(User currentUser) {
-
-        for (UiState uiState : uiStates) {
-            System.out.println(uiState.currentUser.getUsername());
-        }
-    }
-
-    public void updateCurrentUser() {
-        for (UiState uiState : uiStates) {
-            System.out.println("updating current user in " + uiState.getClass().getName());
-            uiState.setCurrentUser(currentUser);
-        }
+        super.setCurrentUser(currentUser);
     }
 
     public void addCar(Car carToAdd) {
         super.addCar(carToAdd);
-        for (UiState uiState : uiStates) {
-            uiState.addCar(carToAdd);
-            System.out.println(uiState.listedCars.getCars().size());
-        }
-        /**for (UiState uiState : uiStates) {
-            uiState.addCars(carToAdd);
-            System.out.println("adding car to " + uiState.getClass().getName());
-            System.out.println(listedCars.getCars().size());
-        }
-         */
     }
+    */
 }
