@@ -10,14 +10,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * UiState class (including UI) for the Car Auction application
  */
 public abstract class UiState {
-    protected int width;
-    protected int height;
-    protected JFrame frame;
+    protected static JFrame frame;
     protected static CardLayout cardLayout;
     protected JPanel panel;
     protected static JPanel cards;
@@ -25,17 +24,25 @@ public abstract class UiState {
     protected static Cars listedCars;
     protected static Users users;
     protected static Font robotoFont;
+    protected static HashMap<String, String> userMap;
+    protected ArrayList<JButton> toSetButtons;
+    protected static CreateListing createListingUI;
+    protected static ViewListings viewListingsUI;
+    protected static ViewYourListings viewYourListingsUI;
+    protected static ViewBids viewBidsUI;
+    protected static ViewWon viewWonUI;
+    protected static JPanel createListingPanel;
+    protected static JPanel viewListingsPanel;
+    protected static JPanel viewYourListingsPanel;
+    protected static JPanel viewBidsPanel;
+    protected static JPanel viewWonPanel;
+    protected static HashMap<String, Boolean> activeClass = new HashMap<>();
 
     /**
      * Constructs a new UiState
-     * @param cardLayout
-     * @param cards
-     * @param frame
      */
-    public UiState(CardLayout cardLayout, JPanel cards, JFrame frame) {
-        this.cardLayout = cardLayout;
-        this.cards = cards;
-        this.frame = frame;
+    public UiState() {
+        toSetButtons = new ArrayList<>();
         panel = new JPanel();
     }
 
@@ -44,7 +51,6 @@ public abstract class UiState {
      * @return the JPanel of the UI state
      */
     protected JPanel initWin() {
-        panel.setSize(width, height);
         panel.setVisible(true);
         return panel;
     }
@@ -84,6 +90,14 @@ public abstract class UiState {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected static void updateStates() {
+        createListingPanel = createListingUI.initWin();
+        viewListingsPanel = viewListingsUI.initWin();
+        viewYourListingsPanel = viewYourListingsUI.initWin();
+        viewBidsPanel = viewBidsUI.initWin();
+        viewWonPanel = viewWonUI.initWin();
     }
 
     /**

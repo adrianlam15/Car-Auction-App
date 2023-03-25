@@ -74,13 +74,10 @@ public class AuctionApp {
         int winWidth = (int) Math.round(width) / 2;
         int winHeight = (int) Math.round(height) / 2;
         frame.setSize(winWidth, winHeight);
-        UiState.currentUser = currentUser;
-        UiState.loadFont();
-        UiState.users = users;
-        UiState.listedCars = listedCars;
-        Login loginUI = new Login(cardLayout, cards, users, userMap, frame);
+        initUiState();
+        Login loginUI = new Login();
         JPanel loginPanel = loginUI.initWin();
-        cards.add(loginPanel, "loginMenu");
+        UiState.cards.add(loginPanel, "loginMenu");
 
         frame.add(cards);
         cardLayout.show(cards, "loginMenu");
@@ -105,6 +102,17 @@ public class AuctionApp {
             command = input.next();
             processCommand(command);
         }
+    }
+
+    private void initUiState() {
+        UiState.currentUser = currentUser;
+        UiState.loadFont();
+        UiState.users = users;
+        UiState.listedCars = listedCars;
+        UiState.frame = frame;
+        UiState.cardLayout = cardLayout;
+        UiState.cards = cards;
+        UiState.userMap = userMap;
     }
 
     // EFFECTS: displays the main menu

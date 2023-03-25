@@ -4,7 +4,6 @@ import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,38 +11,26 @@ import java.util.HashMap;
  * MainMenu class (including UI) for the Car Auction application
  */
 public class MainMenu extends UiState {
-    private Users users;
-    private HashMap<String, String> userMap;
-    private ArrayList<JButton> toSetButtons;
-    private CreateListing createListingUI;
-    private ViewListings viewListingsUI;
-    private ViewYourListings viewYourListingsUI;
-    private ViewBids viewBidsUI;
-    private ViewWon viewWonUI;
-    private ArrayList<UiState> uiStates;
 
-    public MainMenu(CardLayout cardLayout, JPanel cards,
-                    Users users, HashMap<String, String> userMap, JFrame frame) {
-        super(cardLayout, cards, frame);
-        this.users = users;
-        this.userMap = userMap;
-        this.toSetButtons = new ArrayList<>();
-        createListingUI = new CreateListing(cardLayout, cards, users, userMap, frame);
-        viewListingsUI = new ViewListings(cardLayout, cards, users, userMap, frame);
-        viewYourListingsUI = new ViewYourListings(cardLayout, cards, users, userMap, frame);
-        viewBidsUI = new ViewBids(cardLayout, cards, users, userMap, frame);
-        viewWonUI = new ViewWon(cardLayout, cards, users, userMap, frame);
+    public MainMenu() {
+        super();
+        UiState.createListingUI = new CreateListing();
+        UiState.viewListingsUI = new ViewListings();
+        UiState.viewYourListingsUI = new ViewYourListings();
+        UiState.viewBidsUI = new ViewBids();
+        UiState.viewWonUI = new ViewWon();
 
-        JPanel createListingPanel = createListingUI.initWin();
-        JPanel viewListingsPanel = viewListingsUI.initWin();
-        JPanel viewYourListingsPanel = viewYourListingsUI.initWin();
-        JPanel viewBidsPanel = viewBidsUI.initWin();
-        JPanel viewWonPanel = viewWonUI.initWin();
-        cards.add(createListingPanel, "createListing");
-        cards.add(viewListingsPanel, "viewListings");
-        cards.add(viewYourListingsPanel, "viewYourListings");
-        cards.add(viewBidsPanel, "viewBids");
-        cards.add(viewWonPanel, "viewWon");
+        UiState.createListingPanel = UiState.createListingUI.initWin();
+        UiState.viewListingsPanel = UiState.viewListingsUI.initWin();
+        UiState.viewYourListingsPanel = UiState.viewYourListingsUI.initWin();
+        UiState.viewBidsPanel = UiState.viewBidsUI.initWin();
+        UiState.viewWonPanel = UiState.viewWonUI.initWin();
+
+        UiState.cards.add(UiState.createListingPanel, "createListing");
+        UiState.cards.add(UiState.viewListingsPanel, "viewListings");
+        UiState.cards.add(UiState.viewYourListingsPanel, "viewYourListings");
+        UiState.cards.add(UiState.viewBidsPanel, "viewBids");
+        UiState.cards.add(UiState.viewWonPanel, "viewWon");
     }
 
     /**

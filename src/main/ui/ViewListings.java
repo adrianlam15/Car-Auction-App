@@ -8,7 +8,6 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,20 +15,12 @@ import java.util.HashMap;
  * ViewListings class (including UI) for the Car Auction application
  */
 public class ViewListings extends UiState{
-    private ArrayList<JButton> toSetButtons;
 
     /**
      * Constructor for the ViewListings class
-     * @param cardLayout CardLayout for the UI
-     * @param cards JPanel for the UI
-     * @param users Users object for the application
-     * @param userMap HashMap of usernames and passwords
-     * @param frame JFrame for the UI
      */
-    public ViewListings(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                        JFrame frame) {
-        super(cardLayout, cards, frame);
-        this.toSetButtons = new ArrayList<>();
+    public ViewListings() {
+        super();
     }
 
     /**
@@ -45,7 +36,7 @@ public class ViewListings extends UiState{
      * Loads the UI for the ViewListings state
      * @return JPanel of the ViewListings UI
      */
-    private JPanel loadViewListings() {
+    protected JPanel loadViewListings() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getJButtons().forEach(button -> panel.add(button));
@@ -119,6 +110,7 @@ public class ViewListings extends UiState{
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
+            System.out.println("bidding view");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);

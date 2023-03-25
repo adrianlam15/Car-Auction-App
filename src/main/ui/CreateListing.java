@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateListing extends UiState {
-    private ArrayList<JButton> toSetButtons;
     private Car carToCreate;
     private JTextField carMake;
     private JTextField carModel;
@@ -23,13 +22,10 @@ public class CreateListing extends UiState {
     private JTextField carMileage;
     private JTextField carPrice;
     private JTextField carDescription;
-    private HashMap<String, String> userMap;
 
-    public CreateListing(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                         JFrame frame) {
-        super(cardLayout, cards, frame);
+    public CreateListing() {
+        super();
         this.carToCreate = new Car();
-        this.toSetButtons = new ArrayList<>();
     }
 
     protected JPanel initWin() {
@@ -203,11 +199,7 @@ public class CreateListing extends UiState {
 
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
-            System.out.println(currentUser.getUsername());
-            JPanel viewListingsPanelUpdate = new ViewListings(cardLayout, cards, users, userMap,
-                    frame).initWin();
-            cards.remove(1);
-            cards.add(viewListingsPanelUpdate, "viewListings");
+            System.out.println("Entering view listings");
             cardLayout.show(cards, "viewListings");
         });
          buttons.add(viewListings);
@@ -265,7 +257,7 @@ public class CreateListing extends UiState {
                     currentUser.createCar(carToCreate);
                     UiState.listedCars.addCar(carToCreate);
                     System.out.println(UiState.listedCars.getCars().size());
-                    JOptionPane.showMessageDialog(null, "Listing created successfully.");
+                    UiState.viewListingsPanel = viewListingsUI.loadViewListings();
                 } else {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
                 }

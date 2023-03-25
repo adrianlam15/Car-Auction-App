@@ -9,14 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ViewBids extends UiState {
-    private Users users;
-    private ArrayList<JButton> toSetButtons;
 
-    public ViewBids(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                    JFrame frame) {
-        super(cardLayout, cards, frame);
-        this.users = users;
-        this.toSetButtons = new ArrayList<>();
+    public ViewBids() {
+        super();
     }
 
     protected JPanel initWin() {

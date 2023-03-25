@@ -26,32 +26,23 @@ public class Login extends UiState {
     private ArrayList<JButton> toSetButtons;
     private String username;
     private String password;
-    private Users users;
-    private HashMap<String, String> userMap;
     private Clip clip;
     private MainMenu mainMenuUI;
 
     /**
      * Constructs a new Login UI state
      *
-     * @param cards
-     * @param users
-     * @param userMap
-     * @param frame
      */
-    public Login(CardLayout cardLayout, JPanel cards,
-                 Users users, HashMap<String, String> userMap, JFrame frame) {
-        super(cardLayout, cards, frame);
-        this.users = users;
-        this.userMap = userMap;
+    public Login() {
+        super();
         this.usernameTextField = new JTextField();
         this.passwordTextField = new JPasswordField();
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
-        this.mainMenuUI = new MainMenu(cardLayout, cards, users, userMap, frame);
+        this.mainMenuUI = new MainMenu();
         JPanel mainPanel = mainMenuUI.initWin();
-        cards.add(mainPanel, "mainMenu");
+        UiState.cards.add(mainPanel, "mainMenu");
 
     }
 
@@ -240,7 +231,7 @@ public class Login extends UiState {
         signUp.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40, 80,
                 20);
         signUp.addActionListener(e -> {
-            CreateAccount createAccountUI = new CreateAccount(cardLayout, cards, users, userMap, frame, mainMenuUI);
+            CreateAccount createAccountUI = new CreateAccount(users, userMap, frame, mainMenuUI);
             JPanel createAccountPanel = createAccountUI.initWin();
             UiState.users = users;
             UiState.listedCars = listedCars;

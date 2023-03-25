@@ -9,14 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ViewWon extends UiState {
-    private Users users;
-    private ArrayList<JButton> toSetButtons;
 
-    public ViewWon(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                   JFrame frame) {
-        super(cardLayout, cards, frame);
-        this.users = users;
-        this.toSetButtons = new ArrayList<>();
+    public ViewWon() {
+        super();
     }
 
     protected JPanel initWin() {
@@ -84,7 +79,7 @@ public class ViewWon extends UiState {
         int i = 0;
         for (JComponent button : buttons) {
             button.setFont(buttonFont.deriveFont(10f));
-            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
+            button.setBounds(0, (UiState.frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
             button.setBorder(border);
             if ((JButton) button != viewWonCars) {
                 toSetButtons.add((JButton) button);

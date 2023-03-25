@@ -6,17 +6,11 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ViewYourListings extends UiState {
-    private Users users;
-    private ArrayList<JButton> toSetButtons;
 
-    public ViewYourListings(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                            JFrame frame) {
-        super(cardLayout, cards, frame);
-        this.users = users;
-        this.toSetButtons = new ArrayList<>();
+    public ViewYourListings() {
+        super();
     }
 
     protected JPanel initWin() {
