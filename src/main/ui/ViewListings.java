@@ -6,6 +6,8 @@ import model.Users;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,9 +42,25 @@ public class ViewListings extends UiState{
         for (Car car : UiState.listedCars.getCars()) {
             carInfo = car.getCondition() + " " + car.getYear() + " " + car.getMake() + " " + car.getModel();
             JButton listing = new JButton(carInfo);
+            listing.setFocusPainted(false);
+            listing.setBackground(new Color(30,41,59));
+            listing.setForeground(new Color(148,163,184));
             listing.setFont(buttonFont);
             listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
                     , 500, 40);
+            listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+            listing.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent evt) {
+                    listing.setBackground(new Color(30,41,59));
+                    listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
+                    listing.setForeground(Color.WHITE);
+                }
+
+                public void mouseExited(MouseEvent evt) {
+                    listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+                    listing.setForeground(new Color(148,163,184));
+                }
+            });
             listings.add(listing);
             car.setId(i);
             i++;

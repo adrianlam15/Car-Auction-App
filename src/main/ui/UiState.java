@@ -58,15 +58,18 @@ public abstract class UiState {
             button.setBackground(new Color(99, 102, 241));
             button.setForeground(Color.WHITE);
             button.setFocusPainted(false);
+            button.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
             button.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
                     button.setBackground(new Color(30,41,59));
                     button.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
+                    button.setForeground(new Color(148,163,184));
                 }
 
                 public void mouseExited(MouseEvent evt) {
                     button.setBackground(new Color(99,102,241));
                     button.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+                    button.setForeground(Color.WHITE);
                 }
             });
         }
