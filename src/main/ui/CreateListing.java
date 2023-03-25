@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateListing extends UiState {
+    private ArrayList<JComponent> inputFields;
     private Car carToCreate;
     private JTextField carMake;
     private JTextField carModel;
@@ -26,14 +27,15 @@ public class CreateListing extends UiState {
     public CreateListing() {
         super();
         this.carToCreate = new Car();
+        inputFields = new ArrayList<>();
     }
 
     protected JPanel initWin() {
         super.initWin();
-        return loadCreateListingPanel();
+        return loadPanel();
     }
 
-    private JPanel loadCreateListingPanel() {
+    protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getInputFields().forEach(field -> panel.add(field));
@@ -42,8 +44,6 @@ public class CreateListing extends UiState {
     }
 
     private ArrayList<JComponent> getInputFields() {
-        ArrayList<JComponent> inputFields = new ArrayList<>();
-
         JLabel carMakeLabel = new JLabel("Car Make");
         inputFields.add(carMakeLabel);
 
@@ -237,8 +237,8 @@ public class CreateListing extends UiState {
         });
         buttons.add(logout);
 
-        JButton create = new JButton("Create");
-        create.addActionListener(e -> {
+        JButton createCar = new JButton("Create");
+        createCar.addActionListener(e -> {
             System.out.println(UiState.listedCars.getCars().size());
             try {
                 carToCreate.setMake(carMake.getText());
@@ -256,23 +256,30 @@ public class CreateListing extends UiState {
                 if (dialogRes == JOptionPane.YES_OPTION) {
                     currentUser.createCar(carToCreate);
                     UiState.listedCars.addCar(carToCreate);
-                    System.out.println(UiState.listedCars.getCars().size());
-                    UiState.viewListingsPanel = viewListingsUI.loadViewListings();
+                    UiState.updateListingPanel();
+                    JOptionPane.showMessageDialog(null, "Listing created successfully.");
+                    for (JComponent field : inputFields) {
+                        if (field instanceof JTextField && !((JTextField) field).getText().equals("")
+                                && !((JTextField) field).getText().contains("_")) {
+                            ((JTextField) field).setText("");
+                        }
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
                 }
             } catch (NumberFormatException err) {
+                System.out.println(err.getMessage());
                 JOptionPane.showMessageDialog(null, "Invalid year, mileage, or price.");
             }
         });
-        buttons.add(create);
+        buttons.add(createCar);
 
         Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
         int i = 0;
         for (JComponent button : buttons) {
             button.setBorder(border);
             button.setFont(robotoFont.deriveFont(10f));
-            if (button == create) {
+            if (button == createCar) {
                 button.setBounds((frame.getWidth() - 100) / 2 + 100, (frame.getHeight() - 40) / 2,
                         100, 40);
                 toSetButtons.add((JButton) button);

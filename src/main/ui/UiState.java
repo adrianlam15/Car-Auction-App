@@ -92,29 +92,9 @@ public abstract class UiState {
         }
     }
 
-    protected static void updateStates() {
-        createListingPanel = createListingUI.initWin();
-        viewListingsPanel = viewListingsUI.initWin();
-        viewYourListingsPanel = viewYourListingsUI.initWin();
-        viewBidsPanel = viewBidsUI.initWin();
-        viewWonPanel = viewWonUI.initWin();
-    }
+    protected abstract JPanel loadPanel();
 
-    /**
-    public void setCurrentUser(User toSetCurrentUser) {
-        this.currentUser = toSetCurrentUser;
+    protected static void updateListingPanel() {
+        viewListingsPanel = viewListingsUI.loadPanel();
     }
-
-    public void addCar(Car car) {
-        this.listedCars.addCar(car);
-    }
-
-    public void setListedCars(Cars toSetCars) {
-        this.listedCars = toSetCars;
-    }
-
-    protected void setUsers(Users toSetUsers) {
-        this.users = toSetUsers;
-    }
-     */
 }

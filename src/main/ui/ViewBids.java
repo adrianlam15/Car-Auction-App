@@ -16,10 +16,10 @@ public class ViewBids extends UiState {
 
     protected JPanel initWin() {
         super.initWin();
-        return loadViewBidsPanel();
+        return loadPanel();
     }
 
-    private JPanel loadViewBidsPanel() {
+    protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getJButtons().forEach(button -> panel.add(button));

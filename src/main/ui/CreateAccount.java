@@ -21,22 +21,13 @@ public class CreateAccount extends UiState{
     private String password;
     private String retypePassword;
     private User currentUser;
-    private HashMap<String, String> userMap;
-    private MainMenu mainMenuUI;
 
     /**
      * Constructs a new CreateAccount UI state
      *
-     * @param users
-     * @param userMap
-     * @param frame
      */
-    public CreateAccount(Users users, HashMap<String, String> userMap,
-                         JFrame frame, MainMenu mainMenuUI) {
+    public CreateAccount() {
         super();
-        this.users = users;
-        this.userMap = userMap;
-        this.mainMenuUI = mainMenuUI;
     }
 
     /**
@@ -48,15 +39,14 @@ public class CreateAccount extends UiState{
         this.usernameTextField = new JTextField();
         this.passwordTextField = new JPasswordField();
         this.retypePasswordField = new JPasswordField();
-        this.currentUser = new User();
-        return loadCreateAccountPanel();
+        return loadPanel();
     }
 
     /**
      * Loads the UI for the CreateAccount state
      * @return JPanel containing all components needed for UI
      */
-    private JPanel loadCreateAccountPanel() {
+    protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getInputFields().forEach(inputField -> panel.add(inputField));

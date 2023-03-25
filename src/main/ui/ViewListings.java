@@ -29,14 +29,14 @@ public class ViewListings extends UiState{
      */
     protected JPanel initWin() {
         super.initWin();
-        return loadViewListings();
+        return loadPanel();
     }
 
     /**
      * Loads the UI for the ViewListings state
      * @return JPanel of the ViewListings UI
      */
-    protected JPanel loadViewListings() {
+    protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getJButtons().forEach(button -> panel.add(button));
@@ -62,7 +62,7 @@ public class ViewListings extends UiState{
             listing.setForeground(new Color(148,163,184));
             listing.setFont(buttonFont);
             listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
-                    , 500, 40);
+                    , 300, 40);
             listing.setBorder(border);
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {

@@ -69,14 +69,14 @@ public class Login extends UiState {
     protected JPanel initWin() {
         playMusic("./data/ZA-ZA - LOVE & MONEY.wav");
         super.initWin();
-        return loadLoginPanel();
+        return loadPanel();
     }
 
     /**
      * Loads the login panel
      * @return JPanel with all the components
      */
-    private JPanel loadLoginPanel() {
+    protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getInputFields().forEach(inputField -> panel.add(inputField));
@@ -231,7 +231,7 @@ public class Login extends UiState {
         signUp.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40, 80,
                 20);
         signUp.addActionListener(e -> {
-            CreateAccount createAccountUI = new CreateAccount(users, userMap, frame, mainMenuUI);
+            CreateAccount createAccountUI = new CreateAccount();
             JPanel createAccountPanel = createAccountUI.initWin();
             UiState.users = users;
             UiState.listedCars = listedCars;

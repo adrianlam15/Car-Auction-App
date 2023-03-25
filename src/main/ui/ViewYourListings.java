@@ -15,10 +15,10 @@ public class ViewYourListings extends UiState {
 
     protected JPanel initWin() {
         super.initWin();
-        return loadViewWon();
+        return loadPanel();
     }
 
-    private JPanel loadViewWon() {
+    protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getJButtons().forEach(button -> panel.add(button));

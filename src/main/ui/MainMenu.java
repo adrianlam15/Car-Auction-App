@@ -39,14 +39,14 @@ public class MainMenu extends UiState {
      */
     protected JPanel initWin() {
         super.initWin();
-        return loadMainMenuPanel();
+        return loadPanel();
     }
 
     /**
      * Loads the UI for the MainMenu state
      * @return JPanel containing all components needed for UI
      */
-    private JPanel loadMainMenuPanel() {
+    protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
         getJButtons().forEach(button -> panel.add(button));
