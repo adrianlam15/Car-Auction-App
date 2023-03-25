@@ -12,20 +12,39 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * ViewListings class (including UI) for the Car Auction application
+ */
 public class ViewListings extends UiState{
     private ArrayList<JButton> toSetButtons;
 
+    /**
+     * Constructor for the ViewListings class
+     * @param cardLayout CardLayout for the UI
+     * @param cards JPanel for the UI
+     * @param users Users object for the application
+     * @param userMap HashMap of usernames and passwords
+     * @param frame JFrame for the UI
+     */
     public ViewListings(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                         JFrame frame) {
         super(cardLayout, cards, frame);
         this.toSetButtons = new ArrayList<>();
     }
 
+    /**
+     * Initializes the UI for the ViewListings state
+     * @return JPanel of the ViewListings UI
+     */
     protected JPanel initWin() {
         super.initWin();
         return loadViewListings();
     }
 
+    /**
+     * Loads the UI for the ViewListings state
+     * @return JPanel of the ViewListings UI
+     */
     private JPanel loadViewListings() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -34,11 +53,16 @@ public class ViewListings extends UiState{
         return panel;
     }
 
+    /**
+     * Gets the list of JButtons for the ViewListings state
+     * @return ArrayList of JButtons
+     */
     private ArrayList<JComponent> getListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         int i = 1;
         String carInfo;
+        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         for (Car car : UiState.listedCars.getCars()) {
             carInfo = car.getCondition() + " " + car.getYear() + " " + car.getMake() + " " + car.getModel();
             JButton listing = new JButton(carInfo);
@@ -48,7 +72,7 @@ public class ViewListings extends UiState{
             listing.setFont(buttonFont);
             listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
                     , 500, 40);
-            listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+            listing.setBorder(border);
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
                     listing.setBackground(new Color(30,41,59));
