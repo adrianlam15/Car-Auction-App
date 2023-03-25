@@ -90,13 +90,17 @@ public class AuctionApp {
          * Everything below this line is near irrelevant besides logic
          */
         input = new Scanner(System.in);
-        listedCars = new Cars();
         input.useDelimiter("\n");
         loggedIn = false;
         currentUser = new User();
         String command;
         System.out.println("username, password: " + userMap);
         while (keepGoing) {
+            if (UiState.listedCars.getCars().size() > listedCars.getCars().size()) {
+                listedCars = UiState.listedCars;
+            } else {
+                UiState.listedCars = listedCars;
+            }
             displayMenu(loggedIn);
             command = input.next();
             processCommand(command);

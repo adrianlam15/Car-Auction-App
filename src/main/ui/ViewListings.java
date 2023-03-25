@@ -101,6 +101,7 @@ public class ViewListings extends UiState{
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
+            System.out.println(UiState.listedCars.getCars().size());
             cardLayout.show(cards, "createListing");
         });
         buttons.add(createListing);

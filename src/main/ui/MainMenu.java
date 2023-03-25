@@ -33,12 +33,6 @@ public class MainMenu extends UiState {
         viewYourListingsUI = new ViewYourListings(cardLayout, cards, users, userMap, frame);
         viewBidsUI = new ViewBids(cardLayout, cards, users, userMap, frame);
         viewWonUI = new ViewWon(cardLayout, cards, users, userMap, frame);
-        uiStates = new ArrayList<>();
-        uiStates.add(createListingUI);
-        uiStates.add(viewListingsUI);
-        uiStates.add(viewYourListingsUI);
-        uiStates.add(viewBidsUI);
-        uiStates.add(viewWonUI);
 
         JPanel createListingPanel = createListingUI.initWin();
         JPanel viewListingsPanel = viewListingsUI.initWin();

@@ -5,6 +5,7 @@ import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.text.View;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class CreateListing extends UiState {
     private JTextField carMileage;
     private JTextField carPrice;
     private JTextField carDescription;
+    private HashMap<String, String> userMap;
 
     public CreateListing(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                          JFrame frame) {
@@ -202,6 +204,10 @@ public class CreateListing extends UiState {
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
             System.out.println(currentUser.getUsername());
+            JPanel viewListingsPanelUpdate = new ViewListings(cardLayout, cards, users, userMap,
+                    frame).initWin();
+            cards.remove(1);
+            cards.add(viewListingsPanelUpdate, "viewListings");
             cardLayout.show(cards, "viewListings");
         });
          buttons.add(viewListings);
@@ -258,6 +264,7 @@ public class CreateListing extends UiState {
                 if (dialogRes == JOptionPane.YES_OPTION) {
                     currentUser.createCar(carToCreate);
                     UiState.listedCars.addCar(carToCreate);
+                    System.out.println(UiState.listedCars.getCars().size());
                     JOptionPane.showMessageDialog(null, "Listing created successfully.");
                 } else {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
