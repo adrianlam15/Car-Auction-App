@@ -56,7 +56,7 @@ public class CreateListing extends UiState {
 
         carMakeLabel.setLabelFor(carMake);
 
-        JLabel carMakeUnderline = new JLabel("____________________");
+        JLabel carMakeUnderline = new JLabel("________________________");
         inputFields.add(carMakeUnderline);
 
         JLabel carModelLabel = new JLabel("Car Model");
@@ -66,7 +66,7 @@ public class CreateListing extends UiState {
         carModel = new JTextField();
         inputFields.add(carModel);
 
-        JLabel carModelUnderline = new JLabel("____________________");
+        JLabel carModelUnderline = new JLabel("________________________");
         inputFields.add(carModelUnderline);
 
         JLabel carColourLabel = new JLabel("Car Colour");
@@ -75,7 +75,7 @@ public class CreateListing extends UiState {
         carColour = new JTextField();
         inputFields.add(carColour);
 
-        JLabel carColourUnderline = new JLabel("____________________");
+        JLabel carColourUnderline = new JLabel("________________________");
         inputFields.add(carColourUnderline);
 
         JLabel carTransmissionLabel = new JLabel("Car Transmission");
@@ -84,7 +84,7 @@ public class CreateListing extends UiState {
         carTransmission = new JTextField();
         inputFields.add(carTransmission);
 
-        JLabel carTransmissionUnderline = new JLabel("____________________");
+        JLabel carTransmissionUnderline = new JLabel("________________________");
         inputFields.add(carTransmissionUnderline);
 
         JLabel carDriveTypeLabel = new JLabel("Car Drive Type");
@@ -93,7 +93,7 @@ public class CreateListing extends UiState {
         carDriveType = new JTextField();
         inputFields.add(carDriveType);
 
-        JLabel carDriveTypeUnderline = new JLabel("____________________");
+        JLabel carDriveTypeUnderline = new JLabel("________________________");
         inputFields.add(carDriveTypeUnderline);
 
         JLabel carConditionLabel = new JLabel("Car Condition");
@@ -102,7 +102,7 @@ public class CreateListing extends UiState {
         carCondition = new JTextField();
         inputFields.add(carCondition);
 
-        JLabel carConditionUnderline = new JLabel("____________________");
+        JLabel carConditionUnderline = new JLabel("________________________");
         inputFields.add(carConditionUnderline);
 
         JLabel carYearLabel = new JLabel("Car Year");
@@ -111,7 +111,7 @@ public class CreateListing extends UiState {
         carYear = new JTextField();
         inputFields.add(carYear);
 
-        JLabel carYearUnderline = new JLabel("____________________");
+        JLabel carYearUnderline = new JLabel("________________________");
         inputFields.add(carYearUnderline);
 
         JLabel carMileageLabel = new JLabel("Car Mileage");
@@ -120,7 +120,7 @@ public class CreateListing extends UiState {
         carMileage = new JTextField();
         inputFields.add(carMileage);
 
-        JLabel carMileageUnderline = new JLabel("____________________");
+        JLabel carMileageUnderline = new JLabel("________________________");
         inputFields.add(carMileageUnderline);
 
         JLabel carPriceLabel = new JLabel("Car Price");
@@ -129,7 +129,7 @@ public class CreateListing extends UiState {
         carPrice = new JTextField();
         inputFields.add(carPrice);
 
-        JLabel carPriceUnderline = new JLabel("____________________");
+        JLabel carPriceUnderline = new JLabel("________________________");
         inputFields.add(carPriceUnderline);
 
         JLabel carDescriptionLabel = new JLabel("Car Description");
@@ -138,7 +138,7 @@ public class CreateListing extends UiState {
         carDescription = new JTextField();
         inputFields.add(carDescription);
 
-        JLabel carDescriptionUnderline = new JLabel("____________________");
+        JLabel carDescriptionUnderline = new JLabel("________________________");
         inputFields.add(carDescriptionUnderline);
         setInputFields(inputFields);
         return inputFields;

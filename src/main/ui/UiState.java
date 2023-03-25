@@ -18,9 +18,9 @@ public abstract class UiState {
     protected int width;
     protected int height;
     protected JFrame frame;
-    protected CardLayout cardLayout;
-    protected JPanel cards;
+    protected static CardLayout cardLayout;
     protected JPanel panel;
+    protected static JPanel cards;
     protected static User currentUser = new User();
     protected static Cars listedCars;
     protected static Users users;
