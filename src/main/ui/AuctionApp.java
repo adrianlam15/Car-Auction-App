@@ -74,11 +74,12 @@ public class AuctionApp {
         int winWidth = (int) Math.round(width) / 2;
         int winHeight = (int) Math.round(height) / 2;
         frame.setSize(winWidth, winHeight);
-        Login loginUI = new Login(cardLayout, cards, users, userMap, frame);
-        JPanel loginPanel = loginUI.initWin();
         UiState.currentUser = currentUser;
+        UiState.loadFont();
         UiState.users = users;
         UiState.listedCars = listedCars;
+        Login loginUI = new Login(cardLayout, cards, users, userMap, frame);
+        JPanel loginPanel = loginUI.initWin();
         cards.add(loginPanel, "loginMenu");
 
         frame.add(cards);

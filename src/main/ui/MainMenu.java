@@ -1,8 +1,5 @@
 package ui;
 
-import model.Car;
-import model.Cars;
-import model.User;
 import model.Users;
 
 import javax.swing.*;
@@ -31,7 +28,7 @@ public class MainMenu extends UiState {
         this.users = users;
         this.userMap = userMap;
         this.toSetButtons = new ArrayList<>();
-        createListingUI = new CreateListing(cardLayout, cards, users, userMap, frame, this);
+        createListingUI = new CreateListing(cardLayout, cards, users, userMap, frame);
         viewListingsUI = new ViewListings(cardLayout, cards, users, userMap, frame);
         viewYourListingsUI = new ViewYourListings(cardLayout, cards, users, userMap, frame);
         viewBidsUI = new ViewBids(cardLayout, cards, users, userMap, frame);
@@ -80,7 +77,6 @@ public class MainMenu extends UiState {
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         ArrayList<JComponent> buttons = new ArrayList<>();
 
         JButton createListing = new JButton("Create Listing");
@@ -129,7 +125,7 @@ public class MainMenu extends UiState {
         Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
         int i = 0;
         for (JComponent button : buttons) {
-            button.setFont(buttonFont.deriveFont(10f));
+            button.setFont(robotoFont.deriveFont(10f));
             button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
             button.setBorder(border);
             toSetButtons.add((JButton) button);

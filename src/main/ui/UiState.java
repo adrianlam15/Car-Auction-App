@@ -1,15 +1,14 @@
 package ui;
 
-import model.Car;
 import model.Cars;
 import model.User;
 import model.Users;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +24,7 @@ public abstract class UiState {
     protected static User currentUser = new User();
     protected static Cars listedCars;
     protected static Users users;
+    protected static Font robotoFont;
 
     /**
      * Constructs a new UiState
@@ -69,6 +69,17 @@ public abstract class UiState {
                     button.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
                 }
             });
+        }
+    }
+
+    protected static void loadFont() {
+        try {
+            File fontFile = new File("./data/Roboto/Roboto-Regular.ttf");
+            robotoFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(robotoFont);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -133,20 +133,18 @@ public class Login extends UiState {
      * @return ArrayList of JComponents (input fields)
      */
     private ArrayList<JComponent> getInputFields() {
-        Font labelFont = new Font("Roboto", Font.PLAIN, 10);
-
         usernameTextField.setForeground(Color.WHITE);
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setForeground(new Color(148,163,184));
         usernameLabel.setLabelFor(usernameTextField);
-        usernameLabel.setFont(labelFont);
+        usernameLabel.setFont(robotoFont.deriveFont(11f));
         usernameLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 70,
                 200, 20);
         usernameTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 50,
                 200, 20);
         usernameTextField.setBorder(BorderFactory.createEmptyBorder());
         usernameTextField.setOpaque(false);
-        JLabel usernameUnderline = new JLabel("________________________________________");
+        JLabel usernameUnderline = new JLabel("_________________________________________________");
         usernameUnderline.setFont(new Font("Roboto", Font.PLAIN, 9));
         usernameUnderline.setForeground(new Color(148,163,184));
         usernameUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 40,
@@ -156,22 +154,22 @@ public class Login extends UiState {
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setForeground(new Color(148,163,184));
         passwordLabel.setLabelFor(passwordTextField);
-        passwordLabel.setFont(labelFont);
+        passwordLabel.setFont(robotoFont.deriveFont(11f));
         passwordLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 20,
                 200, 20);
         passwordTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2,
                 200, 20);
         passwordTextField.setBorder(BorderFactory.createEmptyBorder());
         passwordTextField.setOpaque(false);
-        JLabel passwordUnderline = new JLabel("________________________________________");
-        passwordUnderline.setFont(new Font("Roboto", Font.PLAIN, 9));
+        JLabel passwordUnderline = new JLabel("_________________________________________________");
+        passwordUnderline.setFont(robotoFont.deriveFont(9f));
         passwordUnderline.setForeground(new Color(148,163,184));
         passwordUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 10,
                 300, 10);
 
         JLabel orLabel = new JLabel("OR");
         orLabel.setForeground(new Color(148,163,184));
-        orLabel.setFont(labelFont.deriveFont(8f));
+        orLabel.setFont(robotoFont.deriveFont(8f));
         orLabel.setBounds((frame.getWidth() - 100) / 2 + 45, (frame.getHeight() - 40) / 2 + 40,
                 20, 20);
 
@@ -190,11 +188,10 @@ public class Login extends UiState {
      * @return ArrayList of JComponents (buttons)
      */
     private ArrayList<JComponent> getJButtons() {
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         Border border = BorderFactory.createLineBorder(new Color(30,41,59), 2);
 
         JButton loginButton = new JButton("Login");
-        loginButton.setFont(buttonFont.deriveFont(10f));
+        loginButton.setFont(robotoFont.deriveFont(10f));
         loginButton.setBounds((frame.getWidth() - 100) / 2 + 70, (frame.getHeight() - 40) / 2 + 40, 80,
                 20);
         loginButton.addActionListener(e -> {
@@ -222,7 +219,7 @@ public class Login extends UiState {
         buttons.add(loginButton);
 
         JButton seePass = new JButton("Show");
-        seePass.setFont(buttonFont.deriveFont(14f));
+        seePass.setFont(robotoFont.deriveFont(14f));
         seePass.setBounds((frame.getWidth() - 100) / 2 + 160, (frame.getHeight() - 20) / 2,
                 20, 20);
         seePass.addActionListener(e -> {
@@ -239,7 +236,7 @@ public class Login extends UiState {
         buttons.add(seePass);
 
         JButton signUp = new JButton("Sign Up");
-        signUp.setFont(buttonFont.deriveFont(10f));
+        signUp.setFont(robotoFont.deriveFont(10f));
         signUp.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40, 80,
                 20);
         signUp.addActionListener(e -> {
@@ -254,7 +251,7 @@ public class Login extends UiState {
         toSetButtons.add(signUp);
 
         JButton toggleMusic = new JButton("Mute");
-        toggleMusic.setFont(buttonFont.deriveFont(10f));
+        toggleMusic.setFont(robotoFont.deriveFont(10f));
         toggleMusic.setBounds((frame.getWidth() - 80) / 2, (frame.getHeight() - 40) / 2 + 100, 20,
                 20);
         toggleMusic.addActionListener(e -> {

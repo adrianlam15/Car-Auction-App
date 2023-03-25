@@ -11,13 +11,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ViewListings extends UiState{
-    private Users users;
     private ArrayList<JButton> toSetButtons;
 
     public ViewListings(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
                         JFrame frame) {
         super(cardLayout, cards, frame);
-        this.users = users;
         this.toSetButtons = new ArrayList<>();
     }
 
@@ -37,8 +35,18 @@ public class ViewListings extends UiState{
     private ArrayList<JComponent> getListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
-
-        // TODO: get listings
+        int i = 1;
+        String carInfo;
+        for (Car car : UiState.listedCars.getCars()) {
+            carInfo = car.getCondition() + " " + car.getYear() + " " + car.getMake() + " " + car.getModel();
+            JButton listing = new JButton(carInfo);
+            listing.setFont(buttonFont);
+            listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
+                    , 500, 40);
+            listings.add(listing);
+            car.setId(i);
+            i++;
+        }
         return listings;
     }
 

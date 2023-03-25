@@ -1,7 +1,6 @@
 package ui;
 
 import model.Car;
-import model.User;
 import model.Users;
 
 import javax.swing.*;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateListing extends UiState {
-    private Users users;
     private ArrayList<JButton> toSetButtons;
     private Car carToCreate;
     private JTextField carMake;
@@ -24,13 +22,10 @@ public class CreateListing extends UiState {
     private JTextField carMileage;
     private JTextField carPrice;
     private JTextField carDescription;
-    private MainMenu mainMenuUI;
 
     public CreateListing(CardLayout cardLayout, JPanel cards, Users users, HashMap<String, String> userMap,
-                         JFrame frame, MainMenu mainMenuUI) {
+                         JFrame frame) {
         super(cardLayout, cards, frame);
-        this.users = users;
-        this.mainMenuUI = mainMenuUI;
         this.carToCreate = new Car();
         this.toSetButtons = new ArrayList<>();
     }
@@ -158,17 +153,16 @@ public class CreateListing extends UiState {
         int underlineHeight = 10;
 
         for (JComponent field : inputFields) {
-            System.out.println(y);
             if (field instanceof JLabel && !((JLabel) field).getText().contains("_")) {
-                field.setFont(new Font("Roboto", Font.PLAIN, 12));
+                field.setFont(robotoFont.deriveFont(12f));
                 field.setForeground(new Color(148, 163, 184));
             } else if (field instanceof JTextField) {
-                field.setFont(new Font("Roboto", Font.PLAIN, 12));
+                field.setFont(robotoFont.deriveFont(12f));
                 field.setForeground(Color.WHITE);
                 field.setBorder(BorderFactory.createEmptyBorder());
                 field.setOpaque(false);
             } else if (field instanceof JLabel && ((JLabel) field).getText().contains("_")) {
-                field.setFont(new Font("Roboto", Font.PLAIN, 9));
+                field.setFont(robotoFont.deriveFont(9f));
                 field.setForeground(new Color(148, 163, 184));
             }
         }
@@ -200,7 +194,6 @@ public class CreateListing extends UiState {
      */
      private ArrayList<JComponent> getJButtons() {
         ArrayList<JComponent> buttons = new ArrayList<>();
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.setBackground(new java.awt.Color(30, 41, 59));
         createListing.setFocusPainted(false);
@@ -279,7 +272,7 @@ public class CreateListing extends UiState {
         int i = 0;
         for (JComponent button : buttons) {
             button.setBorder(border);
-            button.setFont(buttonFont.deriveFont(10f));
+            button.setFont(robotoFont.deriveFont(10f));
             if (button == create) {
                 button.setBounds((frame.getWidth() - 100) / 2 + 100, (frame.getHeight() - 40) / 2,
                         100, 40);

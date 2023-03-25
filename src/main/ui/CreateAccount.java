@@ -71,22 +71,21 @@ public class CreateAccount extends UiState{
      * @return ArrayList of JComponents (input fields)
      */
     private ArrayList<JComponent> getInputFields() {
-        Font labelFont = new Font("Roboto", Font.PLAIN, 10);
         ArrayList<JComponent> inputFields = new ArrayList<>();
 
         usernameTextField.setForeground(Color.WHITE);
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setForeground(new Color(148,163,184));
         usernameLabel.setLabelFor(usernameTextField);
-        usernameLabel.setFont(labelFont);
+        usernameLabel.setFont(robotoFont.deriveFont(11f));
         usernameLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 90,
                 200, 20);
         usernameTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 70,
                 200, 20);
         usernameTextField.setBorder(BorderFactory.createEmptyBorder());
         usernameTextField.setOpaque(false);
-        JLabel usernameUnderline = new JLabel("________________________________________");
-        usernameUnderline.setFont(new Font("Roboto", Font.PLAIN, 9));
+        JLabel usernameUnderline = new JLabel("_________________________________________________");
+        usernameUnderline.setFont(robotoFont.deriveFont(9f));
         usernameUnderline.setForeground(new Color(148,163,184));
         usernameUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 60,
                 300, 10);
@@ -95,15 +94,15 @@ public class CreateAccount extends UiState{
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setForeground(new Color(148,163,184));
         passwordLabel.setLabelFor(passwordTextField);
-        passwordLabel.setFont(labelFont);
+        passwordLabel.setFont(robotoFont.deriveFont(11f));
         passwordLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 40,
                 200, 20);
         passwordTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 20,
                 200, 20);
         passwordTextField.setBorder(BorderFactory.createEmptyBorder());
         passwordTextField.setOpaque(false);
-        JLabel passwordUnderline = new JLabel("________________________________________");
-        passwordUnderline.setFont(new Font("Roboto", Font.PLAIN, 9));
+        JLabel passwordUnderline = new JLabel("_________________________________________________");
+        passwordUnderline.setFont(robotoFont.deriveFont(9f));
         passwordUnderline.setForeground(new Color(148,163,184));
         passwordUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 10,
                 300, 10);
@@ -112,15 +111,15 @@ public class CreateAccount extends UiState{
         JLabel retypePasswordLabel = new JLabel("Re-type Password");
         retypePasswordLabel.setForeground(new Color(148,163,184));
         retypePasswordLabel.setLabelFor(passwordTextField);
-        retypePasswordLabel.setFont(labelFont);
+        retypePasswordLabel.setFont(robotoFont.deriveFont(11f));
         retypePasswordLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 10,
                 200, 20);
         retypePasswordField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 30,
                 200, 20);
         retypePasswordField.setBorder(BorderFactory.createEmptyBorder());
         retypePasswordField.setOpaque(false);
-        JLabel retypeUnderline = new JLabel("________________________________________");
-        retypeUnderline.setFont(new Font("Roboto", Font.PLAIN, 9));
+        JLabel retypeUnderline = new JLabel("_________________________________________________");
+        retypeUnderline.setFont(robotoFont.deriveFont(9f));
         retypeUnderline.setForeground(new Color(148,163,184));
         retypeUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 40,
                 300, 10);
@@ -157,6 +156,11 @@ public class CreateAccount extends UiState{
             username = usernameTextField.getText();
             password = passwordTextField.getText();
             retypePassword = retypePasswordField.getText();
+            if (username.equals("") || password.equals("") || retypePassword.equals("")) {
+                JOptionPane.showMessageDialog(frame, "Please fill out all fields",
+                        "Empty Field", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             for (User u : users.getUsers()) {
                 if (u.getUsername().equals(username)) {
                     JOptionPane.showMessageDialog(frame, "Username already exists",
@@ -167,9 +171,9 @@ public class CreateAccount extends UiState{
             if (currentUser.createUser(username, password, retypePassword)) {
                 userMap.put(username, password);
                 users.add(currentUser);
+                UiState.currentUser = currentUser;
                 System.out.println(userMap);
                 UiState.users = users;
-                UiState.listedCars = listedCars;
                 cardLayout.show(cards, "mainMenu");
             } else {
                 JOptionPane.showMessageDialog(frame, "Your passwords do not match",
