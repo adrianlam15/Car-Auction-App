@@ -23,15 +23,15 @@ import javax.swing.*;
 
 // Represents the Car Auction App User Interface
 public class AuctionApp {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    private final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private static final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
 
     private static final String JSON_STORE = "./data/data.json";
     private JsonReader jsonReader;
-    private JsonWriter jsonWriter;
+    private static JsonWriter jsonWriter;
     private Scanner input;
     private User currentUser;
-    private Users users;
+    private static Users users;
     private boolean loggedIn;
     private boolean keepGoing = true;
     private Cars listedCars = null;
@@ -445,7 +445,7 @@ public class AuctionApp {
 
     // MODIFIES: this
     // EFFECTS: saves the data to file
-    private void save() {
+    public static void save() {
         try {
             jsonWriter.open();
             LocalDateTime now = LocalDateTime.now();

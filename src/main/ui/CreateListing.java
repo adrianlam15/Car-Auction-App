@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.View;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -228,6 +229,10 @@ public class CreateListing extends UiState {
         buttons.add(loadUpToDateData);
 
         JButton saveCurrentData = new JButton("Save Current Data");
+        saveCurrentData.addActionListener(e -> {
+            System.out.println("Saving current data...");
+            AuctionApp.save();
+        });
         buttons.add(saveCurrentData);
 
         JButton logout = new JButton("Logout");

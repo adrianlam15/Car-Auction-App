@@ -1,5 +1,5 @@
 {
-    "date": "17-03-2023 13:03:30",
+    "date": "24-03-2023 23:54:02",
     "users": [
         {
             "password": "1234",
@@ -7,7 +7,7 @@
             "biddedCars": [],
             "listedCars": [
                 {
-                    "timeLeftInSeconds": 884,
+                    "timeLeftInSeconds": 854,
                     "year": 1998,
                     "driveType": "FWD",
                     "description": "Like new",
@@ -22,7 +22,7 @@
                     "mileage": 150000
                 },
                 {
-                    "timeLeftInSeconds": 99924,
+                    "timeLeftInSeconds": 99894,
                     "year": 1998,
                     "driveType": "FWD",
                     "description": "Good",
@@ -45,7 +45,7 @@
             "biddedCars": [
                 {
                     "car": {
-                        "timeLeftInSeconds": 884,
+                        "timeLeftInSeconds": 854,
                         "year": 1998,
                         "driveType": "FWD",
                         "description": "Like new",
@@ -63,7 +63,7 @@
                 },
                 {
                     "car": {
-                        "timeLeftInSeconds": 99924,
+                        "timeLeftInSeconds": 99894,
                         "year": 1998,
                         "driveType": "FWD",
                         "description": "Good",
