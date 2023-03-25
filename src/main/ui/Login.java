@@ -21,9 +21,6 @@ public class Login extends UiState {
     private boolean loggedIn = false;
     private JTextField usernameTextField;
     private JPasswordField passwordTextField;
-    private ArrayList<JComponent> inputFields;
-    private ArrayList<JComponent> buttons;
-    private ArrayList<JButton> toSetButtons;
     private String username;
     private String password;
     private Clip clip;
@@ -40,9 +37,6 @@ public class Login extends UiState {
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
-        this.mainMenuUI = new MainMenu();
-        JPanel mainPanel = mainMenuUI.initWin();
-        UiState.cards.add(mainPanel, "mainMenu");
 
     }
 
@@ -209,17 +203,24 @@ public class Login extends UiState {
         toSetButtons.add(loginButton);
         buttons.add(loginButton);
 
-        JButton seePass = new JButton("Show");
-        seePass.setFont(robotoFont.deriveFont(14f));
+        JButton seePass = new JButton();
+        ImageIcon seePassIcon = new ImageIcon("./data/view.png");
+        Image seePassImage = seePassIcon.getImage();
+        Image newSeePassImage = seePassImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon newSeePassIcon = new ImageIcon(newSeePassImage);
+        seePass.setIcon(newSeePassIcon);
         seePass.setBounds((frame.getWidth() - 100) / 2 + 160, (frame.getHeight() - 20) / 2,
-                20, 20);
+                25, 25);
+        final boolean[] show = {false};
         seePass.addActionListener(e -> {
-            if (seePass.getText().equals("Show")) {
-                passwordTextField.setEchoChar((char) 0);
-                seePass.setText("Hide");
-            } else {
+            if (show[0]) {
                 passwordTextField.setEchoChar('•');
-                seePass.setText("Show");
+                setImageIcon(show[0], seePass);
+                show[0] = false;
+            } else {
+                passwordTextField.setEchoChar((char) 0);
+                setImageIcon(show[0], seePass);
+                show[0] = true;
             }
         });
         seePass.setBorder(border);
@@ -233,8 +234,6 @@ public class Login extends UiState {
         signUp.addActionListener(e -> {
             CreateAccount createAccountUI = new CreateAccount();
             JPanel createAccountPanel = createAccountUI.initWin();
-            UiState.users = users;
-            UiState.listedCars = listedCars;
             cards.add(createAccountPanel, "createAccount");
             cardLayout.show(cards, "createAccount");
             });
@@ -262,5 +261,19 @@ public class Login extends UiState {
         buttons.add(signUp);
         buttons.add(toggleMusic);
         return buttons;
+    }
+
+    public void setImageIcon(boolean show, JButton seePass) {
+        ImageIcon seePassIcon;
+        if (show) {
+            seePassIcon = new ImageIcon("./data/view.png");
+
+        } else {
+            seePassIcon = new ImageIcon("./data/hide.png");
+        }
+        Image seePassImage = seePassIcon.getImage();
+        Image newSeePassImage = seePassImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon newSeePassIcon = new ImageIcon(newSeePassImage);
+        seePass.setIcon(newSeePassIcon);
     }
 }

@@ -27,7 +27,7 @@ public class AuctionApp {
     private static final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
 
     private static final String JSON_STORE = "./data/data.json";
-    private JsonReader jsonReader;
+    private static JsonReader jsonReader;
     private static JsonWriter jsonWriter;
     private Scanner input;
     private User currentUser;
@@ -75,10 +75,6 @@ public class AuctionApp {
         int winHeight = (int) Math.round(height) / 2;
         frame.setSize(winWidth, winHeight);
         initUiState();
-        Login loginUI = new Login();
-        JPanel loginPanel = loginUI.initWin();
-        UiState.cards.add(loginPanel, "loginMenu");
-
         frame.add(cards);
         cardLayout.show(cards, "loginMenu");
         frame.setVisible(true);
@@ -113,6 +109,31 @@ public class AuctionApp {
         UiState.cardLayout = cardLayout;
         UiState.cards = cards;
         UiState.userMap = userMap;
+        UiState.loginUI = new Login();
+        UiState.mainMenuUI = new MainMenu();
+        UiState.createListingUI = new CreateListing();
+        UiState.viewListingsUI = new ViewListings();
+        UiState.viewYourListingsUI = new ViewYourListings();
+        UiState.viewBidsUI = new ViewBids();
+        UiState.viewWonUI = new ViewWon();
+        UiState.loginPanel = UiState.loginUI.initWin();
+        UiState.mainMenuPanel = UiState.mainMenuUI.initWin();
+        UiState.createListingPanel = UiState.createListingUI.initWin();
+        UiState.viewListingsPanel = UiState.viewListingsUI.initWin();
+        UiState.viewYourListingsPanel = UiState.viewYourListingsUI.initWin();
+        UiState.viewBidsPanel = UiState.viewBidsUI.initWin();
+        UiState.viewWonPanel = UiState.viewWonUI.initWin();
+        addCards();
+    }
+
+    private void addCards() {
+        cards.add(UiState.loginPanel, "loginMenu");
+        cards.add(UiState.mainMenuPanel, "mainMenu");
+        cards.add(UiState.createListingPanel, "createListing");
+        cards.add(UiState.viewListingsPanel, "viewListings");
+        cards.add(UiState.viewYourListingsPanel, "viewYourListings");
+        cards.add(UiState.viewBidsPanel, "viewBids");
+        cards.add(UiState.viewWonPanel, "viewWon");
     }
 
     // EFFECTS: displays the main menu
@@ -461,7 +482,7 @@ public class AuctionApp {
 
     // MODIFIES: this
     // EFFECTS: loads workroom from file
-    private void load() {
+    public static void load() {
         try {
             String date = jsonReader.readDate();
             System.out.println("Loaded data from " + JSON_STORE + " from " + date);

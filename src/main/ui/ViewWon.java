@@ -62,9 +62,17 @@ public class ViewWon extends UiState {
         buttons.add(viewWonCars);
 
         JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
+        loadUpToDateData.addActionListener(e -> {
+            AuctionApp.load();
+            System.out.println("Data loaded!");
+        });
         buttons.add(loadUpToDateData);
 
         JButton saveCurrentData = new JButton("Save Current Data");
+        saveCurrentData.addActionListener(e -> {
+            AuctionApp.save();
+            System.out.println("Data saved!");
+        });
         buttons.add(saveCurrentData);
 
         JButton logout = new JButton("Logout");

@@ -225,15 +225,17 @@ public class CreateListing extends UiState {
         });
         buttons.add(viewWonCars);
 
-        JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
-        buttons.add(loadUpToDateData);
+         JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
+         loadUpToDateData.addActionListener(e -> {
+             AuctionApp.load();
+         });
+         buttons.add(loadUpToDateData);
 
-        JButton saveCurrentData = new JButton("Save Current Data");
-        saveCurrentData.addActionListener(e -> {
-            System.out.println("Saving current data...");
-            AuctionApp.save();
-        });
-        buttons.add(saveCurrentData);
+         JButton saveCurrentData = new JButton("Save Current Data");
+         saveCurrentData.addActionListener(e -> {
+             AuctionApp.save();
+         });
+         buttons.add(saveCurrentData);
 
         JButton logout = new JButton("Logout");
         logout.addActionListener(e -> {
