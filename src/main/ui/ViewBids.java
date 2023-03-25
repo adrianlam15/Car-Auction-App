@@ -31,7 +31,6 @@ public class ViewBids extends UiState {
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {

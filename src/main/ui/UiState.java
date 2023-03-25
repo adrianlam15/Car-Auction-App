@@ -1,5 +1,6 @@
 package ui;
 
+import model.Car;
 import model.Cars;
 import model.User;
 import model.Users;
@@ -36,13 +37,16 @@ public abstract class UiState {
     protected static JPanel viewYourListingsPanel;
     protected static JPanel viewBidsPanel;
     protected static JPanel viewWonPanel;
+    protected ArrayList<JComponent> buttons;
     protected static HashMap<String, Boolean> activeClass = new HashMap<>();
+    protected static ArrayList<JComponent> timers = new ArrayList<>();
 
     /**
      * Constructs a new UiState
      */
     public UiState() {
         toSetButtons = new ArrayList<>();
+        buttons = new ArrayList<>();
         panel = new JPanel();
     }
 

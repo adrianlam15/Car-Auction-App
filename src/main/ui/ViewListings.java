@@ -14,7 +14,7 @@ import java.util.HashMap;
 /**
  * ViewListings class (including UI) for the Car Auction application
  */
-public class ViewListings extends UiState{
+public class ViewListings extends UiState {
 
     /**
      * Constructor for the ViewListings class
@@ -50,7 +50,6 @@ public class ViewListings extends UiState{
      */
     private ArrayList<JComponent> getListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         int i = 1;
         String carInfo;
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
@@ -60,9 +59,9 @@ public class ViewListings extends UiState{
             listing.setFocusPainted(false);
             listing.setBackground(new Color(30,41,59));
             listing.setForeground(new Color(148,163,184));
-            listing.setFont(buttonFont);
-            listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
-                    , 300, 40);
+            listing.setFont(robotoFont.deriveFont(12f));
+            listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50),
+                    300, 40);
             listing.setBorder(border);
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
@@ -88,8 +87,6 @@ public class ViewListings extends UiState{
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
             System.out.println(UiState.listedCars.getCars().size());
@@ -134,20 +131,24 @@ public class ViewListings extends UiState{
         });
         buttons.add(logout);
 
-        Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
+        setButtons(buttons, viewListings);
+        return buttons;
+    }
+
+    private void setButtons(ArrayList<JComponent> buttons, JButton viewListings) {
+        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         int i = 0;
         for (JComponent button : buttons) {
-            button.setFont(buttonFont.deriveFont(10f));
+            button.setFont(robotoFont.deriveFont(10f));
             button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            button.setBorder(border);
             if ((JButton) button != viewListings) {
                 toSetButtons.add((JButton) button);
             } else {
+                viewListings.setBorder(border);
                 viewListings.setForeground(Color.WHITE);
             }
             i++;
         }
         super.setAttrButtons(toSetButtons);
-        return buttons;
     }
 }

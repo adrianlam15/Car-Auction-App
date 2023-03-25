@@ -58,8 +58,6 @@ public class MainMenu extends UiState {
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
-
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
             cardLayout.show(cards, "createListing");

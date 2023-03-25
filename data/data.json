@@ -8,11 +8,11 @@
             "listedCars": [
                 {
                     "timeLeftInSeconds": 854,
-                    "year": 1998,
+                    "year": 1994,
                     "driveType": "FWD",
                     "description": "Like new",
                     "colour": "Blue",
-                    "condition": "Good",
+                    "condition": "Excellent",
                     "transmission": "Automatic",
                     "expired": false,
                     "price": 20000,
@@ -31,9 +31,9 @@
                     "transmission": "Automatic",
                     "expired": false,
                     "price": 10000,
-                    "model": "CIvic",
+                    "model": "Skyline R34 GTR",
                     "id": 2,
-                    "make": "Honda",
+                    "make": "Nissan",
                     "mileage": 200000
                 }
             ],
