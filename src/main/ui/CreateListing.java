@@ -200,7 +200,8 @@ public class CreateListing extends UiState {
 
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
-            System.out.println("Entering view listings");
+            //viewListingsUI = new ViewListings();
+            //viewListingsPanel = viewListingsUI.initWin();
             cardLayout.show(cards, "viewListings");
         });
          buttons.add(viewListings);
@@ -233,7 +234,7 @@ public class CreateListing extends UiState {
 
          JButton saveCurrentData = new JButton("Save Current Data");
          saveCurrentData.addActionListener(e -> {
-             AuctionApp.save();
+             save();
          });
          buttons.add(saveCurrentData);
 
@@ -246,7 +247,7 @@ public class CreateListing extends UiState {
 
         JButton createCar = new JButton("Create");
         createCar.addActionListener(e -> {
-            System.out.println(UiState.listedCars.getCars().size());
+            System.out.println(listedCars.getCars().size());
             try {
                 carToCreate.setMake(carMake.getText());
                 carToCreate.setModel(carModel.getText());
@@ -258,12 +259,13 @@ public class CreateListing extends UiState {
                 carToCreate.setMileage(Integer.parseInt(carMileage.getText()));
                 carToCreate.setPrice(Integer.parseInt(carPrice.getText()));
                 carToCreate.setDescription(carDescription.getText());
-                int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() + "\n" +
-                        carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
+                int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() +
+                        "\n" + carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dialogRes == JOptionPane.YES_OPTION) {
                     currentUser.createCar(carToCreate);
-                    UiState.listedCars.addCar(carToCreate);
-                    UiState.updateListingPanel();
+                    listedCars.addCar(carToCreate);
+                    viewListingsUI = new ViewListings();
+                    updateListingPanel();
                     JOptionPane.showMessageDialog(null, "Listing created successfully.");
                     for (JComponent field : inputFields) {
                         if (field instanceof JTextField && !((JTextField) field).getText().equals("")
@@ -275,7 +277,6 @@ public class CreateListing extends UiState {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
                 }
             } catch (NumberFormatException err) {
-                System.out.println(err.getMessage());
                 JOptionPane.showMessageDialog(null, "Invalid year, mileage, or price.");
             }
         });

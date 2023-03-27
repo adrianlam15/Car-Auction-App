@@ -18,7 +18,6 @@ import java.util.HashMap;
  * Login class (including UI) for the Car Auction application
  */
 public class Login extends UiState {
-    private boolean loggedIn = false;
     private JTextField usernameTextField;
     private JPasswordField passwordTextField;
     private String username;
@@ -182,8 +181,8 @@ public class Login extends UiState {
         loginButton.addActionListener(e -> {
             username = usernameTextField.getText();
             password = passwordTextField.getText();
-            loggedIn = currentUser.login(username, password, userMap);
-            if (loggedIn) {
+            AuctionApp.loggedIn = currentUser.login(username, password, userMap);
+            if (AuctionApp.loggedIn) {
                 for (User user : users.getUsers()) {
                     if (user.getUsername().equals(username)) {
                         UiState.currentUser = user;

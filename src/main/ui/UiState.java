@@ -109,4 +109,12 @@ public abstract class UiState {
         viewListingsPanel = viewListingsUI.loadPanel();
     }
 
+    protected static void save() {
+        AuctionApp.save();
+    }
+
+    protected static void load() {
+        AuctionApp.load();
+    }
+
 }

@@ -5,6 +5,8 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
@@ -13,10 +15,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import javax.swing.*;
 
@@ -30,27 +28,27 @@ public class AuctionApp {
     private static JsonReader jsonReader;
     private static JsonWriter jsonWriter;
     private Scanner input;
-    private User currentUser;
+    private static User currentUser;
     private static Users users;
-    private boolean loggedIn;
+    public static boolean loggedIn;
     private boolean keepGoing = true;
-    private Cars listedCars = null;
+    private static Cars listedCars;
     private ArrayList<Integer> listingID;
-    private HashMap<String, String> userMap;
-    private JFrame frame;
+    private static HashMap<String, String> userMap;
+    private static JFrame frame;
     private Dimension screenSize;
     private double width;
     private double height;
-    private CardLayout cardLayout;
-    private JPanel cards;
+    private static CardLayout cardLayout;
+    private static JPanel cards;
+    public static boolean loaded;
 
     public AuctionApp() throws IOException {
+        loaded = false;
         frame = new JFrame("Car Auction App");
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
-        frame.setResizable(false);
-        frame.setLayout(cardLayout);
-        frame.setLocationRelativeTo(null);
+        setFrame();
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         height = screenSize.getHeight();
@@ -62,15 +60,60 @@ public class AuctionApp {
         runAuctionApp();
     }
 
+    private void setFrame() {
+        frame.setResizable(false);
+        frame.setLayout(cardLayout);
+        frame.setLocationRelativeTo(null);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                if (loggedIn) {
+                    JOptionPane.showOptionDialog(frame,
+                            "Are you sure you want to exit?",
+                            "Exit Confirmation",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            null,
+                            null);
+                    if (JOptionPane.YES_OPTION == 0) {
+                        JOptionPane.showOptionDialog(frame,
+                                "Do you want to save your data?",
+                                "Save Confirmation",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                null,
+                                null);
+                        if (JOptionPane.YES_OPTION == 0) {
+                            save();
+                        }
+                    }
+                } else {
+                    JOptionPane.showOptionDialog(frame,
+                            "You are not logged in. Are you sure you want to exit?",
+                            "Exit Confirmation",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            null,
+                            null);
+                }
+                System.exit(0);
+            }
+        });
+    }
+
     // MODIFIES: this
     // EFFECTS: runs the Car Auction App
     public void runAuctionApp() {
         listedCars = new Cars();
-        for (User user : users.getUsers()) {
+        /**for (User user : users.getUsers()) {
             for (Car car : user.getCars()) {
                 listedCars.addCar(car);
             }
         }
+         */
         int winWidth = (int) Math.round(width) / 2;
         int winHeight = (int) Math.round(height) / 2;
         frame.setSize(winWidth, winHeight);
@@ -100,7 +143,7 @@ public class AuctionApp {
         }
     }
 
-    private void initUiState() {
+    private static void initUiState() {
         UiState.currentUser = currentUser;
         UiState.loadFont();
         UiState.users = users;
@@ -126,7 +169,7 @@ public class AuctionApp {
         addCards();
     }
 
-    private void addCards() {
+    private static void addCards() {
         cards.add(UiState.loginPanel, "loginMenu");
         cards.add(UiState.mainMenuPanel, "mainMenu");
         cards.add(UiState.createListingPanel, "createListing");
@@ -483,11 +526,23 @@ public class AuctionApp {
     // MODIFIES: this
     // EFFECTS: loads workroom from file
     public static void load() {
-        try {
-            String date = jsonReader.readDate();
-            System.out.println("Loaded data from " + JSON_STORE + " from " + date);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+        if (!loaded) {
+            try {
+                for (User user : users.getUsers()) {
+                    for (Car car : user.getCars()) {
+                        listedCars.addCar(car);
+                    }
+                }
+                initUiState();
+                String date = jsonReader.readDate();
+                System.out.println("Loaded data from " + JSON_STORE + " from " + date);
+            } catch (IOException e) {
+                System.out.println("Unable to read from file: " + JSON_STORE);
+            }
         }
+        else {
+            JOptionPane.showMessageDialog(null, "Data already loaded.");
+        }
+        loaded = true;
     }
 }

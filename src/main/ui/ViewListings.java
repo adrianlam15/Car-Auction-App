@@ -91,6 +91,9 @@ public class ViewListings extends UiState {
             listing.setBounds((frame.getWidth()) / 2 - 250, (frame.getHeight()) / 2 - 275 + (i * 50),
                     300, 40);
             listing.setBorder(border);
+            listing.addActionListener(e -> {
+
+            });
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
                     listing.setBackground(new Color(30,41,59));
