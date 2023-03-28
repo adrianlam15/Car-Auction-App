@@ -1,9 +1,6 @@
 package ui;
 
-import model.Car;
-import model.Cars;
-import model.User;
-import model.Users;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +16,7 @@ import java.util.HashMap;
 public abstract class UiState {
     protected static JFrame frame;
     protected static CardLayout cardLayout;
+    protected static ArrayList<Bid> bids;
     protected JPanel panel;
     protected static JPanel cards;
     protected static User currentUser = new User();
@@ -106,7 +104,7 @@ public abstract class UiState {
     protected abstract JPanel loadPanel();
 
     protected static void updateListingPanel() {
-        viewListingsPanel = viewListingsUI.loadPanel();
+        viewListingsPanel = viewListingsUI.initWin();
     }
 
     protected static void save() {

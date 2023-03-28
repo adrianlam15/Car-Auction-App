@@ -200,15 +200,17 @@ public class CreateListing extends UiState {
 
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
-            //viewListingsUI = new ViewListings();
-            //viewListingsPanel = viewListingsUI.initWin();
+            System.out.println(listedCars.getCars().size());
+            viewListingsUI = new ViewListings();
+            viewListingsPanel = viewListingsUI.initWin();
             cardLayout.show(cards, "viewListings");
         });
          buttons.add(viewListings);
 
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
-            System.out.println(currentUser.getUsername());
+            viewYourListingsUI = new ViewYourListings();
+            viewYourListingsPanel = viewYourListingsUI.initWin();
             cardLayout.show(cards, "viewYourListings");
         });
         buttons.add(viewYourListings);
@@ -228,7 +230,7 @@ public class CreateListing extends UiState {
 
          JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
          loadUpToDateData.addActionListener(e -> {
-             AuctionApp.load();
+             load();
          });
          buttons.add(loadUpToDateData);
 
@@ -265,7 +267,8 @@ public class CreateListing extends UiState {
                     currentUser.createCar(carToCreate);
                     listedCars.addCar(carToCreate);
                     viewListingsUI = new ViewListings();
-                    updateListingPanel();
+                    viewListingsPanel = viewListingsUI.initWin();
+                    //updateListingPanel();
                     JOptionPane.showMessageDialog(null, "Listing created successfully.");
                     for (JComponent field : inputFields) {
                         if (field instanceof JTextField && !((JTextField) field).getText().equals("")
@@ -273,6 +276,7 @@ public class CreateListing extends UiState {
                             ((JTextField) field).setText("");
                         }
                     }
+                    cardLayout.show(cards, "mainMenu");
                 } else {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
                 }

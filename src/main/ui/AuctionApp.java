@@ -64,44 +64,37 @@ public class AuctionApp {
         frame.setResizable(false);
         frame.setLayout(cardLayout);
         frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (loggedIn) {
-                    JOptionPane.showOptionDialog(frame,
+                    int exitConfirmation = JOptionPane.showConfirmDialog(null,
                             "Are you sure you want to exit?",
                             "Exit Confirmation",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null,
-                            null,
-                            null);
-                    if (JOptionPane.YES_OPTION == 0) {
-                        JOptionPane.showOptionDialog(frame,
+                            JOptionPane.YES_NO_OPTION);
+                    if (exitConfirmation == JOptionPane.YES_OPTION) {
+                        int saveConfirmation = JOptionPane.showConfirmDialog(null,
                                 "Do you want to save your data?",
                                 "Save Confirmation",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                null,
-                                null,
-                                null);
-                        if (JOptionPane.YES_OPTION == 0) {
+                                JOptionPane.YES_NO_OPTION);
+                        if (saveConfirmation == JOptionPane.YES_OPTION) {
                             save();
+                            System.exit(0);
                         }
                     }
                 } else {
-                    JOptionPane.showOptionDialog(frame,
+                    int exitConfirmation = JOptionPane.showConfirmDialog(frame,
                             "You are not logged in. Are you sure you want to exit?",
                             "Exit Confirmation",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null,
-                            null,
-                            null);
+                            JOptionPane.YES_NO_OPTION);
+                    if (exitConfirmation == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
+                    }
                 }
-                System.exit(0);
-            }
         });
+
     }
 
     // MODIFIES: this
@@ -145,6 +138,7 @@ public class AuctionApp {
 
     private static void initUiState() {
         UiState.currentUser = currentUser;
+        UiState.bids = currentUser.getBids();
         UiState.loadFont();
         UiState.users = users;
         UiState.listedCars = listedCars;
@@ -518,8 +512,10 @@ public class AuctionApp {
             jsonWriter.write(formattedNow, users);
             jsonWriter.close();
             System.out.println("Saved date from " + formattedNow + " to " + JSON_STORE);
+            JOptionPane.showMessageDialog(frame, "Data saved successfully!");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(frame, "Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -536,8 +532,10 @@ public class AuctionApp {
                 initUiState();
                 String date = jsonReader.readDate();
                 System.out.println("Loaded data from " + JSON_STORE + " from " + date);
+                JOptionPane.showMessageDialog(frame, "Data loaded successfully!");
             } catch (IOException e) {
                 System.out.println("Unable to read from file: " + JSON_STORE);
+                JOptionPane.showMessageDialog(frame, "Unable to read from file: " + JSON_STORE);
             }
         }
         else {

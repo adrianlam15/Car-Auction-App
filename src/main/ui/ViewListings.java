@@ -138,7 +138,6 @@ public class ViewListings extends UiState {
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
-            System.out.println("bidding view");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
@@ -151,15 +150,13 @@ public class ViewListings extends UiState {
 
         JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
         loadUpToDateData.addActionListener(e -> {
-            System.out.println("Data loaded");
-            AuctionApp.load();
+            load();
         });
         buttons.add(loadUpToDateData);
 
         JButton saveCurrentData = new JButton("Save Current Data");
         saveCurrentData.addActionListener(e -> {
-            System.out.println("Data saved");
-            AuctionApp.save();
+            save();
         });
         buttons.add(saveCurrentData);
 

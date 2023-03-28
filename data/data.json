@@ -1,5 +1,5 @@
 {
-    "date": "27-03-2023 14:29:54",
+    "date": "27-03-2023 21:19:59",
     "users": [
         {
             "password": "1234",
@@ -7,7 +7,7 @@
             "biddedCars": [],
             "listedCars": [
                 {
-                    "timeLeftInSeconds": 791,
+                    "timeLeftInSeconds": 723,
                     "year": 1994,
                     "driveType": "FWD",
                     "description": "Like new",
@@ -17,12 +17,12 @@
                     "expired": false,
                     "price": 20000,
                     "model": "Civic",
-                    "id": 7,
+                    "id": 1,
                     "make": "Honda",
                     "mileage": 150000
                 },
                 {
-                    "timeLeftInSeconds": 99831,
+                    "timeLeftInSeconds": 99763,
                     "year": 1998,
                     "driveType": "FWD",
                     "description": "Good",
@@ -32,7 +32,7 @@
                     "expired": false,
                     "price": 10000,
                     "model": "Skyline R34 GTR",
-                    "id": 8,
+                    "id": 2,
                     "make": "Nissan",
                     "mileage": 200000
                 }
@@ -45,7 +45,7 @@
             "biddedCars": [
                 {
                     "car": {
-                        "timeLeftInSeconds": 791,
+                        "timeLeftInSeconds": 723,
                         "year": 1994,
                         "driveType": "FWD",
                         "description": "Like new",
@@ -55,7 +55,7 @@
                         "expired": false,
                         "price": 20000,
                         "model": "Civic",
-                        "id": 7,
+                        "id": 1,
                         "make": "Honda",
                         "mileage": 150000
                     },
@@ -63,7 +63,7 @@
                 },
                 {
                     "car": {
-                        "timeLeftInSeconds": 99831,
+                        "timeLeftInSeconds": 99763,
                         "year": 1998,
                         "driveType": "FWD",
                         "description": "Good",
@@ -73,7 +73,7 @@
                         "expired": false,
                         "price": 10000,
                         "model": "Skyline R34 GTR",
-                        "id": 8,
+                        "id": 2,
                         "make": "Nissan",
                         "mileage": 200000
                     },

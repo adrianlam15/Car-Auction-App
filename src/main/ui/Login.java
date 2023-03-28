@@ -71,7 +71,7 @@ public class Login extends UiState {
      */
     protected JPanel loadPanel() {
         panel.setLayout(null);
-        panel.setBackground(new java.awt.Color(15, 23, 42));
+        panel.setBackground(new Color(15, 23, 42));
         getInputFields().forEach(inputField -> panel.add(inputField));
         getJButtons().forEach(button -> panel.add(button));
         try {
@@ -186,6 +186,7 @@ public class Login extends UiState {
                 for (User user : users.getUsers()) {
                     if (user.getUsername().equals(username)) {
                         UiState.currentUser = user;
+                        UiState.bids = currentUser.getBids();
                         System.out.println("Logged in as " + currentUser.getUsername());
                         cardLayout.show(cards, "mainMenu");
                         usernameTextField.setText("");
