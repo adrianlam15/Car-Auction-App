@@ -201,6 +201,7 @@ public class CreateListing extends UiState {
         viewListings.addActionListener(e -> {
             System.out.println("Entering view listings");
             cards.remove(viewListingsPanel);
+            viewListingsUI = new ViewListings();
             viewListingsPanel = viewListingsUI.initWin();
             cards.add(viewListingsPanel, "viewListings");
             cardLayout.show(cards, "viewListings");

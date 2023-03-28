@@ -19,7 +19,7 @@ public abstract class UiState {
     protected static ArrayList<Bid> bids;
     protected JPanel panel;
     protected static JPanel cards;
-    protected static User currentUser = new User();
+    protected static User currentUser;
     protected static Cars listedCars;
     protected static Users users;
     protected static Font robotoFont;

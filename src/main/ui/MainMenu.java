@@ -46,6 +46,7 @@ public class MainMenu extends UiState {
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
             cards.remove(createListingPanel);
+            createListingUI = new CreateListing();
             createListingPanel = createListingUI.initWin();
             cards.add(createListingPanel, "createListing");
             cardLayout.show(cards, "createListing");
@@ -55,6 +56,7 @@ public class MainMenu extends UiState {
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
             cards.remove(viewListingsPanel);
+            viewListingsUI = new ViewListings();
             viewListingsPanel = viewListingsUI.initWin();
             cards.add(viewListingsPanel, "viewListings");
             cardLayout.show(cards, "viewListings");
@@ -63,18 +65,30 @@ public class MainMenu extends UiState {
 
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
+            cards.remove(viewYourListingsPanel);
+            viewYourListingsUI = new ViewYourListings();
+            viewYourListingsPanel = viewYourListingsUI.initWin();
+            cards.add(viewYourListingsPanel, "viewYourListings");
             cardLayout.show(cards, "viewYourListings");
         });
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
+            cards.remove(viewBidsPanel);
+            viewBidsUI = new ViewBids();
+            viewBidsPanel = viewBidsUI.initWin();
+            cards.add(viewBidsPanel, "viewBids");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
 
         JButton viewWonCars = new JButton("View Won Cars");
         viewWonCars.addActionListener(e -> {
+            cards.remove(viewWonPanel);
+            viewWonUI = new ViewWon();
+            viewWonPanel = viewWonUI.initWin();
+            cards.add(viewWonPanel, "viewWon");
             cardLayout.show(cards, "viewWon");
         });
         buttons.add(viewWonCars);

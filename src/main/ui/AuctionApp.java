@@ -136,7 +136,7 @@ public class AuctionApp {
         }
     }
 
-    private static void initUiState() {
+    public static void initUiState() {
         UiState.currentUser = currentUser;
         UiState.bids = currentUser.getBids();
         UiState.loadFont();

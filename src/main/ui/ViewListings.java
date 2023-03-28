@@ -21,6 +21,7 @@ public class ViewListings extends UiState{
      */
     public ViewListings() {
         super();
+        System.out.println(currentUser.getUsername());
     }
 
     /**
@@ -76,7 +77,7 @@ public class ViewListings extends UiState{
                     , 300, 40);
             listing.setBorder(border);
             listing.addActionListener(e -> {
-                showCarInfo(listing);
+                showCarInfo(listing, car);
             });
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
@@ -97,9 +98,30 @@ public class ViewListings extends UiState{
         return listings;
     }
 
-    private void showCarInfo(JButton listing) {
+    private void showCarInfo(JButton listing, Car car) {
+        System.out.println(currentUser.getUsername());
+        String message = "Condition: " + car.getCondition() + "\n"
+                + "Transmission: " + car.getTransmission() + "\n"
+                + "Color: " + car.getColour() + "\n"
+                + "DriveType: " + car.getDriveType() + "\n"
+                + "Year: " + car.getYear() + "\n"
+                + "Make: " + car.getMake() + "\n"
+                + "Model: " + car.getModel() + "\n"
+                + "Mileage: " + car.getMileage() + "\n"
+                + "Price: $" + car.getPrice() + "\n"
+                + "Description: " + car.getDescription() + "\n";
 
+        JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
+
+        String input = JOptionPane.showInputDialog(frame, "Enter your bid amount:");
+        try {
+            double bidAmount = Double.parseDouble(input);
+            JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.", "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid input. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
 
     /**
      * Gets the list of JButtons for the MainMenu state
@@ -110,6 +132,10 @@ public class ViewListings extends UiState{
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
+            cards.remove(createListingPanel);
+            createListingUI = new CreateListing();
+            createListingPanel = createListingUI.initWin();
+            cards.add(createListingPanel, "createListing");
             System.out.println(UiState.listedCars.getCars().size());
             cardLayout.show(cards, "createListing");
         });
