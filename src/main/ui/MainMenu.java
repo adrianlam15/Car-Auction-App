@@ -63,27 +63,18 @@ public class MainMenu extends UiState {
 
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
-            cards.remove(viewYourListingsPanel);
-            viewYourListingsPanel = viewYourListingsUI.initWin();
-            cards.add(viewYourListingsPanel, "viewYourListings");
             cardLayout.show(cards, "viewYourListings");
         });
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
-            cards.remove(viewBidsPanel);
-            viewBidsPanel = viewBidsUI.initWin();
-            cards.add(viewBidsPanel, "viewBids");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
 
         JButton viewWonCars = new JButton("View Won Cars");
         viewWonCars.addActionListener(e -> {
-            cards.remove(viewWonPanel);
-            viewWonPanel = viewWonUI.initWin();
-            cards.add(viewWonPanel, "viewWon");
             cardLayout.show(cards, "viewWon");
         });
         buttons.add(viewWonCars);

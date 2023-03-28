@@ -116,4 +116,8 @@ public abstract class UiState {
         AuctionApp.load();
     }
 
+    protected static void updateState(UiState state) {
+        // implement method
+    }
+
 }

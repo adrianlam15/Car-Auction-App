@@ -39,9 +39,20 @@ public class ViewListings extends UiState{
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
+
         getJButtons().forEach(button -> panel.add(button));
         getListings().forEach(listing -> panel.add(listing));
+        panel.add(bidInfo());
         return panel;
+    }
+
+    private JLabel bidInfo() {
+        JLabel bidInfo = new JLabel("Click a car to bid on it!");
+        bidInfo.setFont(robotoFont.deriveFont(20f));
+        bidInfo.setForeground(new Color(148,163,184));
+        bidInfo.setBounds(225, (frame.getHeight() / 2) - 250, 300, 100);
+
+        return bidInfo;
     }
 
     /**
@@ -51,7 +62,7 @@ public class ViewListings extends UiState{
     private ArrayList<JComponent> getListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
-        int i = 1;
+        int i = 2;
         String carInfo;
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         for (Car car : UiState.listedCars.getCars()) {
@@ -64,6 +75,9 @@ public class ViewListings extends UiState{
             listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
                     , 300, 40);
             listing.setBorder(border);
+            listing.addActionListener(e -> {
+                showCarInfo(listing);
+            });
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
                     listing.setBackground(new Color(30,41,59));
@@ -81,6 +95,10 @@ public class ViewListings extends UiState{
             i++;
         }
         return listings;
+    }
+
+    private void showCarInfo(JButton listing) {
+
     }
 
     /**
