@@ -14,7 +14,7 @@ import java.util.HashMap;
 /**
  * ViewListings class (including UI) for the Car Auction application
  */
-public class ViewListings extends UiState {
+public class ViewListings extends UiState{
 
     /**
      * Constructor for the ViewListings class
@@ -39,38 +39,10 @@ public class ViewListings extends UiState {
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(null);
-        buttonPanel.setBackground(new Color(15, 23, 42));
-        buttonPanel.setBounds(0, 0, 100, (frame.getHeight()));
-        getJButtons().forEach(button -> buttonPanel.add(button));
-        panel.add(buttonPanel);
-
-        panel.add(getListingPanel());
+        getJButtons().forEach(button -> panel.add(button));
+        getListings().forEach(listing -> panel.add(listing));
         return panel;
     }
-
-
-    private JScrollPane getListingPanel() {
-        JPanel listingsPanel = new JPanel();
-        listingsPanel.setLayout(null);
-        listingsPanel.setBackground(new Color(15, 23, 42));
-        getListings().forEach(listing -> listingsPanel.add(listing));
-        System.out.println(frame.getHeight());
-        int multiplier = UiState.listedCars.getCars().size() * 20;
-        listingsPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() + multiplier));
-
-        JScrollPane scrollPane = new JScrollPane(listingsPanel);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBackground(new Color(15, 23, 42));
-        scrollPane.setBounds(100, 0, frame.getWidth() - 110, frame.getHeight());
-        return scrollPane;
-    }
-
-
 
     /**
      * Gets the list of JButtons for the ViewListings state
@@ -78,6 +50,7 @@ public class ViewListings extends UiState {
      */
     private ArrayList<JComponent> getListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
+        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         int i = 1;
         String carInfo;
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
@@ -87,13 +60,10 @@ public class ViewListings extends UiState {
             listing.setFocusPainted(false);
             listing.setBackground(new Color(30,41,59));
             listing.setForeground(new Color(148,163,184));
-            listing.setFont(robotoFont.deriveFont(12f));
-            listing.setBounds((frame.getWidth()) / 2 - 250, (frame.getHeight()) / 2 - 275 + (i * 50),
-                    300, 40);
+            listing.setFont(buttonFont);
+            listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
+                    , 300, 40);
             listing.setBorder(border);
-            listing.addActionListener(e -> {
-
-            });
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
                     listing.setBackground(new Color(30,41,59));
@@ -118,6 +88,8 @@ public class ViewListings extends UiState {
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
+        ArrayList<JComponent> buttons = new ArrayList<>();
+        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
             System.out.println(UiState.listedCars.getCars().size());
@@ -138,6 +110,7 @@ public class ViewListings extends UiState {
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
+            System.out.println("bidding view");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
@@ -149,41 +122,32 @@ public class ViewListings extends UiState {
         buttons.add(viewWonCars);
 
         JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
-        loadUpToDateData.addActionListener(e -> {
-            load();
-        });
         buttons.add(loadUpToDateData);
 
         JButton saveCurrentData = new JButton("Save Current Data");
-        saveCurrentData.addActionListener(e -> {
-            save();
-        });
         buttons.add(saveCurrentData);
 
         JButton logout = new JButton("Logout");
         logout.addActionListener(e -> {
+            System.out.println("Logging out...");
             cardLayout.show(cards, "loginMenu");
         });
         buttons.add(logout);
 
-        setButtons(buttons, viewListings);
-        return buttons;
-    }
-
-    private void setButtons(ArrayList<JComponent> buttons, JButton viewListings) {
-        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
+        Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
         int i = 0;
         for (JComponent button : buttons) {
-            button.setFont(robotoFont.deriveFont(10f));
+            button.setFont(buttonFont.deriveFont(10f));
             button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
+            button.setBorder(border);
             if ((JButton) button != viewListings) {
                 toSetButtons.add((JButton) button);
             } else {
-                viewListings.setBorder(border);
                 viewListings.setForeground(Color.WHITE);
             }
             i++;
         }
         super.setAttrButtons(toSetButtons);
+        return buttons;
     }
 }

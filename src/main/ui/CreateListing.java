@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.View;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -191,7 +190,7 @@ public class CreateListing extends UiState {
      * Gets the list of JButtons for the MainMenu state
      * @return ArrayList of JButtons
      */
-     private ArrayList<JComponent> getJButtons() {
+    private ArrayList<JComponent> getJButtons() {
         ArrayList<JComponent> buttons = new ArrayList<>();
         JButton createListing = new JButton("Create Listing");
         createListing.setBackground(new java.awt.Color(30, 41, 59));
@@ -200,45 +199,52 @@ public class CreateListing extends UiState {
 
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
-            System.out.println(listedCars.getCars().size());
-            viewListingsUI = new ViewListings();
+            System.out.println("Entering view listings");
+            cards.remove(viewListingsPanel);
             viewListingsPanel = viewListingsUI.initWin();
+            cards.add(viewListingsPanel, "viewListings");
             cardLayout.show(cards, "viewListings");
         });
-         buttons.add(viewListings);
+        buttons.add(viewListings);
 
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
-            viewYourListingsUI = new ViewYourListings();
+            cards.remove(viewYourListingsPanel);
             viewYourListingsPanel = viewYourListingsUI.initWin();
+            cards.add(viewYourListingsPanel, "viewYourListings");
             cardLayout.show(cards, "viewYourListings");
         });
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
-            System.out.println(currentUser.getUsername());
+            cards.remove(viewBidsPanel);
+            viewBidsPanel = viewBidsUI.initWin();
+            cards.add(viewBidsPanel, "viewBids");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
 
         JButton viewWonCars = new JButton("View Won Cars");
         viewWonCars.addActionListener(e -> {
+            cards.remove(viewWonPanel);
+            viewWonPanel = viewWonUI.initWin();
+            cards.add(viewWonPanel, "viewWon");
             cardLayout.show(cards, "viewWon");
         });
         buttons.add(viewWonCars);
 
-         JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
-         loadUpToDateData.addActionListener(e -> {
-             load();
-         });
-         buttons.add(loadUpToDateData);
+        JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
+        loadUpToDateData.addActionListener(e -> {
+            load();
+        });
+        buttons.add(loadUpToDateData);
 
-         JButton saveCurrentData = new JButton("Save Current Data");
-         saveCurrentData.addActionListener(e -> {
-             save();
-         });
-         buttons.add(saveCurrentData);
+        JButton saveCurrentData = new JButton("Save Current Data");
+        saveCurrentData.addActionListener(e -> {
+            save();
+        });
+        buttons.add(saveCurrentData);
 
         JButton logout = new JButton("Logout");
         logout.addActionListener(e -> {
@@ -249,7 +255,7 @@ public class CreateListing extends UiState {
 
         JButton createCar = new JButton("Create");
         createCar.addActionListener(e -> {
-            System.out.println(listedCars.getCars().size());
+            System.out.println(UiState.listedCars.getCars().size());
             try {
                 carToCreate.setMake(carMake.getText());
                 carToCreate.setModel(carModel.getText());
@@ -261,14 +267,11 @@ public class CreateListing extends UiState {
                 carToCreate.setMileage(Integer.parseInt(carMileage.getText()));
                 carToCreate.setPrice(Integer.parseInt(carPrice.getText()));
                 carToCreate.setDescription(carDescription.getText());
-                int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() +
-                        "\n" + carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
+                int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() + "\n" +
+                        carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dialogRes == JOptionPane.YES_OPTION) {
                     currentUser.createCar(carToCreate);
-                    listedCars.addCar(carToCreate);
-                    viewListingsUI = new ViewListings();
-                    viewListingsPanel = viewListingsUI.initWin();
-                    //updateListingPanel();
+                    UiState.listedCars.addCar(carToCreate);
                     JOptionPane.showMessageDialog(null, "Listing created successfully.");
                     for (JComponent field : inputFields) {
                         if (field instanceof JTextField && !((JTextField) field).getText().equals("")
@@ -276,11 +279,11 @@ public class CreateListing extends UiState {
                             ((JTextField) field).setText("");
                         }
                     }
-                    cardLayout.show(cards, "mainMenu");
                 } else {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
                 }
             } catch (NumberFormatException err) {
+                System.out.println(err.getMessage());
                 JOptionPane.showMessageDialog(null, "Invalid year, mileage, or price.");
             }
         });
@@ -307,5 +310,5 @@ public class CreateListing extends UiState {
         }
         super.setAttrButtons(toSetButtons);
         return buttons;
-     }
+    }
 }

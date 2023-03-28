@@ -1,8 +1,11 @@
 package ui;
 
+import model.Users;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * MainMenu class (including UI) for the Car Auction application
@@ -24,45 +27,63 @@ public class MainMenu extends UiState {
 
     /**
      * Loads the UI for the MainMenu state
-     * @return JPanel of the MainMenu UI
+     * @return JPanel containing all components needed for UI
      */
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
+        getJButtons().forEach(button -> panel.add(button));
+        return panel;
+    }
 
+    /**
+     * Gets the list of JButtons for the MainMenu state
+     * @return ArrayList of JButtons
+     */
+    private ArrayList<JComponent> getJButtons() {
         ArrayList<JComponent> buttons = new ArrayList<>();
+
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
+            cards.remove(createListingPanel);
+            createListingPanel = createListingUI.initWin();
+            cards.add(createListingPanel, "createListing");
             cardLayout.show(cards, "createListing");
         });
         buttons.add(createListing);
 
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
-            System.out.println(listedCars.getCars().size());
-            viewListingsUI = new ViewListings();
+            cards.remove(viewListingsPanel);
             viewListingsPanel = viewListingsUI.initWin();
+            cards.add(viewListingsPanel, "viewListings");
             cardLayout.show(cards, "viewListings");
         });
         buttons.add(viewListings);
 
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
-            viewYourListingsUI = new ViewYourListings();
+            cards.remove(viewYourListingsPanel);
             viewYourListingsPanel = viewYourListingsUI.initWin();
+            cards.add(viewYourListingsPanel, "viewYourListings");
             cardLayout.show(cards, "viewYourListings");
         });
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
-            System.out.println(currentUser.getUsername());
+            cards.remove(viewBidsPanel);
+            viewBidsPanel = viewBidsUI.initWin();
+            cards.add(viewBidsPanel, "viewBids");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
 
         JButton viewWonCars = new JButton("View Won Cars");
         viewWonCars.addActionListener(e -> {
+            cards.remove(viewWonPanel);
+            viewWonPanel = viewWonUI.initWin();
+            cards.add(viewWonPanel, "viewWon");
             cardLayout.show(cards, "viewWon");
         });
         buttons.add(viewWonCars);
@@ -74,6 +95,9 @@ public class MainMenu extends UiState {
         buttons.add(loadUpToDateData);
 
         JButton saveCurrentData = new JButton("Save Current Data");
+        saveCurrentData.addActionListener(e -> {
+            save();
+        });
         buttons.add(saveCurrentData);
 
         JButton logout = new JButton("Logout");
@@ -82,50 +106,17 @@ public class MainMenu extends UiState {
             cardLayout.show(cards, "loginMenu");
         });
         buttons.add(logout);
-        int i = 1;
+
+        Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
+        int i = 0;
         for (JComponent button : buttons) {
             button.setFont(robotoFont.deriveFont(10f));
-            button.setBounds(0, (frame.getHeight() / 2) - 275 + (i * 50), 100, 40);
+            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
+            button.setBorder(border);
             toSetButtons.add((JButton) button);
             i++;
         }
         super.setAttrButtons(toSetButtons);
-        panel.add(createListing);
-        panel.add(viewListings);
-        panel.add(viewYourListings);
-        panel.add(viewCurrentBids);
-        panel.add(viewWonCars);
-        panel.add(loadUpToDateData);
-        panel.add(saveCurrentData);
-        panel.add(logout);
-        return panel;
+        return buttons;
     }
-
-    /**
-     * Adds a button to the MainMenu UI
-     * @param text text to be displayed on the button
-     * @param cardName name of the card to be displayed when the button is clicked
-     */
-    /**
-    protected void addButton(String text, String cardName) {
-        JButton button = new JButton(text);
-        button.setFont(robotoFont.deriveFont(10f));
-
-        if (cardName != null) {
-            button.addActionListener(e -> cardLayout.show(cards, cardName));
-        } else if (text.equals("Load Up-to-Date Data")) {
-            button.addActionListener(e -> load());
-        } else if (text.equals("Save Current Data")) {
-            button.addActionListener(e -> save());
-        } else if (text.equals("Logout")) {
-            button.addActionListener(e -> {
-                System.out.println("Logging out...");
-                cardLayout.show(cards, "loginMenu");
-            });
-        }
-        buttons.add(button);
-        toSetButtons.add(button);
-        panel.add(button);
-    }
-     */
 }

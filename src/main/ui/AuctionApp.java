@@ -147,28 +147,33 @@ public class AuctionApp {
         UiState.cards = cards;
         UiState.userMap = userMap;
         UiState.loginUI = new Login();
-        UiState.mainMenuUI = new MainMenu();
-        UiState.createListingUI = new CreateListing();
-        UiState.viewListingsUI = new ViewListings();
-        UiState.viewYourListingsUI = new ViewYourListings();
-        UiState.viewBidsUI = new ViewBids();
-        UiState.viewWonUI = new ViewWon();
         UiState.loginPanel = UiState.loginUI.initWin();
+        UiState.createAccountUI = new CreateAccount();
+        UiState.createAccountPanel = UiState.createAccountUI.initWin();
+        UiState.mainMenuUI = new MainMenu();
         UiState.mainMenuPanel = UiState.mainMenuUI.initWin();
+        UiState.createListingUI = new CreateListing();
         UiState.createListingPanel = UiState.createListingUI.initWin();
+        UiState.viewListingsUI = new ViewListings();
         UiState.viewListingsPanel = UiState.viewListingsUI.initWin();
+        UiState.viewYourListingsUI = new ViewYourListings();
         UiState.viewYourListingsPanel = UiState.viewYourListingsUI.initWin();
+        UiState.viewBidsUI = new ViewBids();
         UiState.viewBidsPanel = UiState.viewBidsUI.initWin();
+        UiState.viewBidsUI = new ViewBids();
+        UiState.viewBidsPanel = UiState.viewBidsUI.initWin();
+        UiState.viewWonUI = new ViewWon();
         UiState.viewWonPanel = UiState.viewWonUI.initWin();
         addCards();
     }
 
     private static void addCards() {
         cards.add(UiState.loginPanel, "loginMenu");
+        cards.add(UiState.createAccountPanel, "createAccountMenu");
         cards.add(UiState.mainMenuPanel, "mainMenu");
         cards.add(UiState.createListingPanel, "createListing");
-        cards.add(UiState.viewListingsPanel, "viewListings");
-        cards.add(UiState.viewYourListingsPanel, "viewYourListings");
+        cards.add(UiState.viewListingsPanel, "viewListing");
+        cards.add(UiState.viewYourListingsPanel, "viewYourListing");
         cards.add(UiState.viewBidsPanel, "viewBids");
         cards.add(UiState.viewWonPanel, "viewWon");
     }

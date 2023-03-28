@@ -36,6 +36,9 @@ public class Login extends UiState {
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
+        this.mainMenuUI = new MainMenu();
+        JPanel mainPanel = mainMenuUI.initWin();
+        UiState.cards.add(mainPanel, "mainMenu");
 
     }
 

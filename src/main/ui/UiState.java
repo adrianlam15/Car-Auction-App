@@ -30,6 +30,7 @@ public abstract class UiState {
     protected static volatile CreateListing createListingUI;
     protected static volatile ViewListings viewListingsUI;
     protected static volatile ViewYourListings viewYourListingsUI;
+    protected static CreateAccount createAccountUI;
     protected static ViewBids viewBidsUI;
     protected static ViewWon viewWonUI;
     protected static JPanel createAccountPanel;
