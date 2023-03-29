@@ -535,6 +535,9 @@ public class AuctionApp {
                     }
                 }
                 String date = jsonReader.readDate();
+                //initUiState();    problem is that currentUser is null because according to AuctionApp class, currentUser
+                // is not static    hasn't been initialized yet
+                System.out.println(currentUser.getUsername());
                 System.out.println("Loaded data from " + JSON_STORE + " from " + date);
                 JOptionPane.showMessageDialog(frame, "Data loaded successfully!");
             } catch (IOException e) {
