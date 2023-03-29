@@ -96,6 +96,7 @@ public class MainMenu extends UiState {
         JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
         loadUpToDateData.addActionListener(e -> {
             load();
+            System.out.println(currentUser.getUsername());
         });
         buttons.add(loadUpToDateData);
 

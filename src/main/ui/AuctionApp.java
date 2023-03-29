@@ -534,7 +534,6 @@ public class AuctionApp {
                         listedCars.addCar(car);
                     }
                 }
-                initUiState();
                 String date = jsonReader.readDate();
                 System.out.println("Loaded data from " + JSON_STORE + " from " + date);
                 JOptionPane.showMessageDialog(frame, "Data loaded successfully!");
