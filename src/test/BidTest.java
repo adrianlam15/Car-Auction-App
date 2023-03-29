@@ -1,6 +1,5 @@
 import model.Bid;
 import model.Car;
-import model.Cars;
 import model.User;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;

@@ -8,8 +8,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CreateListing extends UiState {
-    private ArrayList<JComponent> inputFields;
-    private Car carToCreate;
+    private final ArrayList<JComponent> inputFields;
+    private final Car carToCreate;
     private JTextField carMake;
     private JTextField carModel;
     private JTextField carColour;
@@ -40,6 +40,7 @@ public class CreateListing extends UiState {
         return panel;
     }
 
+    @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getInputFields() {
         JLabel carMakeLabel = new JLabel("Car Make");
         inputFields.add(carMakeLabel);
@@ -147,6 +148,44 @@ public class CreateListing extends UiState {
         int underlineWidth = 100;
         int underlineHeight = 10;
 
+        setAttrFields(inputFields);
+        setJLabels(inputFields, x, y, labelWidth, labelHeight);
+        y = (frame.getHeight() - 40) / 2 - 160;
+        setJTextFields(inputFields, x, y, textFieldWidth, textFieldHeight);
+        y = (frame.getHeight() - 40) / 2 - 150;
+        setUnderlines(inputFields, x, y, underlineWidth, underlineHeight);
+    }
+
+    private void setUnderlines(ArrayList<JComponent> inputFields, int x, int y, int underlineWidth,
+                               int underlineHeight) {
+        for (JComponent field : inputFields) {
+            if (field instanceof JLabel && ((JLabel) field).getText().contains("_")) {
+                field.setBounds(x, y, underlineWidth, underlineHeight);
+                y += 40;
+            }
+        }
+    }
+
+    private void setJTextFields(ArrayList<JComponent> inputFields, int x, int y, int textFieldWidth,
+                                int textFieldHeight) {
+        for (JComponent field : inputFields) {
+            if (field instanceof JTextField) {
+                field.setBounds(x, y, textFieldWidth, textFieldHeight);
+                y += 40;
+            }
+        }
+    }
+
+    private void setJLabels(ArrayList<JComponent> inputFields, int x, int y, int labelWidth, int labelHeight) {
+        for (JComponent field : inputFields) {
+            if (field instanceof JLabel && !((JLabel) field).getText().contains("_")) {
+                field.setBounds(x, y, labelWidth, labelHeight);
+                y += 40;
+            }
+        }
+    }
+
+    private void setAttrFields(ArrayList<JComponent> inputFields) {
         for (JComponent field : inputFields) {
             if (field instanceof JLabel && !((JLabel) field).getText().contains("_")) {
                 field.setFont(robotoFont.deriveFont(12f));
@@ -161,26 +200,6 @@ public class CreateListing extends UiState {
                 field.setForeground(new Color(148, 163, 184));
             }
         }
-        for (JComponent field : inputFields) {
-            if (field instanceof JLabel && !((JLabel) field).getText().contains("_")) {
-                field.setBounds(x, y, labelWidth, labelHeight);
-                y += 40;
-            }
-        }
-        y = (frame.getHeight() - 40) / 2 - 160;
-        for (JComponent field : inputFields) {
-            if (field instanceof JTextField) {
-                field.setBounds(x, y, textFieldWidth, textFieldHeight);
-                y += 40;
-            }
-        }
-        y = (frame.getHeight() - 40) / 2 - 150;
-        for (JComponent field : inputFields) {
-            if (field instanceof JLabel && ((JLabel) field).getText().contains("_")) {
-                field.setBounds(x, y, underlineWidth, underlineHeight);
-                y += 40;
-            }
-        }
     }
 
     /**
@@ -188,10 +207,10 @@ public class CreateListing extends UiState {
      *
      * @return ArrayList of JButtons
      */
+    @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");
-        createListing.setBackground(new java.awt.Color(30, 41, 59));
-        createListing.setFocusPainted(false);
+        setCurrentButton(createListing);
         buttons.add(createListing);
 
         JButton viewListings = new JButton("View Listings");
@@ -257,7 +276,7 @@ public class CreateListing extends UiState {
             if (button instanceof JButton && ((JButton) button).getText().equals("Create")) {
                 button.setBounds(450, 200, 100, 40);
             }
-            if ((JButton) button != ignoreButton) {
+            if (button != ignoreButton) {
                 toSetButtons.add((JButton) button);
             } else {
                 Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
@@ -272,8 +291,8 @@ public class CreateListing extends UiState {
     private void tryCreateCar() {
         try {
             setCar();
-            int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() + "\n" +
-                    carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
+            int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar()
+                    + "\n" + carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
             if (dialogRes == JOptionPane.YES_OPTION) {
                 handleCreate();
                 resetFields();

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * ViewListings class (including UI) for the Car Auction application
  */
-public class ViewListings extends UiState{
+public class ViewListings extends UiState {
 
     /**
      * Constructor for the ViewListings class
@@ -80,67 +80,87 @@ public class ViewListings extends UiState{
         ArrayList<JComponent> listings = new ArrayList<>();
         Font buttonFont = robotoFont.deriveFont(12f);
         int i = 2;
-        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         for (Car car : listedCars.getCars()) {
             String carInfo = car.getCondition() + " " + car.getYear() + " " + car.getMake() + " " + car.getModel();
             JButton listing = new JButton(carInfo);
-            listing.setFocusPainted(false);
-            listing.setBackground(new Color(30,41,59));
-            listing.setForeground(new Color(148,163,184));
-            listing.setFont(buttonFont);
-            listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
-                    , 300, 40);
-            listing.setBorder(border);
-            listing.addMouseListener(new MouseAdapter() {
-                public void mouseEntered(MouseEvent evt) {
-                    listing.setBackground(new Color(30,41,59));
-                    listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
-                    listing.setForeground(Color.WHITE);
-                }
-
-                public void mouseExited(MouseEvent evt) {
-                    listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
-                    listing.setForeground(new Color(148,163,184));
-                }
-            });
-            if (car.isExpired() || (currentUser.getCars().contains(car))) {
-                if (car.isExpired() && currentUser.getCars().contains(car)) {
-                    removeCarOption(listing, car);
-                } else if (!currentUser.getCars().contains(car)) {
-                    listing.addActionListener(e -> {
-                        showCarInfo(car);
-                    });
-                } else {
-                    listing.setEnabled(false);
-                    JLabel hoverText = new JLabel();
-                    if (car.isExpired()) {
-                        hoverText.setText("This car has expired!");
-                    } else {
-                        hoverText.setText("You can't bid on your own car!");
-                    }
-                    hoverText.setForeground(Color.WHITE);
-                    hoverText.setFont(robotoFont.deriveFont(12f));
-                    String listingText = listing.getText();
-                    listing.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
-                            listing.setText("");
-                            listing.add(hoverText);
-                        }
-
-                        @Override
-                        public void mouseExited(MouseEvent e) {
-                            listing.remove(hoverText);
-                            listing.setText(listingText);
-                        }
-                    });
-                }
-            }
+            setAttrListing(listing, buttonFont, i);
+            setListeners(listing);
+            handleExpiredOrOwn(car, listing);
             listings.add(listing);
             car.setId(i);
             i++;
         }
         return listings;
+    }
+
+    private void handleExpiredOrOwn(Car car, JButton listing) {
+        if (car.isExpired() || (currentUser.getCars().contains(car))) {
+            if (car.isExpired() && currentUser.getCars().contains(car)) {
+                removeCarOption(listing, car);
+            } else if (!currentUser.getCars().contains(car)) {
+                listing.addActionListener(e -> {
+                    showCarInfo(car);
+                });
+            } else {
+                handleCarBidError(listing, car);
+            }
+        }
+    }
+
+    private void handleCarBidError(JButton listing, Car car) {
+        listing.setEnabled(false);
+        JLabel hoverText = new JLabel();
+        if (car.isExpired()) {
+            hoverText.setText("This car has expired!");
+        } else {
+            hoverText.setText("You can't bid on your own car!");
+        }
+        hoverText.setForeground(Color.WHITE);
+        hoverText.setFont(robotoFont.deriveFont(12f));
+        String listingText = listing.getText();
+        setMouseListener(listing, hoverText, listingText);
+    }
+
+    private void setAttrListing(JButton listing, Font buttonFont, int i) {
+        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
+        listing.setFocusPainted(false);
+        listing.setBackground(new Color(30,41,59));
+        listing.setForeground(new Color(148,163,184));
+        listing.setFont(buttonFont);
+        listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50),
+                300, 40);
+        listing.setBorder(border);
+    }
+
+    private void setMouseListener(JButton listing, JLabel hoverText, String listingText) {
+        listing.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                listing.setText("");
+                listing.add(hoverText);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                listing.remove(hoverText);
+                listing.setText(listingText);
+            }
+        });
+    }
+
+    private void setListeners(JButton listing) {
+        listing.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                listing.setBackground(new Color(30,41,59));
+                listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
+                listing.setForeground(Color.WHITE);
+            }
+
+            public void mouseExited(MouseEvent evt) {
+                listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+                listing.setForeground(new Color(148,163,184));
+            }
+        });
     }
 
     private void removeCarOption(JButton listing, Car car) {
@@ -163,15 +183,27 @@ public class ViewListings extends UiState{
 
             @Override
             public void mousePressed(MouseEvent e) {
-                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to remove this car from the auction?",
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to "
+                                + "remove this car from the auction?",
                         "Remove Car", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    listedCars.removeCar(car);
-                    currentUser.getCars().remove(car);
-                }
+                handleRemove(result, car);
             }
         });
+    }
 
+    private void handleRemove(int result, Car car) {
+        if (result == JOptionPane.YES_OPTION) {
+            listedCars.removeCar(car);
+            currentUser.getCars().remove(car);
+            cards.remove(viewListingsPanel);
+            viewListingsPanel = new ViewListings().initWin();
+            cards.add(viewListingsPanel, "viewListings");
+            cardLayout.show(cards, "viewListings");
+            JOptionPane.showMessageDialog(frame,
+                    "Listing removed!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void showCarInfo(Car car) {
@@ -203,8 +235,7 @@ public class ViewListings extends UiState{
                 JOptionPane.showMessageDialog(frame, "Your bid must be a positive number!", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 return;
-            }
-            else if (bidAmount < car.getPrice()) {
+            } else if (bidAmount < car.getPrice()) {
                 JOptionPane.showMessageDialog(frame, "Your bid must be higher than the current price!",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -232,6 +263,7 @@ public class ViewListings extends UiState{
      * Gets the list of JButtons for the MainMenu state
      * @return ArrayList of JButtons
      */
+    @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
@@ -246,8 +278,7 @@ public class ViewListings extends UiState{
         buttons.add(createListing);
 
         JButton viewListings = new JButton("View Listings");
-        viewListings.setBackground(new java.awt.Color(30, 41, 59));
-        viewListings.setFocusPainted(false);
+        setCurrentButton(viewListings);
         buttons.add(viewListings);
 
         JButton viewYourListings = new JButton("View Your Listings");

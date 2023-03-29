@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JsonWriterTest {
     private LocalDateTime now;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    private ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
     private ZonedDateTime zonedTime;
     private Users users = new Users();
 

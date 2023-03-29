@@ -77,24 +77,28 @@ public class ViewBids extends UiState {
             bidButton.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50),
                     300, 40);
             bidButton.setBorder(border);
-            bidButton.addActionListener(e -> {
-                editBid(bid);
-            });
-            bidButton.addMouseListener(new MouseAdapter() {
-                public void mouseEntered(MouseEvent evt) {
-                    bidButton.setBackground(new Color(30,41,59));
-                    bidButton.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
-                }
-
-                public void mouseExited(MouseEvent evt) {
-                    bidButton.setBackground(new Color(30,41,59));
-                    bidButton.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
-                }
-            });
+            setListeners(bid, bidButton);
             bids.add(bidButton);
             i++;
-            }
+        }
         return bids;
+    }
+
+    private void setListeners(Bid bid, JButton bidButton) {
+        bidButton.addActionListener(e -> {
+            editBid(bid);
+        });
+        bidButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                bidButton.setBackground(new Color(30,41,59));
+                bidButton.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
+            }
+
+            public void mouseExited(MouseEvent evt) {
+                bidButton.setBackground(new Color(30,41,59));
+                bidButton.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+            }
+        });
     }
 
     private void editBid(Bid bid) {
@@ -120,6 +124,7 @@ public class ViewBids extends UiState {
      * Gets the list of JButtons for the MainMenu state
      * @return ArrayList of JButtons
      */
+    @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
@@ -149,8 +154,7 @@ public class ViewBids extends UiState {
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");
-        viewCurrentBids.setBackground(new java.awt.Color(30, 41, 59));
-        viewCurrentBids.setFocusPainted(false);
+        setCurrentButton(viewCurrentBids);
         buttons.add(viewCurrentBids);
 
         JButton viewWonCars = new JButton("View Won Cars");

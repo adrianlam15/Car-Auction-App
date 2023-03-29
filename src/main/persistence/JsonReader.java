@@ -13,8 +13,8 @@ import java.util.stream.Stream;
 
 // Represents a reader that reads JSON representation of users from file
 public class JsonReader {
-    private String source;
-    private HashMap<String, String> userMap;
+    private final String source;
+    private final HashMap<String, String> userMap;
 
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {

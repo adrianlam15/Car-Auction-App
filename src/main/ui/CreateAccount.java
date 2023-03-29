@@ -1,18 +1,16 @@
 package ui;
 
 import model.User;
-import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * CreateAccount class (including UI) for the Car Auction application
  */
-public class CreateAccount extends UiState{
+public class CreateAccount extends UiState {
     private JTextField usernameTextField;
     private JPasswordField passwordTextField;
     private JPasswordField retypePasswordField;
@@ -57,62 +55,24 @@ public class CreateAccount extends UiState{
      * @return ArrayList of JComponents (input fields)
      */
     private ArrayList<JComponent> getInputFields() {
-        ArrayList<JComponent> inputFields = new ArrayList<>();
+        JLabel usernameLabel = addLabel("Username", usernameTextField,
+                (frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 90);
+        setInputFields(usernameTextField, (frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 70);
 
-        usernameTextField.setForeground(Color.WHITE);
-        JLabel usernameLabel = new JLabel("Username");
-        usernameLabel.setForeground(new Color(148,163,184));
-        usernameLabel.setLabelFor(usernameTextField);
-        usernameLabel.setFont(robotoFont.deriveFont(11f));
-        usernameLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 90,
-                200, 20);
-        usernameTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 70,
-                200, 20);
-        usernameTextField.setBorder(BorderFactory.createEmptyBorder());
-        usernameTextField.setOpaque(false);
-        JLabel usernameUnderline = new JLabel("_________________________________________________");
-        usernameUnderline.setFont(robotoFont.deriveFont(9f));
-        usernameUnderline.setForeground(new Color(148,163,184));
-        usernameUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 60,
-                300, 10);
+        JLabel passwordLabel = addLabel("Password", passwordTextField,
+                (frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 40);
+        setInputFields(passwordTextField, (frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 20);
 
-        passwordTextField.setForeground(Color.WHITE);
-        JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setForeground(new Color(148,163,184));
-        passwordLabel.setLabelFor(passwordTextField);
-        passwordLabel.setFont(robotoFont.deriveFont(11f));
-        passwordLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 40,
-                200, 20);
-        passwordTextField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 20,
-                200, 20);
-        passwordTextField.setBorder(BorderFactory.createEmptyBorder());
-        passwordTextField.setOpaque(false);
-        JLabel passwordUnderline = new JLabel("_________________________________________________");
-        passwordUnderline.setFont(robotoFont.deriveFont(9f));
-        passwordUnderline.setForeground(new Color(148,163,184));
-        passwordUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 - 10,
-                300, 10);
+        JLabel retypePasswordLabel = addLabel("Re-type Password", retypePasswordField,
+                (frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 10);
+        setInputFields(retypePasswordField, (frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 30);
 
-        retypePasswordField.setForeground(Color.WHITE);
-        JLabel retypePasswordLabel = new JLabel("Re-type Password");
-        retypePasswordLabel.setForeground(new Color(148,163,184));
-        retypePasswordLabel.setLabelFor(passwordTextField);
-        retypePasswordLabel.setFont(robotoFont.deriveFont(11f));
-        retypePasswordLabel.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 10,
-                200, 20);
-        retypePasswordField.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 30,
-                200, 20);
-        retypePasswordField.setBorder(BorderFactory.createEmptyBorder());
-        retypePasswordField.setOpaque(false);
-        JLabel retypeUnderline = new JLabel("_________________________________________________");
-        retypeUnderline.setFont(robotoFont.deriveFont(9f));
-        retypeUnderline.setForeground(new Color(148,163,184));
-        retypeUnderline.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 20) / 2 + 40,
-                300, 10);
-
-        inputFields.add(usernameUnderline);
-        inputFields.add(passwordUnderline);
-        inputFields.add(retypeUnderline);
+        inputFields.add(createUnderline((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 60
+        ));
+        inputFields.add(createUnderline((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2
+        ));
+        inputFields.add(createUnderline((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 50
+        ));
         inputFields.add(retypePasswordLabel);
         inputFields.add(retypePasswordField);
         inputFields.add(usernameTextField);
@@ -121,6 +81,34 @@ public class CreateAccount extends UiState{
         inputFields.add(passwordLabel);
 
         return inputFields;
+    }
+
+    private JLabel addLabel(String text, JTextField labelField, int x, int y) {
+        JLabel label = new JLabel(text);
+        label.setForeground(new Color(148,163,184));
+        label.setLabelFor(labelField);
+        label.setFont(robotoFont.deriveFont(11f));
+        setFixedBounds(label, x, y);
+        return label;
+    }
+
+    private void setInputFields(JTextField field, int x, int y) {
+        field.setBorder(BorderFactory.createEmptyBorder());
+        field.setOpaque(false);
+        field.setForeground(Color.WHITE);
+        setFixedBounds(field, x, y);
+    }
+
+    private void setFixedBounds(JComponent component, int x, int y) {
+        component.setBounds(x, y, 200, 20);
+    }
+
+    private JLabel createUnderline(int x, int y) {
+        JLabel underline = new JLabel("_________________________________________________");
+        underline.setFont(robotoFont.deriveFont(9f));
+        underline.setForeground(new Color(148,163,184));
+        underline.setBounds(x, y, 300, 10);
+        return underline;
     }
 
     /**
@@ -139,30 +127,36 @@ public class CreateAccount extends UiState{
             username = usernameTextField.getText();
             password = passwordTextField.getText();
             retypePassword = retypePasswordField.getText();
-            if (username.equals("") || password.equals("") || retypePassword.equals("")) {
-                JOptionPane.showMessageDialog(frame, "Please fill out all fields",
-                        "Empty Field", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            for (User u : users.getUsers()) {
-                if (u.getUsername().equals(username)) {
-                    JOptionPane.showMessageDialog(frame, "Username already exists",
-                            "Username Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-            if (currentUser.createUser(username, password, retypePassword)) {
-                userMap.put(username, password);
-                users.add(currentUser);
-                cardLayout.show(cards, "mainMenu");
-            } else {
-                JOptionPane.showMessageDialog(frame, "Your passwords do not match",
-                        "Password Mismatch", JOptionPane.ERROR_MESSAGE);
-            }
+            handleCreateAccount();
         });
         buttons.add(createAcc);
         toSetButtons.add(createAcc);
         super.setAttrButtons(toSetButtons);
         return buttons;
+    }
+
+    private void handleCreateAccount() {
+        if (username.equals("") || password.equals("") || retypePassword.equals("")) {
+            JOptionPane.showMessageDialog(frame, "Please fill out all fields",
+                    "Empty Field", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        for (User u : users.getUsers()) {
+            if (u.getUsername().equals(username)) {
+                JOptionPane.showMessageDialog(frame, "Username already exists",
+                        "Username Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        if (currentUser.createUser(username, password, retypePassword)) {
+            JOptionPane.showMessageDialog(frame, "Account created successfully",
+                    "Account Created", JOptionPane.INFORMATION_MESSAGE);
+            userMap.put(username, password);
+            users.add(currentUser);
+            cardLayout.show(cards, "mainMenu");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Your passwords do not match",
+                    "Password Mismatch", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

@@ -1,15 +1,10 @@
 package persistence;
 
-import model.Car;
-import model.Cars;
 import model.User;
 import model.Users;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;

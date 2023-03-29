@@ -1,6 +1,5 @@
 import model.Car;
 import model.User;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

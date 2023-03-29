@@ -1,7 +1,6 @@
 package ui;
 
 import model.User;
-import model.Users;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -12,14 +11,13 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Login class (including UI) for the Car Auction application
  */
 public class Login extends UiState {
-    private JTextField usernameTextField;
-    private JPasswordField passwordTextField;
+    private final JTextField usernameTextField;
+    private final JPasswordField passwordTextField;
     private String username;
     private String password;
     private Clip clip;
@@ -76,7 +74,7 @@ public class Login extends UiState {
         try {
             getImages().forEach(image -> panel.add(image, BorderLayout.CENTER));
         } catch (IOException e) {
-
+            System.out.println("Error importing images");
         }
         return panel;
     }

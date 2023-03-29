@@ -1,4 +1,3 @@
-import model.Bid;
 import model.Car;
 import model.Cars;
 import model.User;
@@ -7,7 +6,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;

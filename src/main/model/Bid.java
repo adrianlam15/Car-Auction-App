@@ -6,8 +6,8 @@ import persistence.Writable;
 // represents a class for a bid
 public class Bid implements Writable {
     private Car car;
-    private User user;
-    private int bidAmount;
+    private final User user;
+    private final int bidAmount;
 
     public Bid(User user, Car car, int bidAmount) {
         this.user = user;

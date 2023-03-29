@@ -37,6 +37,7 @@ public class MainMenu extends UiState {
      * Gets the list of JButtons for the MainMenu state
      * @return ArrayList of JButtons
      */
+    @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {

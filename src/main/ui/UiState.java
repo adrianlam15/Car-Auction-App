@@ -119,7 +119,7 @@ public abstract class UiState {
     /**
      * Sets the attributes of the buttons
      *
-     * @param buttons
+     * @param buttons the buttons to set the attributes of
      */
     protected void setAttrButtons(ArrayList<JButton> buttons) {
         for (JButton button : buttons) {
@@ -216,7 +216,7 @@ public abstract class UiState {
         setScreen();
         frame.setResizable(false);
         frame.setLayout(cardLayout);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         setFrameListener();
     }
@@ -225,33 +225,32 @@ public abstract class UiState {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                if (loggedIn) {
-                    int exitConfirmation = JOptionPane.showConfirmDialog(null,
-                            "Are you sure you want to exit?",
-                            "Exit Confirmation",
-                            JOptionPane.YES_NO_OPTION);
-                    if (exitConfirmation == JOptionPane.YES_OPTION) {
-                        int saveConfirmation = JOptionPane.showConfirmDialog(null,
-                                "Do you want to save your data?",
-                                "Save Confirmation",
-                                JOptionPane.YES_NO_OPTION);
-                        if (saveConfirmation == JOptionPane.YES_OPTION) {
-                            save();
-                            System.exit(0);
-                        }
-                    }
-                } else {
-                    int exitConfirmation = JOptionPane.showConfirmDialog(frame,
-                            "You are not logged in. Are you sure you want to exit?",
-                            "Exit Confirmation",
-                            JOptionPane.YES_NO_OPTION);
-                    if (exitConfirmation == JOptionPane.YES_OPTION) {
-                        System.exit(0);
-                    }
-                }
+                int exitConfirmation = JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to exit?",
+                        "Exit Confirmation",
+                        JOptionPane.YES_NO_OPTION);
+                handleExit(exitConfirmation);
             }
         });
+    }
 
+    private static void handleExit(int exitConfirmation) {
+        if (loggedIn) {
+            if (exitConfirmation == JOptionPane.YES_OPTION) {
+                int saveConfirmation = JOptionPane.showConfirmDialog(null,
+                        "Do you want to save your data?",
+                        "Save Confirmation",
+                        JOptionPane.YES_NO_OPTION);
+                if (saveConfirmation == JOptionPane.YES_OPTION) {
+                    save();
+                }
+                System.exit(0);
+            }
+        } else {
+            if (exitConfirmation == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        }
     }
 
     protected static void setScreen() {
@@ -329,7 +328,7 @@ public abstract class UiState {
         for (JComponent button : buttons) {
             button.setFont(robotoFont.deriveFont(10f));
             button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            if ((JButton) button != ignoreButton) {
+            if (button != ignoreButton) {
                 toSetButtons.add((JButton) button);
             } else {
                 Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
@@ -339,5 +338,10 @@ public abstract class UiState {
             i++;
         }
         setAttrButtons(toSetButtons);
+    }
+
+    protected void setCurrentButton(JButton button) {
+        button.setBackground(new java.awt.Color(30, 41, 59));
+        button.setFocusPainted(false);
     }
 }

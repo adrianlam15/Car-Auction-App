@@ -66,62 +66,74 @@ public class ViewYourListings extends UiState {
         ArrayList<JComponent> listings = new ArrayList<>();
         Font buttonFont = robotoFont.deriveFont(12f);
         int i = 2;
-        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         for (Car car : currentUser.getCars()) {
             String carInfo = car.getCondition() + " " + car.getYear() + " " + car.getMake() + " " + car.getModel();
             JButton listing = new JButton(carInfo);
-            listing.setFocusPainted(false);
-            listing.setBackground(new Color(30, 41, 59));
-            listing.setForeground(new Color(148, 163, 184));
-            listing.setFont(buttonFont);
-            listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
-                    , 300, 40);
-            listing.setBorder(border);
+            setAttrListing(listing, buttonFont, i);
             JLabel hoverText = new JLabel("Click for more info!");
             hoverText.setForeground(Color.WHITE);
             hoverText.setFont(buttonFont);
             String listingText = listing.getText();
-            listing.addMouseListener(new MouseAdapter() {
-                public void mouseEntered(MouseEvent evt) {
-                    listing.setText("");
-                    listing.setBackground(new Color(30, 41, 59));
-                    listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
-                    listing.setForeground(Color.WHITE);
-                    listing.add(hoverText);
-                }
-
-                public void mouseExited(MouseEvent evt) {
-                    listing.remove(hoverText);
-                    listing.setText(listingText);
-                    listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
-                    listing.setForeground(new Color(148, 163, 184));
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    showCarInfo(car);
-                    int result = JOptionPane.showConfirmDialog(null,
-                            "Do you want to delete this listing?",
-                            "Remove Car", JOptionPane.YES_NO_OPTION);
-                    if (result == JOptionPane.YES_OPTION) {
-                        listedCars.removeCar(car);
-                        currentUser.getCars().remove(car);
-                        cards.remove(viewListingsPanel);
-                        viewListingsPanel = new ViewYourListings().initWin();
-                        cards.add(viewListingsPanel, "viewListingsPanel");
-                        cardLayout.show(cards, "viewListingsPanel");
-                        JOptionPane.showMessageDialog(frame,
-                                "Listing removed!",
-                                "Success",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }
-            });
+            setListener(listing, car, listingText, hoverText);
             listings.add(listing);
             car.setId(i);
             i++;
         }
         return listings;
+    }
+
+    private void setAttrListing(JButton listing, Font buttonFont, int i) {
+        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
+        listing.setFocusPainted(false);
+        listing.setBackground(new Color(30, 41, 59));
+        listing.setForeground(new Color(148, 163, 184));
+        listing.setFont(buttonFont);
+        listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50),
+                300, 40);
+        listing.setBorder(border);
+    }
+
+    private void setListener(JButton listing, Car car, String listingText, JLabel hoverText) {
+        listing.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                listing.setText("");
+                listing.setBackground(new Color(30, 41, 59));
+                listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
+                listing.setForeground(Color.WHITE);
+                listing.add(hoverText);
+            }
+
+            public void mouseExited(MouseEvent evt) {
+                listing.remove(hoverText);
+                listing.setText(listingText);
+                listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+                listing.setForeground(new Color(148, 163, 184));
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showCarInfo(car);
+                int result = JOptionPane.showConfirmDialog(null,
+                        "Do you want to delete this listing?",
+                        "Remove Car", JOptionPane.YES_NO_OPTION);
+                handleRemoveCar(result, car);
+            }
+        });
+    }
+
+    private void handleRemoveCar(int result, Car car) {
+        if (result == JOptionPane.YES_OPTION) {
+            listedCars.removeCar(car);
+            currentUser.getCars().remove(car);
+            cards.remove(viewListingsPanel);
+            viewYourListingsPanel = new ViewYourListings().initWin();
+            cards.add(viewYourListingsPanel, "viewYourListings");
+            cardLayout.show(cards, "viewYourListings");
+            JOptionPane.showMessageDialog(frame,
+                    "Listing removed!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void showCarInfo(Car car) {
@@ -149,6 +161,7 @@ public class ViewYourListings extends UiState {
      *
      * @return ArrayList of JButtons
      */
+    @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
@@ -171,8 +184,7 @@ public class ViewYourListings extends UiState {
         buttons.add(viewListings);
 
         JButton viewYourListings = new JButton("View Your Listings");
-        viewYourListings.setBackground(new java.awt.Color(30, 41, 59));
-        viewYourListings.setFocusPainted(false);
+        setCurrentButton(viewYourListings);
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");

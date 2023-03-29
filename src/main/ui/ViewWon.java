@@ -75,24 +75,28 @@ public class ViewWon extends UiState {
             listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50),
                     300, 40);
             listing.setBorder(border);
-            listing.addActionListener(e -> {
-                showCarInfo(car);
-            });
-            listing.addMouseListener(new MouseAdapter() {
-                public void mouseEntered(MouseEvent evt) {
-                    listing.setBackground(new Color(30,41,59));
-                    listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
-                }
-
-                public void mouseExited(MouseEvent evt) {
-                    listing.setBackground(new Color(30,41,59));
-                    listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
-                }
-            });
+            setListeners(listing, car);
             wonCars.add(listing);
             i++;
         }
         return wonCars;
+    }
+
+    private void setListeners(JButton listing, Car car) {
+        listing.addActionListener(e -> {
+            showCarInfo(car);
+        });
+        listing.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                listing.setBackground(new Color(30,41,59));
+                listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
+            }
+
+            public void mouseExited(MouseEvent evt) {
+                listing.setBackground(new Color(30,41,59));
+                listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+            }
+        });
     }
 
     private void showCarInfo(Car car) {
@@ -115,6 +119,7 @@ public class ViewWon extends UiState {
      * Gets the list of JButtons for the MainMenu state
      * @return ArrayList of JButtons
      */
+    @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
@@ -154,8 +159,7 @@ public class ViewWon extends UiState {
         buttons.add(viewCurrentBids);
 
         JButton viewWonCars = new JButton("View Won Cars");
-        viewWonCars.setBackground(new java.awt.Color(30, 41, 59));
-        viewWonCars.setFocusPainted(false);
+        setCurrentButton(viewWonCars);
         buttons.add(viewWonCars);
 
         addButton("load");

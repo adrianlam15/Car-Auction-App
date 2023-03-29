@@ -1,13 +1,11 @@
 package model;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-import persistence.Writable;
 
 import java.util.ArrayList;
 
 public class Cars {
-    private ArrayList<Car> cars;
+    private final ArrayList<Car> cars;
 
     public Cars() {
         this.cars = new ArrayList<Car>();

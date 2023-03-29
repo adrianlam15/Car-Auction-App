@@ -13,9 +13,9 @@ public class User implements Writable {
     private String username;
     private String password;
     private Car car;
-    private Cars listedCars = new Cars();
-    private Cars wonCars = new Cars();
-    private ArrayList<Bid> biddedCars = new ArrayList<>();
+    private final Cars listedCars = new Cars();
+    private final Cars wonCars = new Cars();
+    private final ArrayList<Bid> biddedCars = new ArrayList<>();
 
     // REQUIRED: user, password must be non-empty strings and hashmap must be non-null.
     // EFFECTS: returns true if user and password combination match one in stored hashmap, false otherwise
