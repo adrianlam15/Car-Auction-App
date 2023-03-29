@@ -36,10 +36,6 @@ public class Login extends UiState {
         this.inputFields = new ArrayList<>();
         this.buttons = new ArrayList<>();
         this.toSetButtons = new ArrayList<>();
-        this.mainMenuUI = new MainMenu();
-        JPanel mainPanel = mainMenuUI.initWin();
-        UiState.cards.add(mainPanel, "mainMenu");
-
     }
 
     /**
@@ -184,12 +180,12 @@ public class Login extends UiState {
         loginButton.addActionListener(e -> {
             username = usernameTextField.getText();
             password = passwordTextField.getText();
-            AuctionApp.loggedIn = currentUser.login(username, password, userMap);
-            if (AuctionApp.loggedIn) {
+            loggedIn = currentUser.login(username, password, userMap);
+            if (loggedIn) {
                 for (User user : users.getUsers()) {
                     if (user.getUsername().equals(username)) {
-                        UiState.currentUser = user;
-                        UiState.bids = currentUser.getBids();
+                        currentUser = user;
+                        bids = currentUser.getBids();
                         System.out.println("Logged in as " + currentUser.getUsername());
 
                         cardLayout.show(cards, "mainMenu");

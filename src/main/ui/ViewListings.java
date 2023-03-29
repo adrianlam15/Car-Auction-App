@@ -51,7 +51,7 @@ public class ViewListings extends UiState{
         JLabel bidInfo = new JLabel("Click a car to bid on it!");
         bidInfo.setFont(robotoFont.deriveFont(20f));
         bidInfo.setForeground(new Color(148,163,184));
-        bidInfo.setBounds(225, (frame.getHeight() / 2) - 250, 300, 100);
+        bidInfo.setBounds(225, 0, 300, 100);
 
         return bidInfo;
     }
@@ -116,6 +116,20 @@ public class ViewListings extends UiState{
         String input = JOptionPane.showInputDialog(frame, "Enter your bid amount:");
         try {
             double bidAmount = Double.parseDouble(input);
+            for (Car userCar : currentUser.getCars()) {
+                if (car.equals(userCar)) {
+                    JOptionPane.showMessageDialog(frame, "You cannot bid on your own car!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            if (bidAmount < 0) {
+                JOptionPane.showMessageDialog(frame, "Your bid must be a positive number!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else if (bidAmount < car.getPrice()) {
+                JOptionPane.showMessageDialog(frame, "Your bid must be higher than the current price!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.", "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame, "Invalid input. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);

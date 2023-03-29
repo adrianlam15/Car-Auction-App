@@ -220,6 +220,7 @@ public class CreateListing extends UiState {
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
             cards.remove(viewBidsPanel);
+            viewBidsUI = new ViewBids();
             viewBidsPanel = viewBidsUI.initWin();
             cards.add(viewBidsPanel, "viewBids");
             cardLayout.show(cards, "viewBids");
@@ -229,11 +230,15 @@ public class CreateListing extends UiState {
         JButton viewWonCars = new JButton("View Won Cars");
         viewWonCars.addActionListener(e -> {
             cards.remove(viewWonPanel);
+            viewWonUI = new ViewWon();
             viewWonPanel = viewWonUI.initWin();
             cards.add(viewWonPanel, "viewWon");
             cardLayout.show(cards, "viewWon");
         });
         buttons.add(viewWonCars);
+
+        loadSave("save");
+        loadSave("load");
 
         JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
         loadUpToDateData.addActionListener(e -> {

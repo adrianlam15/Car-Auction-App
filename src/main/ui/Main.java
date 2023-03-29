@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         try {
-            new AuctionApp();
+            new AuctionAppUI();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to run application: file not found");
         } catch (IOException e) {   // remove exception after finished debugging json

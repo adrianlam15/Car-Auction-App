@@ -1,5 +1,6 @@
 package ui;
 
+import model.Cars;
 import model.User;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -11,27 +12,37 @@ import java.io.IOException;
 public class AuctionAppUI extends UiState {
 
     public AuctionAppUI() throws IOException {
-        loaded = false;
-        frame = new JFrame("Car Auction App");
-        cardLayout = new CardLayout();
-        cards = new JPanel(cardLayout);
-        setFrame();
-        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        width = screenSize.getWidth();
-        height = screenSize.getHeight();
-        jsonReader = new JsonReader(JSON_STORE);
-        jsonWriter = new JsonWriter(JSON_STORE);
-        currentUser = new User();
-        users = jsonReader.readUsers();
-        userMap = jsonReader.getUserMap();
+        init();
+        initFrame();
+        initUIState();
+        try {
+            initUsers();
+        } catch (IOException e) {
+            System.out.println("Failed to import users and userMap");
+        }
         runAuctionApp();
     }
 
     private void runAuctionApp() {
-
-
+        initUI();
+        frame.add(cards);
+        frame.setVisible(true);
     }
 
+    private void initUI() {
+        loginUI = new Login();
+        mainMenuUI = new MainMenu();
+        createListingUI = new CreateListing();
+        viewListingsUI = new ViewListings();
+        viewYourListingsUI = new ViewYourListings();
+        createAccountUI = new CreateAccount();
+        viewBidsUI = new ViewBids();
+        viewWonUI = new ViewWon();
+        initPanels();
+        addCards();
+        cardLayout.show(cards, "loginMenu");
+    }
+    
     @Override
     protected JPanel loadPanel() {
         return null;

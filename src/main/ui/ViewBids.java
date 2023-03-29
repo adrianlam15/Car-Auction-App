@@ -41,7 +41,11 @@ public class ViewBids extends UiState {
         bidPanel.setLayout(null);
         bidPanel.setBackground(new Color(15, 23, 42));
         getBids().forEach(bid -> bidPanel.add(bid));
-        System.out.println(frame.getHeight());
+        JLabel bidInfo = new JLabel("Your Current Bids");
+        bidInfo.setFont(robotoFont.deriveFont(20f));
+        bidInfo.setForeground(new Color(148,163,184));
+        bidInfo.setBounds(225, 0, 300, 100);
+        bidPanel.add(bidInfo);
         int multiplier = UiState.bids.size() * 20;
         bidPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() + multiplier));
 
@@ -62,7 +66,7 @@ public class ViewBids extends UiState {
         ArrayList<JComponent> bids = new ArrayList<>();
         int i = 1;
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        for (Bid bid : UiState.bids) {
+        for (Bid bid : currentUser.getBids()) {
             JButton bidButton = new JButton(bid.getBid() + " " + bid.getBidAmount());
             bidButton.setFocusPainted(false);
             bidButton.setBackground(new Color(30,41,59));
@@ -143,21 +147,21 @@ public class ViewBids extends UiState {
         });
         buttons.add(logout);
 
-        setButtons(buttons, viewListings);
+        setButtons(buttons, viewCurrentBids);
         return buttons;
     }
 
-    private void setButtons(ArrayList<JComponent> buttons, JButton viewListings) {
+    private void setButtons(ArrayList<JComponent> buttons, JButton viewCurrentBids) {
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         int i = 0;
         for (JComponent button : buttons) {
             button.setFont(robotoFont.deriveFont(10f));
             button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            if ((JButton) button != viewListings) {
+            if ((JButton) button != viewCurrentBids) {
                 toSetButtons.add((JButton) button);
             } else {
-                viewListings.setBorder(border);
-                viewListings.setForeground(Color.WHITE);
+                viewCurrentBids.setBorder(border);
+                viewCurrentBids.setForeground(Color.WHITE);
             }
             i++;
         }
