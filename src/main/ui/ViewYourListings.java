@@ -77,64 +77,51 @@ public class ViewYourListings extends UiState {
             listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
                     , 300, 40);
             listing.setBorder(border);
-            listing.addActionListener(e -> {
-                showCarInfo(car);
-            });
+            JLabel hoverText = new JLabel("Click for more info!");
+            hoverText.setForeground(Color.WHITE);
+            hoverText.setFont(buttonFont);
+            String listingText = listing.getText();
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
+                    listing.setText("");
                     listing.setBackground(new Color(30, 41, 59));
                     listing.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
                     listing.setForeground(Color.WHITE);
+                    listing.add(hoverText);
                 }
 
                 public void mouseExited(MouseEvent evt) {
+                    listing.remove(hoverText);
+                    listing.setText(listingText);
                     listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
                     listing.setForeground(new Color(148, 163, 184));
                 }
-            });
-            if (car.isExpired()) {
-                listing.setEnabled(false);
-                listing.setBackground(new Color(30, 41, 59));
-                listing.setForeground(new Color(148, 163, 184));
-                listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
-                JLabel hoverText = new JLabel("Your car listing has expired!");
-                hoverText.setForeground(Color.WHITE);
-                hoverText.setFont(robotoFont.deriveFont(12f));
-                String listingText = listing.getText();
-                listing.addActionListener(e -> {
-                    handleExpiredListing(car);
-                });
-                listing.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        listing.setText("");
-                        listing.add(hoverText);
-                    }
 
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        listing.remove(hoverText);
-                        listing.setText(listingText);
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    showCarInfo(car);
+                    int result = JOptionPane.showConfirmDialog(null,
+                            "Do you want to delete this listing?",
+                            "Remove Car", JOptionPane.YES_NO_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        listedCars.removeCar(car);
+                        currentUser.getCars().remove(car);
+                        cards.remove(viewListingsPanel);
+                        viewListingsPanel = new ViewYourListings().initWin();
+                        cards.add(viewListingsPanel, "viewListingsPanel");
+                        cardLayout.show(cards, "viewListingsPanel");
+                        JOptionPane.showMessageDialog(frame,
+                                "Listing removed!",
+                                "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
-                });
-            }
+                }
+            });
             listings.add(listing);
             car.setId(i);
             i++;
         }
         return listings;
-    }
-
-    private void handleExpiredListing(Car car) {
-        String message = "Your car listing has expired! Would you like to remove it from your listings?";
-        int reply = JOptionPane.showConfirmDialog(frame, message, "Expired Listing", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            currentUser.getCars().remove(car);
-            cards.remove(viewListingsPanel);
-            viewListingsPanel = new ViewYourListings().initWin();
-            cards.add(viewListingsPanel, "viewListingsPanel");
-            cardLayout.show(cards, "viewListingsPanel");
-        }
     }
 
     private void showCarInfo(Car car) {
@@ -148,31 +135,13 @@ public class ViewYourListings extends UiState {
                 + "Mileage: " + car.getMileage() + "\n"
                 + "Price: $" + car.getPrice() + "\n"
                 + "Description: " + car.getDescription() + "\n"
-                + "Time left: " + car.getTimer() + " seconds" + "\n"
-                + "Highest Bid: $" + car.getHighestBid().getBidAmount() + "\n";
-        JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
-        placeBid(car);
-    }
-
-    private void placeBid(Car car) {
-        String input = JOptionPane.showInputDialog(frame, "Enter your bid amount:");
-        try {
-            double bidAmount = Double.parseDouble(input);
-            if (bidAmount < 0) {
-                JOptionPane.showMessageDialog(frame, "Your bid must be a positive number!", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            } else if (bidAmount < car.getPrice()) {
-                JOptionPane.showMessageDialog(frame, "Your bid must be higher than the current price!",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.",
-                    "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Invalid input. Please enter a valid number.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                + "Time left: " + car.getTimer() + " seconds" + "\n";
+        if (car.getHighestBid() == null) {
+            message = message + "Highest bid: None";
+        } else {
+            message = message + "Highest bid: $" + car.getHighestBid().getBidAmount();
         }
+        JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

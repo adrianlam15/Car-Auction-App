@@ -24,7 +24,7 @@ import java.util.HashMap;
 public abstract class UiState {
     protected static JFrame frame;
     protected static CardLayout cardLayout;
-    protected static ArrayList<Bid> bids;
+    protected static ArrayList<Bid> bids = new ArrayList<>();
     protected JPanel panel;
     protected static JPanel cards;
     protected static User currentUser;
@@ -184,9 +184,11 @@ public abstract class UiState {
                     }
                 }
                 String date = jsonReader.readDate();
-                //initUiState();    problem is that currentUser is null because according to AuctionApp class,
-                //                  currentUser not initialized
-                System.out.println(currentUser.getBids().size());
+                for (User user : users.getUsers()) {
+                    if (user.getUsername().equals(currentUser.getUsername())) {
+                        currentUser = user;
+                    }
+                }
                 System.out.println("Loaded data from " + JSON_STORE + " from " + date);
                 JOptionPane.showMessageDialog(frame, "Data loaded successfully!");
             } catch (IOException e) {

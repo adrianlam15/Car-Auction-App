@@ -1,5 +1,6 @@
 package ui;
 
+import model.Bid;
 import model.Car;
 
 import javax.swing.*;
@@ -90,9 +91,6 @@ public class ViewListings extends UiState{
             listing.setBounds((frame.getWidth()) / 2 - 200, (frame.getHeight()) / 2 - 275 + (i * 50)
                     , 300, 40);
             listing.setBorder(border);
-            listing.addActionListener(e -> {
-                showCarInfo(car);
-            });
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
                     listing.setBackground(new Color(30,41,59));
@@ -105,33 +103,75 @@ public class ViewListings extends UiState{
                     listing.setForeground(new Color(148,163,184));
                 }
             });
-            if (currentUser.getCars().contains(car)) {
-                listing.setEnabled(false);
-                listing.setBackground(new Color(30,41,59));
-                listing.setForeground(new Color(148,163,184));
-                listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
-                JLabel hoverText = new JLabel("You can't bid on your own car!");
-                hoverText.setForeground(Color.WHITE);
-                hoverText.setFont(robotoFont.deriveFont(12f));
-                String listingText = listing.getText();
-                listing.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        listing.setText("");
-                        listing.add(hoverText);
+            if (car.isExpired() || (currentUser.getCars().contains(car))) {
+                if (car.isExpired() && currentUser.getCars().contains(car)) {
+                    removeCarOption(listing, car);
+                } else if (!currentUser.getCars().contains(car)) {
+                    listing.addActionListener(e -> {
+                        showCarInfo(car);
+                    });
+                } else {
+                    listing.setEnabled(false);
+                    JLabel hoverText = new JLabel();
+                    if (car.isExpired()) {
+                        hoverText.setText("This car has expired!");
+                    } else {
+                        hoverText.setText("You can't bid on your own car!");
                     }
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        listing.remove(hoverText);
-                        listing.setText(listingText);
-                    }
-                });
+                    hoverText.setForeground(Color.WHITE);
+                    hoverText.setFont(robotoFont.deriveFont(12f));
+                    String listingText = listing.getText();
+                    listing.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            listing.setText("");
+                            listing.add(hoverText);
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            listing.remove(hoverText);
+                            listing.setText(listingText);
+                        }
+                    });
+                }
             }
             listings.add(listing);
             car.setId(i);
             i++;
         }
         return listings;
+    }
+
+    private void removeCarOption(JButton listing, Car car) {
+        String listingText = listing.getText();
+        JLabel hoverText = new JLabel("Remove this car from the auction?");
+        hoverText.setForeground(Color.WHITE);
+        hoverText.setFont(robotoFont.deriveFont(12f));
+        listing.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                listing.setText("");
+                listing.add(hoverText);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                listing.remove(hoverText);
+                listing.setText(listingText);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to remove this car from the auction?",
+                        "Remove Car", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    listedCars.removeCar(car);
+                    currentUser.getCars().remove(car);
+                }
+            }
+        });
+
     }
 
     private void showCarInfo(Car car) {
@@ -158,7 +198,7 @@ public class ViewListings extends UiState{
     private void placeBid(Car car) {
         String input = JOptionPane.showInputDialog(frame, "Enter your bid amount:");
         try {
-            double bidAmount = Double.parseDouble(input);
+            int bidAmount = Integer.parseInt(input);
             if (bidAmount < 0) {
                 JOptionPane.showMessageDialog(frame, "Your bid must be a positive number!", "Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -169,11 +209,22 @@ public class ViewListings extends UiState{
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            handleDuplicateCar(car, bidAmount);
             JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.",
                     "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame, "Invalid input. Please enter a valid number.",
                     "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleDuplicateCar(Car car, int bidAmount) {
+        for (Bid bid : currentUser.getBids()) {
+            if (bid.getCar() == car) {
+                currentUser.getBids().remove(bid);
+                currentUser.placeBid(car.getId(), bidAmount, listedCars);
+                break;
+            }
         }
     }
 

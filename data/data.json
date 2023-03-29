@@ -1,5 +1,5 @@
 {
-    "date": "28-03-2023 22:53:40",
+    "date": "29-03-2023 01:04:49",
     "users": [
         {
             "password": "1234",
@@ -7,7 +7,7 @@
             "biddedCars": [],
             "listedCars": [
                 {
-                    "timeLeftInSeconds": 696,
+                    "timeLeftInSeconds": 675,
                     "year": 1994,
                     "driveType": "FWD",
                     "description": "Like new",
@@ -21,8 +21,23 @@
                     "make": "Honda",
                     "mileage": 150000
                 },
+              {
+                "timeLeftInSeconds": 0,
+                "year": 0,
+                "driveType": "FWD",
+                "description": "Good",
+                "colour": "Blue",
+                "condition": "Broken",
+                "transmission": "Manual",
+                "expired": true,
+                "price": 2000,
+                "model": "WRX STI",
+                "id": 1,
+                "make": "Subaru",
+                "mileage": 150000
+              },
                 {
-                    "timeLeftInSeconds": 99736,
+                    "timeLeftInSeconds": 99715,
                     "year": 1998,
                     "driveType": "FWD",
                     "description": "Good",
@@ -45,7 +60,7 @@
             "biddedCars": [
                 {
                     "car": {
-                        "timeLeftInSeconds": 696,
+                        "timeLeftInSeconds": 675,
                         "year": 1994,
                         "driveType": "FWD",
                         "description": "Like new",
@@ -53,7 +68,7 @@
                         "condition": "Excellent",
                         "transmission": "Automatic",
                         "expired": false,
-                        "price": 20000,
+                        "price": 2000,
                         "model": "Civic",
                         "id": 2,
                         "make": "Honda",
@@ -63,7 +78,7 @@
                 },
                 {
                     "car": {
-                        "timeLeftInSeconds": 99736,
+                        "timeLeftInSeconds": 99715,
                         "year": 1998,
                         "driveType": "FWD",
                         "description": "Good",
@@ -71,7 +86,7 @@
                         "condition": "Good",
                         "transmission": "Automatic",
                         "expired": false,
-                        "price": 10000,
+                        "price": 1000,
                         "model": "Skyline R34 GTR",
                         "id": 3,
                         "make": "Nissan",
@@ -82,6 +97,13 @@
             ],
             "listedCars": [],
             "username": "Adrian2"
+        },
+        {
+            "password": "enjoythisgui",
+            "wonCars": [],
+            "biddedCars": [],
+            "listedCars": [],
+            "username": "210grader"
         }
     ]
 }

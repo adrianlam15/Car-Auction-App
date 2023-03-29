@@ -13,14 +13,12 @@ import java.util.HashMap;
  * CreateAccount class (including UI) for the Car Auction application
  */
 public class CreateAccount extends UiState{
-    private Users users;
     private JTextField usernameTextField;
     private JPasswordField passwordTextField;
     private JPasswordField retypePasswordField;
     private String username;
     private String password;
     private String retypePassword;
-    private User currentUser;
 
     /**
      * Constructs a new CreateAccount UI state

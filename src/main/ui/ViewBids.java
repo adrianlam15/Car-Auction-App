@@ -39,11 +39,11 @@ public class ViewBids extends UiState {
         JPanel bidPanel = new JPanel();
         bidPanel.setLayout(null);
         bidPanel.setBackground(new Color(15, 23, 42));
-        getBids().forEach(bid -> bidPanel.add(bid));
+        getBids().forEach(bidPanel::add);
         JLabel headerLabel = new JLabel("Your Current Bids! (Click any to increase bid amount)");
-        headerLabel.setFont(robotoFont.deriveFont(20f));
+        headerLabel.setFont(robotoFont.deriveFont(16f));
         headerLabel.setForeground(new Color(148,163,184));
-        headerLabel.setBounds(225, 0, 300, 100);
+        headerLabel.setBounds(150, 0, 400, 100);
         bidPanel.add(headerLabel);
         int multiplier = bids.size() * 20;
         bidPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() + multiplier));
