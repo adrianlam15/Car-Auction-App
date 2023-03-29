@@ -230,24 +230,7 @@ public class ViewYourListings extends UiState {
         addButton("save");
         addButton("logout");
 
-        setButtons(buttons, viewYourListings);
+        setStateButtons(buttons, viewYourListings);
         return buttons;
-    }
-
-    private void setButtons(ArrayList<JComponent> buttons, JButton viewYourListings) {
-        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        int i = 0;
-        for (JComponent button : buttons) {
-            button.setFont(robotoFont.deriveFont(10f));
-            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            if ((JButton) button != viewYourListings) {
-                toSetButtons.add((JButton) button);
-            } else {
-                viewYourListings.setBorder(border);
-                viewYourListings.setForeground(Color.WHITE);
-            }
-            i++;
-        }
-        super.setAttrButtons(toSetButtons);
     }
 }

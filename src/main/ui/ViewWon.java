@@ -162,25 +162,8 @@ public class ViewWon extends UiState {
         addButton("save");
         addButton("logout");
 
-        setButtons(buttons, viewWonCars);
+        setStateButtons(buttons, viewWonCars);
         return buttons;
 
-    }
-
-    private void setButtons(ArrayList<JComponent> buttons, JButton viewWonCars) {
-        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        int i = 0;
-        for (JComponent button : buttons) {
-            button.setFont(robotoFont.deriveFont(10f));
-            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            if ((JButton) button != viewWonCars) {
-                toSetButtons.add((JButton) button);
-            } else {
-                viewWonCars.setBorder(border);
-                viewWonCars.setForeground(Color.WHITE);
-            }
-            i++;
-        }
-        super.setAttrButtons(toSetButtons);
     }
 }

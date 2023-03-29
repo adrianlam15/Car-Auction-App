@@ -233,6 +233,7 @@ public class Login extends UiState {
                 20);
         signUp.addActionListener(e -> {
             cards.remove(createAccountPanel);
+            createAccountUI = new CreateAccount();
             createAccountPanel = createAccountUI.initWin();
             cards.add(createAccountPanel, "createAccount");
             cardLayout.show(cards, "createAccount");

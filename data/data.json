@@ -15,7 +15,7 @@
                     "condition": "Excellent",
                     "transmission": "Automatic",
                     "expired": false,
-                    "price": 20000,
+                    "price": 2000,
                     "model": "Civic",
                     "id": 2,
                     "make": "Honda",
@@ -30,7 +30,7 @@
                     "condition": "Good",
                     "transmission": "Automatic",
                     "expired": false,
-                    "price": 10000,
+                    "price": 1000,
                     "model": "Skyline R34 GTR",
                     "id": 3,
                     "make": "Nissan",
@@ -59,7 +59,7 @@
                         "make": "Honda",
                         "mileage": 150000
                     },
-                    "bidAmount": 100000
+                    "bidAmount": 1000
                 },
                 {
                     "car": {
@@ -77,7 +77,7 @@
                         "make": "Nissan",
                         "mileage": 200000
                     },
-                    "bidAmount": 1000000
+                    "bidAmount": 1000
                 }
             ],
             "listedCars": [],

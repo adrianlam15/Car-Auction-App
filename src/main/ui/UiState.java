@@ -5,6 +5,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -62,6 +63,7 @@ public abstract class UiState {
     protected static boolean loggedIn = false;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private static final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+    protected static final HashMap<String, Boolean> states = new HashMap<>();
 
     /**
      * Constructs a new UiState
@@ -76,6 +78,7 @@ public abstract class UiState {
 
     /**
      * Initializes the UI state
+     *
      * @return the JPanel of the UI state
      */
     protected JPanel initWin() {
@@ -83,8 +86,39 @@ public abstract class UiState {
         return panel;
     }
 
+    /*protected static void initActiveState() {
+        states.put(loginUI.getClass().getSimpleName(), true);
+        states.put(mainMenuUI.getClass().getSimpleName(), false);
+        states.put(createListingUI.getClass().getSimpleName(), false);
+        states.put(viewListingsUI.getClass().getSimpleName(), false);
+        states.put(viewYourListingsUI.getClass().getSimpleName(), false);
+        states.put(createAccountUI.getClass().getSimpleName(), false);
+        states.put(viewBidsUI.getClass().getSimpleName(), false);
+        states.put(viewWonUI.getClass().getSimpleName(), false);
+    }
+
+    protected static void setActiveState(String activeState) {
+        for (String stateName : states.keySet()) {
+            if (stateName.equals(activeState)) {
+                states.put(stateName, true);
+            } else {
+                states.put(stateName, false);
+            }
+        }
+    }
+
+    protected static void setStateButtons() {
+        for (String state : states.keySet()) {
+            if (states.get(state)) {
+
+            }
+
+        }
+    }*/
+
     /**
      * Sets the attributes of the buttons
+     *
      * @param buttons
      */
     protected void setAttrButtons(ArrayList<JButton> buttons) {
@@ -96,12 +130,12 @@ public abstract class UiState {
             button.setForeground(Color.WHITE);
             button.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
-                    button.setBackground(new Color(30,41,59));
+                    button.setBackground(new Color(30, 41, 59));
                     button.setBorder(BorderFactory.createLineBorder(new Color(99, 102, 241), 2));
                 }
 
                 public void mouseExited(MouseEvent evt) {
-                    button.setBackground(new Color(99,102,241));
+                    button.setBackground(new Color(99, 102, 241));
                     button.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
                 }
             });
@@ -159,8 +193,7 @@ public abstract class UiState {
                 System.out.println("Unable to read from file: " + JSON_STORE);
                 JOptionPane.showMessageDialog(frame, "Unable to read from file: " + JSON_STORE);
             }
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "Data already loaded.");
         }
         loaded = true;
@@ -218,7 +251,7 @@ public abstract class UiState {
         });
 
     }
-    
+
     protected static void setScreen() {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
@@ -227,14 +260,14 @@ public abstract class UiState {
         int winHeight = (int) (height * 0.5);
         frame.setSize(winWidth, winHeight);
     }
-    
+
     protected static void initUIState() {
-        UiState.currentUser = new User();
-        UiState.listedCars = new Cars();
-        UiState.users = new Users();
-        UiState.bids = new ArrayList<>();
-        UiState.loadFont();
-        UiState.userMap = new HashMap<>();
+        currentUser = new User();
+        listedCars = new Cars();
+        users = new Users();
+        bids = new ArrayList<>();
+        loadFont();
+        userMap = new HashMap<>();
     }
 
     protected static void setReadAndWrite() {
@@ -271,34 +304,38 @@ public abstract class UiState {
     }
 
     protected void addButton(String option) {
-        JButton optionButton = null;
-        if (option.equals("save")) {
-            optionButton = new JButton("Save");
-            optionButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    save();
-                }
-            });
-        } else if (option.equals("load")) {
-            optionButton = new JButton("Load");
-            optionButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    load();
-                }
-            });
-        } else if (option.equals("logout")) {
-            optionButton = new JButton("Logout");
-            optionButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    loggedIn = false;
-                    currentUser = new User();
-                    cardLayout.show(cards, "loginMenu");
-                }
-            });
-        }
+        String optionName = option.substring(0, 1).toUpperCase() + option.substring(1);
+        JButton optionButton = new JButton(optionName);
+        optionButton.addActionListener(e -> {
+            if (option.equals("save")) {
+                save();
+            } else if (option.equals("load")) {
+                load();
+            } else if (option.equals("logout")) {
+                loggedIn = false;
+                currentUser = new User();
+                cardLayout.show(cards, "loginMenu");
+            } else {
+                throw new UnsupportedOperationException("Invalid option");
+            }
+        });
         buttons.add(optionButton);
+    }
+
+    protected void setStateButtons(ArrayList<JComponent> buttons, JButton ignoreButton) {
+        int i = 0;
+        for (JComponent button : buttons) {
+            button.setFont(robotoFont.deriveFont(10f));
+            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
+            if ((JButton) button != ignoreButton) {
+                toSetButtons.add((JButton) button);
+            } else {
+                Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
+                ignoreButton.setBorder(border);
+                ignoreButton.setForeground(Color.WHITE);
+            }
+            i++;
+        }
+        setAttrButtons(toSetButtons);
     }
 }

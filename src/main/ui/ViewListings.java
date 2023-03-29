@@ -145,8 +145,12 @@ public class ViewListings extends UiState{
                 + "Mileage: " + car.getMileage() + "\n"
                 + "Price: $" + car.getPrice() + "\n"
                 + "Description: " + car.getDescription() + "\n"
-                + "Time left: " + car.getTimer() + " seconds" + "\n"
-                + "Highest Bid: $" + car.getHighestBid().getBidAmount() + "\n";
+                + "Time left: " + car.getTimer() + " seconds" + "\n";
+        if (car.getHighestBid() == null) {
+            message = message + "Highest bid: None";
+        } else {
+            message = message + "Highest bid: $" + car.getHighestBid().getBidAmount();
+        }
         JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
         placeBid(car);
     }
@@ -197,19 +201,30 @@ public class ViewListings extends UiState{
 
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
+            cards.remove(viewYourListingsPanel);
+            viewYourListingsUI = new ViewYourListings();
+            viewYourListingsPanel = viewYourListingsUI.initWin();
+            cards.add(viewYourListingsPanel, "viewYourListings");
             cardLayout.show(cards, "viewYourListings");
         });
         buttons.add(viewYourListings);
 
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
-            System.out.println("bidding view");
+            cards.remove(viewBidsPanel);
+            viewBidsUI = new ViewBids();
+            viewBidsPanel = viewBidsUI.initWin();
+            cards.add(viewBidsPanel, "viewBids");
             cardLayout.show(cards, "viewBids");
         });
         buttons.add(viewCurrentBids);
 
         JButton viewWonCars = new JButton("View Won Cars");
         viewWonCars.addActionListener(e -> {
+            cards.remove(viewWonPanel);
+            viewWonUI = new ViewWon();
+            viewWonPanel = viewWonUI.initWin();
+            cards.add(viewWonPanel, "viewWon");
             cardLayout.show(cards, "viewWon");
         });
         buttons.add(viewWonCars);
@@ -218,24 +233,7 @@ public class ViewListings extends UiState{
         addButton("save");
         addButton("logout");
 
-        setButtons(buttons, viewListings);
+        setStateButtons(buttons, viewListings);
         return buttons;
-    }
-
-    private void setButtons(ArrayList<JComponent> buttons, JButton viewListings) {
-        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        int i = 0;
-        for (JComponent button : buttons) {
-            button.setFont(robotoFont.deriveFont(10f));
-            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            if ((JButton) button != viewListings) {
-                toSetButtons.add((JButton) button);
-            } else {
-                viewListings.setBorder(border);
-                viewListings.setForeground(Color.WHITE);
-            }
-            i++;
-        }
-        super.setAttrButtons(toSetButtons);
     }
 }

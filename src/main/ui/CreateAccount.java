@@ -130,13 +130,10 @@ public class CreateAccount extends UiState{
      * @return ArrayList of JComponents (buttons)
      */
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
-        ArrayList<JButton> toSetButtons = new ArrayList<>();
         Border buttonBorder = BorderFactory.createLineBorder(new Color(30,41,59), 2);
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 14);
 
         JButton createAcc = new JButton("Create");
-        createAcc.setFont(buttonFont.deriveFont(10f));
+        createAcc.setFont(robotoFont.deriveFont(10f));
         createAcc.setBounds((frame.getWidth() - 100) / 2 + 70, (frame.getHeight() - 40) / 2 + 70, 80,
                 20);
         createAcc.setBorder(buttonBorder);
@@ -159,16 +156,12 @@ public class CreateAccount extends UiState{
             if (currentUser.createUser(username, password, retypePassword)) {
                 userMap.put(username, password);
                 users.add(currentUser);
-                UiState.currentUser = currentUser;
-                System.out.println(userMap);
-                UiState.users = users;
                 cardLayout.show(cards, "mainMenu");
             } else {
                 JOptionPane.showMessageDialog(frame, "Your passwords do not match",
                         "Password Mismatch", JOptionPane.ERROR_MESSAGE);
             }
         });
-
         buttons.add(createAcc);
         toSetButtons.add(createAcc);
         super.setAttrButtons(toSetButtons);

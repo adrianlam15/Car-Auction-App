@@ -40,7 +40,7 @@ public class ViewBids extends UiState {
         bidPanel.setLayout(null);
         bidPanel.setBackground(new Color(15, 23, 42));
         getBids().forEach(bid -> bidPanel.add(bid));
-        JLabel headerLabel = new JLabel("Your Current Bids");
+        JLabel headerLabel = new JLabel("Your Current Bids! (Click any to increase bid amount)");
         headerLabel.setFont(robotoFont.deriveFont(20f));
         headerLabel.setForeground(new Color(148,163,184));
         headerLabel.setBounds(225, 0, 300, 100);
@@ -65,7 +65,7 @@ public class ViewBids extends UiState {
         ArrayList<JComponent> bids = new ArrayList<>();
         int i = 2;
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        System.out.println(currentUser.getBids().size());
+        System.out.println("bids: " + currentUser.getBids().size());
         for (Bid bid : currentUser.getBids()) {
             String bidInfo = "Car: " + bid.getCar().getMake() + " " + bid.getCar().getModel()
                     + " " + bid.getCar().getYear() + " | Bid: $" + bid.getBidAmount();
@@ -107,6 +107,7 @@ public class ViewBids extends UiState {
                     int newBid = Integer.parseInt(bidAmount);
                     currentUser.getBids().remove(userBid);
                     currentUser.placeBid(userBid.getCar().getId(), newBid, listedCars);
+                    JOptionPane.showMessageDialog(null, "Your new bid is $" + newBid);
                     return;
                 }
             }
@@ -165,24 +166,7 @@ public class ViewBids extends UiState {
         addButton("save");
         addButton("logout");
 
-        setButtons(buttons, viewCurrentBids);
+        setStateButtons(buttons, viewCurrentBids);
         return buttons;
-    }
-
-    private void setButtons(ArrayList<JComponent> buttons, JButton viewCurrentBids) {
-        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        int i = 0;
-        for (JComponent button : buttons) {
-            button.setFont(robotoFont.deriveFont(10f));
-            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            if ((JButton) button != viewCurrentBids) {
-                toSetButtons.add((JButton) button);
-            } else {
-                viewCurrentBids.setBorder(border);
-                viewCurrentBids.setForeground(Color.WHITE);
-            }
-            i++;
-        }
-        super.setAttrButtons(toSetButtons);
     }
 }

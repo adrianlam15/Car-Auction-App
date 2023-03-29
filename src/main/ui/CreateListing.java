@@ -185,6 +185,7 @@ public class CreateListing extends UiState {
 
     /**
      * Gets the list of JButtons for the MainMenu state
+     *
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
@@ -207,6 +208,7 @@ public class CreateListing extends UiState {
         JButton viewYourListings = new JButton("View Your Listings");
         viewYourListings.addActionListener(e -> {
             cards.remove(viewYourListingsPanel);
+            viewYourListingsUI = new ViewYourListings();
             viewYourListingsPanel = viewYourListingsUI.initWin();
             cards.add(viewYourListingsPanel, "viewYourListings");
             cardLayout.show(cards, "viewYourListings");
@@ -239,44 +241,48 @@ public class CreateListing extends UiState {
 
         JButton createCar = new JButton("Create");
         createCar.addActionListener(e -> {
-            try {
-                setCar();
-                int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() + "\n" +
-                        carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
-                if (dialogRes == JOptionPane.YES_OPTION) {
-                    handleCreate();
-                    resetFields();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
-                }
-            } catch (NumberFormatException err) {
-                System.out.println(err.getMessage());
-                JOptionPane.showMessageDialog(null, "Invalid year, mileage, or price.");
-            }
+            tryCreateCar();
         });
         buttons.add(createCar);
+        setStateButtons(buttons, createListing);
+        return buttons;
+    }
 
-        Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
+    @Override
+    protected void setStateButtons(ArrayList<JComponent> buttons, JButton ignoreButton) {
         int i = 0;
         for (JComponent button : buttons) {
-            button.setBorder(border);
             button.setFont(robotoFont.deriveFont(10f));
-            if (button == createCar) {
-                button.setBounds((frame.getWidth() - 100) / 2 + 100, (frame.getHeight() - 40) / 2,
-                        100, 40);
+            button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
+            if (button instanceof JButton && ((JButton) button).getText().equals("Create")) {
+                button.setBounds(450, 200, 100, 40);
+            }
+            if ((JButton) button != ignoreButton) {
                 toSetButtons.add((JButton) button);
             } else {
-                if (button != createListing) {
-                    toSetButtons.add((JButton) button);
-                } else {
-                    createListing.setForeground(Color.WHITE);
-                }
-                button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
+                Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
+                ignoreButton.setBorder(border);
+                ignoreButton.setForeground(Color.WHITE);
             }
             i++;
         }
         super.setAttrButtons(toSetButtons);
-        return buttons;
+    }
+
+    private void tryCreateCar() {
+        try {
+            setCar();
+            int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() + "\n" +
+                    carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
+            if (dialogRes == JOptionPane.YES_OPTION) {
+                handleCreate();
+                resetFields();
+            } else {
+                JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
+            }
+        } catch (NumberFormatException err) {
+            JOptionPane.showMessageDialog(null, "Invalid year, mileage, or price.");
+        }
     }
 
     private void resetFields() {
