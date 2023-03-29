@@ -1,11 +1,8 @@
 package ui;
 
-import model.Users;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * MainMenu class (including UI) for the Car Auction application
@@ -41,8 +38,6 @@ public class MainMenu extends UiState {
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
-
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
             cards.remove(createListingPanel);
@@ -93,25 +88,9 @@ public class MainMenu extends UiState {
         });
         buttons.add(viewWonCars);
 
-        JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
-        loadUpToDateData.addActionListener(e -> {
-            load();
-            System.out.println(currentUser.getUsername());
-        });
-        buttons.add(loadUpToDateData);
-
-        JButton saveCurrentData = new JButton("Save Current Data");
-        saveCurrentData.addActionListener(e -> {
-            save();
-        });
-        buttons.add(saveCurrentData);
-
-        JButton logout = new JButton("Logout");
-        logout.addActionListener(e -> {
-            System.out.println("Logging out...");
-            cardLayout.show(cards, "loginMenu");
-        });
-        buttons.add(logout);
+        addButton("load");
+        addButton("save");
+        addButton("logout");
 
         Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
         int i = 0;

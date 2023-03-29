@@ -24,6 +24,5 @@ This application will be built using Java.
 - As a user, I want to be able to list a car up for auction with a minimum bid and time interval.
 - As a user, I want to be able to make bids on a car
 - As a user, I want to be able to buy the car after the auction time interval has ended, and I have the highest bid.
-- As a user, I want to be able to edit, and delete my listings on a car.
 - As a user, I want to be able to 'import' my current user state of my listings and bids from a file to the application.
 - As a user, I want to be able to 'export' my current user state of my listings and bids to a file from the application.

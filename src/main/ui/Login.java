@@ -232,8 +232,8 @@ public class Login extends UiState {
         signUp.setBounds((frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 + 40, 80,
                 20);
         signUp.addActionListener(e -> {
-            CreateAccount createAccountUI = new CreateAccount();
-            JPanel createAccountPanel = createAccountUI.initWin();
+            cards.remove(createAccountPanel);
+            createAccountPanel = createAccountUI.initWin();
             cards.add(createAccountPanel, "createAccount");
             cardLayout.show(cards, "createAccount");
             });

@@ -1,7 +1,6 @@
 package ui;
 
 import model.Car;
-import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,7 +8,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * ViewListings class (including UI) for the Car Auction application
@@ -21,7 +19,6 @@ public class ViewListings extends UiState{
      */
     public ViewListings() {
         super();
-        System.out.println(currentUser.getUsername());
     }
 
     /**
@@ -41,19 +38,37 @@ public class ViewListings extends UiState{
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
 
-        getJButtons().forEach(button -> panel.add(button));
-        getListings().forEach(listing -> panel.add(listing));
-        panel.add(bidInfo());
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(null);
+        buttonPanel.setBackground(new Color(15, 23, 42));
+        buttonPanel.setBounds(0, 0, 100, (frame.getHeight()));
+        getJButtons().forEach(button -> buttonPanel.add(button));
+
+        panel.add(listingInfo());
+        panel.add(buttonPanel);
         return panel;
     }
 
-    private JLabel bidInfo() {
-        JLabel bidInfo = new JLabel("Click a car to bid on it!");
-        bidInfo.setFont(robotoFont.deriveFont(20f));
-        bidInfo.setForeground(new Color(148,163,184));
-        bidInfo.setBounds(225, 0, 300, 100);
+    private JScrollPane listingInfo() {
+        JPanel listingPanel = new JPanel();
+        listingPanel.setLayout(null);
+        listingPanel.setBackground(new Color(15, 23, 42));
+        getListings().forEach(listing -> listingPanel.add(listing));
+        JLabel headerLabel = new JLabel("Click a car to bid on it!");
+        headerLabel.setFont(robotoFont.deriveFont(20f));
+        headerLabel.setForeground(new Color(148,163,184));
+        headerLabel.setBounds(225, 0, 300, 100);
+        listingPanel.add(headerLabel);
+        int multiplier = bids.size() * 20;
+        listingPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() + multiplier));
 
-        return bidInfo;
+        JScrollPane scrollPane = new JScrollPane(listingPanel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBackground(new Color(15, 23, 42));
+        scrollPane.setBounds(100, 0, frame.getWidth() - 110, frame.getHeight());
+        return scrollPane;
     }
 
     /**
@@ -62,12 +77,11 @@ public class ViewListings extends UiState{
      */
     private ArrayList<JComponent> getListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
+        Font buttonFont = robotoFont.deriveFont(12f);
         int i = 2;
-        String carInfo;
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        for (Car car : UiState.listedCars.getCars()) {
-            carInfo = car.getCondition() + " " + car.getYear() + " " + car.getMake() + " " + car.getModel();
+        for (Car car : listedCars.getCars()) {
+            String carInfo = car.getCondition() + " " + car.getYear() + " " + car.getMake() + " " + car.getModel();
             JButton listing = new JButton(carInfo);
             listing.setFocusPainted(false);
             listing.setBackground(new Color(30,41,59));
@@ -77,7 +91,7 @@ public class ViewListings extends UiState{
                     , 300, 40);
             listing.setBorder(border);
             listing.addActionListener(e -> {
-                showCarInfo(listing, car);
+                showCarInfo(car);
             });
             listing.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent evt) {
@@ -91,6 +105,28 @@ public class ViewListings extends UiState{
                     listing.setForeground(new Color(148,163,184));
                 }
             });
+            if (currentUser.getCars().contains(car)) {
+                listing.setEnabled(false);
+                listing.setBackground(new Color(30,41,59));
+                listing.setForeground(new Color(148,163,184));
+                listing.setBorder(BorderFactory.createLineBorder(new Color(30, 41, 59), 2));
+                JLabel hoverText = new JLabel("You can't bid on your own car!");
+                hoverText.setForeground(Color.WHITE);
+                hoverText.setFont(robotoFont.deriveFont(12f));
+                String listingText = listing.getText();
+                listing.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        listing.setText("");
+                        listing.add(hoverText);
+                    }
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        listing.remove(hoverText);
+                        listing.setText(listingText);
+                    }
+                });
+            }
             listings.add(listing);
             car.setId(i);
             i++;
@@ -98,8 +134,7 @@ public class ViewListings extends UiState{
         return listings;
     }
 
-    private void showCarInfo(JButton listing, Car car) {
-        System.out.println(currentUser.getUsername());
+    private void showCarInfo(Car car) {
         String message = "Condition: " + car.getCondition() + "\n"
                 + "Transmission: " + car.getTransmission() + "\n"
                 + "Color: " + car.getColour() + "\n"
@@ -109,40 +144,40 @@ public class ViewListings extends UiState{
                 + "Model: " + car.getModel() + "\n"
                 + "Mileage: " + car.getMileage() + "\n"
                 + "Price: $" + car.getPrice() + "\n"
-                + "Description: " + car.getDescription() + "\n";
-
+                + "Description: " + car.getDescription() + "\n"
+                + "Time left: " + car.getTimer() + " seconds" + "\n"
+                + "Highest Bid: $" + car.getHighestBid().getBidAmount() + "\n";
         JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
+        placeBid(car);
+    }
 
+    private void placeBid(Car car) {
         String input = JOptionPane.showInputDialog(frame, "Enter your bid amount:");
         try {
             double bidAmount = Double.parseDouble(input);
-            for (Car userCar : currentUser.getCars()) {
-                if (car.equals(userCar)) {
-                    JOptionPane.showMessageDialog(frame, "You cannot bid on your own car!", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
             if (bidAmount < 0) {
-                JOptionPane.showMessageDialog(frame, "Your bid must be a positive number!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Your bid must be a positive number!", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
             else if (bidAmount < car.getPrice()) {
-                JOptionPane.showMessageDialog(frame, "Your bid must be higher than the current price!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Your bid must be higher than the current price!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.", "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.",
+                    "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Invalid input. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Invalid input. Please enter a valid number.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     /**
      * Gets the list of JButtons for the MainMenu state
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
         Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
@@ -179,33 +214,28 @@ public class ViewListings extends UiState{
         });
         buttons.add(viewWonCars);
 
-        JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
-        buttons.add(loadUpToDateData);
+        addButton("load");
+        addButton("save");
+        addButton("logout");
 
-        JButton saveCurrentData = new JButton("Save Current Data");
-        buttons.add(saveCurrentData);
+        setButtons(buttons, viewListings);
+        return buttons;
+    }
 
-        JButton logout = new JButton("Logout");
-        logout.addActionListener(e -> {
-            System.out.println("Logging out...");
-            cardLayout.show(cards, "loginMenu");
-        });
-        buttons.add(logout);
-
-        Border border = BorderFactory.createLineBorder(new java.awt.Color(15, 23, 42), 1);
+    private void setButtons(ArrayList<JComponent> buttons, JButton viewListings) {
+        Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         int i = 0;
         for (JComponent button : buttons) {
-            button.setFont(buttonFont.deriveFont(10f));
+            button.setFont(robotoFont.deriveFont(10f));
             button.setBounds(0, (frame.getHeight() / 2) - 225 + (i * 50), 100, 40);
-            button.setBorder(border);
             if ((JButton) button != viewListings) {
                 toSetButtons.add((JButton) button);
             } else {
+                viewListings.setBorder(border);
                 viewListings.setForeground(Color.WHITE);
             }
             i++;
         }
         super.setAttrButtons(toSetButtons);
-        return buttons;
     }
 }

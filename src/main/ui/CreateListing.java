@@ -1,14 +1,11 @@
 package ui;
 
 import model.Car;
-import model.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.text.View;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CreateListing extends UiState {
     private ArrayList<JComponent> inputFields;
@@ -191,7 +188,6 @@ public class CreateListing extends UiState {
      * @return ArrayList of JButtons
      */
     private ArrayList<JComponent> getJButtons() {
-        ArrayList<JComponent> buttons = new ArrayList<>();
         JButton createListing = new JButton("Create Listing");
         createListing.setBackground(new java.awt.Color(30, 41, 59));
         createListing.setFocusPainted(false);
@@ -237,54 +233,19 @@ public class CreateListing extends UiState {
         });
         buttons.add(viewWonCars);
 
-        loadSave("save");
-        loadSave("load");
-
-        JButton loadUpToDateData = new JButton("Load Up-to-Date Data");
-        loadUpToDateData.addActionListener(e -> {
-            load();
-        });
-        buttons.add(loadUpToDateData);
-
-        JButton saveCurrentData = new JButton("Save Current Data");
-        saveCurrentData.addActionListener(e -> {
-            save();
-        });
-        buttons.add(saveCurrentData);
-
-        JButton logout = new JButton("Logout");
-        logout.addActionListener(e -> {
-            System.out.println("Logging out...");
-            cardLayout.show(cards, "loginMenu");
-        });
-        buttons.add(logout);
+        addButton("load");
+        addButton("save");
+        addButton("logout");
 
         JButton createCar = new JButton("Create");
         createCar.addActionListener(e -> {
-            System.out.println(UiState.listedCars.getCars().size());
             try {
-                carToCreate.setMake(carMake.getText());
-                carToCreate.setModel(carModel.getText());
-                carToCreate.setColour(carColour.getText());
-                carToCreate.setTransmission(carTransmission.getText());
-                carToCreate.setDriveType(carDriveType.getText());
-                carToCreate.setCondition(carCondition.getText());
-                carToCreate.setYear(Integer.parseInt(carYear.getText()));
-                carToCreate.setMileage(Integer.parseInt(carMileage.getText()));
-                carToCreate.setPrice(Integer.parseInt(carPrice.getText()));
-                carToCreate.setDescription(carDescription.getText());
+                setCar();
                 int dialogRes = JOptionPane.showConfirmDialog(null, carToCreate.getListingCar() + "\n" +
                         carToCreate.getDescription(), "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dialogRes == JOptionPane.YES_OPTION) {
-                    currentUser.createCar(carToCreate);
-                    UiState.listedCars.addCar(carToCreate);
-                    JOptionPane.showMessageDialog(null, "Listing created successfully.");
-                    for (JComponent field : inputFields) {
-                        if (field instanceof JTextField && !((JTextField) field).getText().equals("")
-                                && !((JTextField) field).getText().contains("_")) {
-                            ((JTextField) field).setText("");
-                        }
-                    }
+                    handleCreate();
+                    resetFields();
                 } else {
                     JOptionPane.showMessageDialog(null, "Listing creation cancelled.");
                 }
@@ -316,5 +277,33 @@ public class CreateListing extends UiState {
         }
         super.setAttrButtons(toSetButtons);
         return buttons;
+    }
+
+    private void resetFields() {
+        for (JComponent field : inputFields) {
+            if (field instanceof JTextField && !((JTextField) field).getText().equals("")
+                    && !((JTextField) field).getText().contains("_")) {
+                ((JTextField) field).setText("");
+            }
+        }
+    }
+
+    private void handleCreate() {
+        currentUser.createCar(carToCreate);
+        listedCars.addCar(carToCreate);
+        JOptionPane.showMessageDialog(null, "Listing created successfully.");
+    }
+
+    private void setCar() {
+        carToCreate.setMake(carMake.getText());
+        carToCreate.setModel(carModel.getText());
+        carToCreate.setColour(carColour.getText());
+        carToCreate.setTransmission(carTransmission.getText());
+        carToCreate.setDriveType(carDriveType.getText());
+        carToCreate.setCondition(carCondition.getText());
+        carToCreate.setYear(Integer.parseInt(carYear.getText()));
+        carToCreate.setMileage(Integer.parseInt(carMileage.getText()));
+        carToCreate.setPrice(Integer.parseInt(carPrice.getText()));
+        carToCreate.setDescription(carDescription.getText());
     }
 }

@@ -152,8 +152,7 @@ public abstract class UiState {
                 String date = jsonReader.readDate();
                 //initUiState();    problem is that currentUser is null because according to AuctionApp class,
                 //                  currentUser not initialized
-                System.out.println(currentUser.getUsername());
-                System.out.println(currentUser.getCars().size());
+                System.out.println(currentUser.getBids().size());
                 System.out.println("Loaded data from " + JSON_STORE + " from " + date);
                 JOptionPane.showMessageDialog(frame, "Data loaded successfully!");
             } catch (IOException e) {
@@ -271,7 +270,7 @@ public abstract class UiState {
         cards.add(viewWonPanel, "viewWon");
     }
 
-    protected void loadSave(String option) {
+    protected void addButton(String option) {
         JButton optionButton = null;
         if (option.equals("save")) {
             optionButton = new JButton("Save");
@@ -287,6 +286,16 @@ public abstract class UiState {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     load();
+                }
+            });
+        } else if (option.equals("logout")) {
+            optionButton = new JButton("Logout");
+            optionButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    loggedIn = false;
+                    currentUser = new User();
+                    cardLayout.show(cards, "loginMenu");
                 }
             });
         }

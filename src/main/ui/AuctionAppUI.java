@@ -1,16 +1,15 @@
 package ui;
 
-import model.Cars;
-import model.User;
-import persistence.JsonReader;
-import persistence.JsonWriter;
-
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
+/**
+ * AuctionAppUI class (including UI) for the Car Auction application
+ */
 public class AuctionAppUI extends UiState {
 
+    // MODIFIES: UiState
+    // EFFECTS: starts the Auction App
     public AuctionAppUI() throws IOException {
         init();
         initFrame();
@@ -23,12 +22,16 @@ public class AuctionAppUI extends UiState {
         runAuctionApp();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: initializes the UI with frames and panels
     private void runAuctionApp() {
         initUI();
         frame.add(cards);
         frame.setVisible(true);
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: initializes appropriate subclasses of UiState
     private void initUI() {
         loginUI = new Login();
         mainMenuUI = new MainMenu();
@@ -42,7 +45,7 @@ public class AuctionAppUI extends UiState {
         addCards();
         cardLayout.show(cards, "loginMenu");
     }
-    
+
     @Override
     protected JPanel loadPanel() {
         return null;
