@@ -191,6 +191,7 @@ public class Login extends UiState {
                         UiState.currentUser = user;
                         UiState.bids = currentUser.getBids();
                         System.out.println("Logged in as " + currentUser.getUsername());
+
                         cardLayout.show(cards, "mainMenu");
                         usernameTextField.setText("");
                         passwordTextField.setText("");

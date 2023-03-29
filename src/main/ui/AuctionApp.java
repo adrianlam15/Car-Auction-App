@@ -130,6 +130,12 @@ public class AuctionApp {
             } else {
                 UiState.listedCars = listedCars;
             }
+            if (currentUser == null & UiState.currentUser != null) {
+                currentUser = UiState.currentUser;
+            } else {
+                UiState.currentUser = currentUser;
+            }
+            System.out.println("Current User: " + currentUser.getUsername());
             displayMenu(loggedIn);
             command = input.next();
             processCommand(command);
@@ -535,9 +541,10 @@ public class AuctionApp {
                     }
                 }
                 String date = jsonReader.readDate();
-                //initUiState();    problem is that currentUser is null because according to AuctionApp class, currentUser
-                // is not static    hasn't been initialized yet
+                //initUiState();    problem is that currentUser is null because according to AuctionApp class,
+                //                  currentUser not initialized
                 System.out.println(currentUser.getUsername());
+                System.out.println(currentUser.getCars().size());
                 System.out.println("Loaded data from " + JSON_STORE + " from " + date);
                 JOptionPane.showMessageDialog(frame, "Data loaded successfully!");
             } catch (IOException e) {

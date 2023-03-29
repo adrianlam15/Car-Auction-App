@@ -46,6 +46,7 @@ public abstract class UiState {
     protected static ArrayList<JComponent> timers = new ArrayList<>();
     protected ArrayList<JComponent> inputFields = new ArrayList<>();
 
+
     /**
      * Constructs a new UiState
      */
