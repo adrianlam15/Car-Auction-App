@@ -15,26 +15,19 @@ import java.util.ArrayList;
  */
 public class ViewListings extends UiState {
 
-    /**
-     * Constructor for the ViewListings class
-     */
     public ViewListings() {
         super();
     }
 
-    /**
-     * Initializes the UI for the ViewListings state
-     * @return JPanel of the ViewListings UI
-     */
+    // MODIFIES: UiState
+    // EFFECTS: initializes the UI for the ViewListings state
     protected JPanel initWin() {
         super.initWin();
         return loadPanel();
     }
 
-    /**
-     * Loads the UI for the ViewListings state
-     * @return JPanel of the ViewListings UI
-     */
+    // MODIFIES: UiState
+    // EFFECTS: loads the UI for the ViewListings state
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -50,6 +43,7 @@ public class ViewListings extends UiState {
         return panel;
     }
 
+    // EFFECTS: initializes the buttons for the ViewListings state and scrollpane
     private JScrollPane listingInfo() {
         JPanel listingPanel = new JPanel();
         listingPanel.setLayout(null);
@@ -72,10 +66,7 @@ public class ViewListings extends UiState {
         return scrollPane;
     }
 
-    /**
-     * Gets the list of JButtons for the ViewListings state
-     * @return ArrayList of JButtons
-     */
+    // EFFECTS: initializes the buttons for the ViewListings state
     private ArrayList<JComponent> getListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
         Font buttonFont = robotoFont.deriveFont(12f);
@@ -93,6 +84,8 @@ public class ViewListings extends UiState {
         return listings;
     }
 
+    // MODIFIES, User, Car, Cars, UiState
+    // EFFECTS: handles if car is expired or current user owns it
     private void handleExpiredOrOwn(Car car, JButton listing) {
         if (car.isExpired() || (currentUser.getCars().contains(car))) {
             if (car.isExpired() && currentUser.getCars().contains(car)) {
@@ -107,6 +100,8 @@ public class ViewListings extends UiState {
         }
     }
 
+    // REQUIRES: listing is not null, car is not null
+    // EFFECTS: if car is expired, show user, else show error that you can't bid on your own car
     private void handleCarBidError(JButton listing, Car car) {
         listing.setEnabled(false);
         JLabel hoverText = new JLabel();
@@ -121,6 +116,8 @@ public class ViewListings extends UiState {
         setMouseListener(listing, hoverText, listingText);
     }
 
+    // REQUIRES: listing is not null, buttonFont is not null, i is not null
+    // EFFECTS: sets the attributes for the listing button
     private void setAttrListing(JButton listing, Font buttonFont, int i) {
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         listing.setFocusPainted(false);
@@ -132,6 +129,7 @@ public class ViewListings extends UiState {
         listing.setBorder(border);
     }
 
+    // EFFECTS: sets the mouse listeners for the error in bidding
     private void setMouseListener(JButton listing, JLabel hoverText, String listingText) {
         listing.addMouseListener(new MouseAdapter() {
             @Override
@@ -139,7 +137,6 @@ public class ViewListings extends UiState {
                 listing.setText("");
                 listing.add(hoverText);
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 listing.remove(hoverText);
@@ -148,6 +145,7 @@ public class ViewListings extends UiState {
         });
     }
 
+    // EFFECTS: sets default listeners for the buttons
     private void setListeners(JButton listing) {
         listing.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -163,6 +161,9 @@ public class ViewListings extends UiState {
         });
     }
 
+    // REQUIRES: listing is not null, car is not null
+    // MODIFIES, User, Car, Cars, UiState
+    // EFFECTS: removes the car from the auction
     private void removeCarOption(JButton listing, Car car) {
         String listingText = listing.getText();
         JLabel hoverText = new JLabel("Remove this car from the auction?");
@@ -191,6 +192,9 @@ public class ViewListings extends UiState {
         });
     }
 
+    // REQUIRES: result is not null, car is not null
+    // MODIFIES, User, Car, Cars, UiState
+    // EFFECTS: removes the car from the auction
     private void handleRemove(int result, Car car) {
         if (result == JOptionPane.YES_OPTION) {
             listedCars.removeCar(car);
@@ -206,6 +210,8 @@ public class ViewListings extends UiState {
         }
     }
 
+    // REQUIRES: car is not null
+    // EFFECTS: shows the car information
     private void showCarInfo(Car car) {
         String message = "Condition: " + car.getCondition() + "\n"
                 + "Transmission: " + car.getTransmission() + "\n"
@@ -227,6 +233,9 @@ public class ViewListings extends UiState {
         placeBid(car);
     }
 
+    // REQUIRES: car is not null
+    // MODIFIES, User, Car, Cars, UiState
+    // EFFECTS: places a bid on the car
     private void placeBid(Car car) {
         String input = JOptionPane.showInputDialog(frame, "Enter your bid amount:");
         try {
@@ -240,7 +249,7 @@ public class ViewListings extends UiState {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            handleDuplicateCar(car, bidAmount);
+            handleDuplicateBid(car, bidAmount);
             JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.",
                     "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
@@ -249,7 +258,10 @@ public class ViewListings extends UiState {
         }
     }
 
-    private void handleDuplicateCar(Car car, int bidAmount) {
+    // REQUIRES: car is not null, bidAmount is not null
+    // MODIFIES, User, Car, Cars, UiState
+    // EFFECTS: removes the previous bid on the car and places a new bid
+    private void handleDuplicateBid(Car car, int bidAmount) {
         for (Bid bid : currentUser.getBids()) {
             if (bid.getCar() == car) {
                 currentUser.getBids().remove(bid);
@@ -259,13 +271,10 @@ public class ViewListings extends UiState {
         }
     }
 
-    /**
-     * Gets the list of JButtons for the MainMenu state
-     * @return ArrayList of JButtons
-     */
+    // MODIFIES: UiState
+    // EFFECTS: initializes the menu buttons for the state
     @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
             cards.remove(createListingPanel);

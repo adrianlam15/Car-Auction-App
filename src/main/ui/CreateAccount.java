@@ -18,18 +18,12 @@ public class CreateAccount extends UiState {
     private String password;
     private String retypePassword;
 
-    /**
-     * Constructs a new CreateAccount UI state
-     *
-     */
     public CreateAccount() {
         super();
     }
 
-    /**
-     * Initializes the UI for the CreateAccount state
-     * @return JPanel of the CreateAccount UI
-     */
+    // MODIFIES: this, UiState
+    // EFFECTS: initializes the UI for the CreateAccount state
     protected JPanel initWin() {
         super.initWin();
         this.usernameTextField = new JTextField();
@@ -38,10 +32,8 @@ public class CreateAccount extends UiState {
         return loadPanel();
     }
 
-    /**
-     * Loads the UI for the CreateAccount state
-     * @return JPanel containing all components needed for UI
-     */
+    // MODIFIES: UiState
+    // EFFECTS: loads the UI for the CreateAccount state
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -50,10 +42,8 @@ public class CreateAccount extends UiState {
         return panel;
     }
 
-    /**
-     * Gets the input fields for the CreateAccount UI
-     * @return ArrayList of JComponents (input fields)
-     */
+    // MODIFIES: this, UiState
+    // EFFECTS: gets the input fields for the CreateAccount UI
     private ArrayList<JComponent> getInputFields() {
         JLabel usernameLabel = addLabel("Username", usernameTextField,
                 (frame.getWidth() - 100) / 2 - 50, (frame.getHeight() - 40) / 2 - 90);
@@ -83,6 +73,8 @@ public class CreateAccount extends UiState {
         return inputFields;
     }
 
+    // REQUIRES: x and y are valid coordinates, labelField is not null
+    // EFFECTS: adds a label to the UI
     private JLabel addLabel(String text, JTextField labelField, int x, int y) {
         JLabel label = new JLabel(text);
         label.setForeground(new Color(148,163,184));
@@ -92,6 +84,8 @@ public class CreateAccount extends UiState {
         return label;
     }
 
+    // REQUIRES: x and y are valid coordinates, field is not null
+    // EFFECTS: sets the input fields for the CreateAccount UI
     private void setInputFields(JTextField field, int x, int y) {
         field.setBorder(BorderFactory.createEmptyBorder());
         field.setOpaque(false);
@@ -99,10 +93,14 @@ public class CreateAccount extends UiState {
         setFixedBounds(field, x, y);
     }
 
+    // REQUIRES: x and y are valid coordinates, component is not null
+    // EFFECTS: sets the bounds for the input fields
     private void setFixedBounds(JComponent component, int x, int y) {
         component.setBounds(x, y, 200, 20);
     }
 
+    // REQUIRES: x and y are valid coordinates
+    // EFFECTS: creates an underline for the input fields
     private JLabel createUnderline(int x, int y) {
         JLabel underline = new JLabel("_________________________________________________");
         underline.setFont(robotoFont.deriveFont(9f));
@@ -111,10 +109,8 @@ public class CreateAccount extends UiState {
         return underline;
     }
 
-    /**
-     * Makes buttons to be used for the CreateAccount UI
-     * @return ArrayList of JComponents (buttons)
-     */
+    // MODIFIES: UiState
+    // EFFECTS: makes buttons to be used for the CreateAccount UI
     private ArrayList<JComponent> getJButtons() {
         Border buttonBorder = BorderFactory.createLineBorder(new Color(30,41,59), 2);
 
@@ -135,6 +131,8 @@ public class CreateAccount extends UiState {
         return buttons;
     }
 
+    // MODIFIES: this, UiState
+    // EFFECTS: handles the creation of an account
     private void handleCreateAccount() {
         if (username.equals("") || password.equals("") || retypePassword.equals("")) {
             JOptionPane.showMessageDialog(frame, "Please fill out all fields",

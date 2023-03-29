@@ -9,17 +9,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/** ViewWon class (including UI) for the Car Auction application */
 public class ViewYourListings extends UiState {
 
     public ViewYourListings() {
         super();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: initializes the UI for the ViewYourListings state
     protected JPanel initWin() {
         super.initWin();
         return loadPanel();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: loads the UI for the ViewYourListings state
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -35,6 +40,7 @@ public class ViewYourListings extends UiState {
         return panel;
     }
 
+    // EFFECTS: initializes the buttons for the ViewYourListings state and scrollpane
     private JScrollPane listingInfo() {
         JPanel listingPanel = new JPanel();
         listingPanel.setLayout(null);
@@ -57,11 +63,7 @@ public class ViewYourListings extends UiState {
         return scrollPane;
     }
 
-    /**
-     * Gets the list of JButtons for the ViewListings state
-     *
-     * @return ArrayList of JButtons
-     */
+    // EFFECTS: returns and arraylist of JComponents for the user's listings
     private ArrayList<JComponent> getYourListings() {
         ArrayList<JComponent> listings = new ArrayList<>();
         Font buttonFont = robotoFont.deriveFont(12f);
@@ -82,6 +84,8 @@ public class ViewYourListings extends UiState {
         return listings;
     }
 
+    // REQUIRES: listing is not null, buttonFont is not null, i is not null
+    // EFFECTS: sets the attributes for the listing button
     private void setAttrListing(JButton listing, Font buttonFont, int i) {
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
         listing.setFocusPainted(false);
@@ -93,6 +97,7 @@ public class ViewYourListings extends UiState {
         listing.setBorder(border);
     }
 
+    // EFFECTS: sets the mouse listeners for the listing button
     private void setListener(JButton listing, Car car, String listingText, JLabel hoverText) {
         listing.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -121,6 +126,9 @@ public class ViewYourListings extends UiState {
         });
     }
 
+    // REQUIRES: result is not null, car is not null
+    // MODIFIES: UiState
+    // EFFECTS: handles the removal of a car from the user's listings
     private void handleRemoveCar(int result, Car car) {
         if (result == JOptionPane.YES_OPTION) {
             listedCars.removeCar(car);
@@ -136,6 +144,7 @@ public class ViewYourListings extends UiState {
         }
     }
 
+    // EFFECTS: shows the car information in a JOptionPane
     private void showCarInfo(Car car) {
         String message = "Condition: " + car.getCondition() + "\n"
                 + "Transmission: " + car.getTransmission() + "\n"
@@ -156,11 +165,8 @@ public class ViewYourListings extends UiState {
         JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /**
-     * Gets the list of JButtons for the MainMenu state
-     *
-     * @return ArrayList of JButtons
-     */
+    // MODIFIES: UiState
+    // EFFECTS: initializes the menu buttons for the state
     @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");

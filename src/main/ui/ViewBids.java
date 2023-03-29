@@ -9,6 +9,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/**
+ * ViewBids class (including UI) for the Car Auction application
+ */
 public class ViewBids extends UiState {
 
     public ViewBids() {
@@ -20,6 +23,8 @@ public class ViewBids extends UiState {
         return loadPanel();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: loads the UI for the ViewBids state
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -35,6 +40,7 @@ public class ViewBids extends UiState {
         return panel;
     }
 
+    // EFFECTS: initializes the buttons for the ViewBids state and scrollpane
     private JScrollPane getBidPanel() {
         JPanel bidPanel = new JPanel();
         bidPanel.setLayout(null);
@@ -57,10 +63,7 @@ public class ViewBids extends UiState {
         return scrollPane;
     }
 
-    /**
-     * Gets the list of JButtons for the ViewListings state
-     * @return ArrayList of JButtons
-     */
+    // EFFECTS: initializes the buttons for the ViewBids state
     private ArrayList<JComponent> getBids() {
         ArrayList<JComponent> bids = new ArrayList<>();
         int i = 2;
@@ -84,6 +87,7 @@ public class ViewBids extends UiState {
         return bids;
     }
 
+    // EFFECTS: sets the listeners for the buttons
     private void setListeners(Bid bid, JButton bidButton) {
         bidButton.addActionListener(e -> {
             editBid(bid);
@@ -101,6 +105,8 @@ public class ViewBids extends UiState {
         });
     }
 
+    // MODIFIES: this, User, Car, UiState
+    // EFFECTS: edits the bid amount of the selected bid
     private void editBid(Bid bid) {
         try {
             for (Bid userBid : currentUser.getBids()) {
@@ -120,10 +126,8 @@ public class ViewBids extends UiState {
         }
     }
 
-    /**
-     * Gets the list of JButtons for the MainMenu state
-     * @return ArrayList of JButtons
-     */
+    // MODIFIES: UiState
+    // EFFECTS: initializes the menu buttons for the state
     @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");

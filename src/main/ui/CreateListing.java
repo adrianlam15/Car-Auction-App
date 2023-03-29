@@ -7,6 +7,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * CreateListing class (including UI) for the Car Auction application
+ */
 public class CreateListing extends UiState {
     private final ArrayList<JComponent> inputFields;
     private final Car carToCreate;
@@ -27,11 +30,15 @@ public class CreateListing extends UiState {
         inputFields = new ArrayList<>();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: initializes the UI for the CreateListing state
     protected JPanel initWin() {
         super.initWin();
         return loadPanel();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: loads the UI for the CreateListing state
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -40,6 +47,8 @@ public class CreateListing extends UiState {
         return panel;
     }
 
+    // MODIFIES: this, UiState
+    // EFFECTS: gets the input fields for the CreateListing UI
     @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getInputFields() {
         JLabel carMakeLabel = new JLabel("Car Make");
@@ -138,6 +147,9 @@ public class CreateListing extends UiState {
         return inputFields;
     }
 
+    // REQUIRES: inputFields is not null
+    // MODIFIES: UiState
+    // EFFECTS: sets the attributes of the input fields
     private void setInputFields(ArrayList<JComponent> inputFields) {
         int x = (frame.getWidth() - 100) / 2 - 50;
         int y = (frame.getHeight() - 40) / 2 - 180;
@@ -147,17 +159,18 @@ public class CreateListing extends UiState {
         int textFieldHeight = 20;
         int underlineWidth = 100;
         int underlineHeight = 10;
-
         setAttrFields(inputFields);
-        setJLabels(inputFields, x, y, labelWidth, labelHeight);
+        setBoundsJLabel(inputFields, x, y, labelWidth, labelHeight);
         y = (frame.getHeight() - 40) / 2 - 160;
-        setJTextFields(inputFields, x, y, textFieldWidth, textFieldHeight);
+        setBoundsField(inputFields, x, y, textFieldWidth, textFieldHeight);
         y = (frame.getHeight() - 40) / 2 - 150;
-        setUnderlines(inputFields, x, y, underlineWidth, underlineHeight);
+        setBoundsUnderlines(inputFields, x, y, underlineWidth, underlineHeight);
     }
 
-    private void setUnderlines(ArrayList<JComponent> inputFields, int x, int y, int underlineWidth,
-                               int underlineHeight) {
+    // REQUIRES: inputFields is not null, x, y, underlineWidth, underlineHeight are not null
+    // EFFECTS: sets the bounds of the underlines
+    private void setBoundsUnderlines(ArrayList<JComponent> inputFields, int x, int y, int underlineWidth,
+                                     int underlineHeight) {
         for (JComponent field : inputFields) {
             if (field instanceof JLabel && ((JLabel) field).getText().contains("_")) {
                 field.setBounds(x, y, underlineWidth, underlineHeight);
@@ -166,7 +179,9 @@ public class CreateListing extends UiState {
         }
     }
 
-    private void setJTextFields(ArrayList<JComponent> inputFields, int x, int y, int textFieldWidth,
+    // REQUIRES: inputFields is not null, x, y, textFieldWidth, textFieldHeight are not null
+    // EFFECTS: sets the bounds of the text fields
+    private void setBoundsField(ArrayList<JComponent> inputFields, int x, int y, int textFieldWidth,
                                 int textFieldHeight) {
         for (JComponent field : inputFields) {
             if (field instanceof JTextField) {
@@ -176,7 +191,9 @@ public class CreateListing extends UiState {
         }
     }
 
-    private void setJLabels(ArrayList<JComponent> inputFields, int x, int y, int labelWidth, int labelHeight) {
+    // REQUIRES: inputFields is not null, x, y, labelWidth, labelHeight are not null
+    // EFFECTS: sets the bounds of the labels
+    private void setBoundsJLabel(ArrayList<JComponent> inputFields, int x, int y, int labelWidth, int labelHeight) {
         for (JComponent field : inputFields) {
             if (field instanceof JLabel && !((JLabel) field).getText().contains("_")) {
                 field.setBounds(x, y, labelWidth, labelHeight);
@@ -185,6 +202,8 @@ public class CreateListing extends UiState {
         }
     }
 
+    // REQUIRES: inputFields is not null
+    // EFFECTS: sets the attributes of the input fields
     private void setAttrFields(ArrayList<JComponent> inputFields) {
         for (JComponent field : inputFields) {
             if (field instanceof JLabel && !((JLabel) field).getText().contains("_")) {
@@ -202,11 +221,8 @@ public class CreateListing extends UiState {
         }
     }
 
-    /**
-     * Gets the list of JButtons for the MainMenu state
-     *
-     * @return ArrayList of JButtons
-     */
+    // MODIFIES: UiState
+    // EFFECTS: returns the list of menu JButtons for the CreateListing state
     @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");
@@ -267,6 +283,9 @@ public class CreateListing extends UiState {
         return buttons;
     }
 
+    // REQUIRES: buttons is not null, ignoreButton is not null
+    // MODIFIES: UiState
+    // EFFECTS: sets the attributes of the buttons
     @Override
     protected void setStateButtons(ArrayList<JComponent> buttons, JButton ignoreButton) {
         int i = 0;
@@ -288,6 +307,8 @@ public class CreateListing extends UiState {
         super.setAttrButtons(toSetButtons);
     }
 
+    // MODIFIES: Car, Cars
+    // EFFECTS: handles creation of car
     private void tryCreateCar() {
         try {
             setCar();
@@ -304,6 +325,7 @@ public class CreateListing extends UiState {
         }
     }
 
+    // EFFECTS: resets the fields of the input fields
     private void resetFields() {
         for (JComponent field : inputFields) {
             if (field instanceof JTextField && !((JTextField) field).getText().equals("")
@@ -313,12 +335,15 @@ public class CreateListing extends UiState {
         }
     }
 
+    // MODIFIES: Car, UiState, Cars
+    // EFFECTS: creates the car and adds it to the list of cars
     private void handleCreate() {
         currentUser.createCar(carToCreate);
         listedCars.addCar(carToCreate);
         JOptionPane.showMessageDialog(null, "Listing created successfully.");
     }
 
+    // MODIFIES: Car
     private void setCar() {
         carToCreate.setMake(carMake.getText());
         carToCreate.setModel(carModel.getText());

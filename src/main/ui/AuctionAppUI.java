@@ -46,6 +46,7 @@ public class AuctionAppUI extends UiState {
         cardLayout.show(cards, "loginMenu");
     }
 
+    // MODIFIES: UiState
     @Override
     protected JPanel loadPanel() {
         return null;

@@ -9,17 +9,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/** ViewWon class (including UI) for the Car Auction application*/
 public class ViewWon extends UiState {
 
     public ViewWon() {
         super();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: initializes the UI for the ViewWon state
     protected JPanel initWin() {
         super.initWin();
         return loadPanel();
     }
 
+    // MODIFIES: UiState
+    // EFFECTS: loads the UI for the ViewWon state
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -35,6 +40,7 @@ public class ViewWon extends UiState {
         return panel;
     }
 
+    // EFFECTS: initializes the buttons for the ViewWon state and scrollpane
     private JScrollPane wonInfo() {
         JPanel listingPanel = new JPanel();
         listingPanel.setLayout(null);
@@ -57,10 +63,7 @@ public class ViewWon extends UiState {
         return scrollPane;
     }
 
-    /**
-     * Gets the list of JButtons for the ViewListings state
-     * @return ArrayList of JButtons
-     */
+    // EFFECTS: returns an arraylist of JComponents for the user's won cars
     private ArrayList<JComponent> getWon() {
         ArrayList<JComponent> wonCars = new ArrayList<>();
         int i = 2;
@@ -82,6 +85,7 @@ public class ViewWon extends UiState {
         return wonCars;
     }
 
+    // EFFECTS: sets default listeners for the buttons
     private void setListeners(JButton listing, Car car) {
         listing.addActionListener(e -> {
             showCarInfo(car);
@@ -99,6 +103,8 @@ public class ViewWon extends UiState {
         });
     }
 
+    // REQUIRES: car is not null
+    // EFFECTS: shows the car information
     private void showCarInfo(Car car) {
         String message = "Condition: " + car.getCondition() + "\n"
                 + "Transmission: " + car.getTransmission() + "\n"
@@ -115,13 +121,10 @@ public class ViewWon extends UiState {
         JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /**
-     * Gets the list of JButtons for the MainMenu state
-     * @return ArrayList of JButtons
-     */
+    // MODIFIES: UiState
+    // EFFECTS: initializes the menu buttons for the state
     @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
-        Font buttonFont = new Font("Roboto", Font.PLAIN, 12);
         JButton createListing = new JButton("Create Listing");
         createListing.addActionListener(e -> {
             cards.remove(createListingPanel);

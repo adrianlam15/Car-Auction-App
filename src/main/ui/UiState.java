@@ -65,9 +65,6 @@ public abstract class UiState {
     private static final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
     protected static final HashMap<String, Boolean> states = new HashMap<>();
 
-    /**
-     * Constructs a new UiState
-     */
     public UiState() {
         toSetButtons = new ArrayList<>();
         buttons = new ArrayList<>();
@@ -76,51 +73,15 @@ public abstract class UiState {
 
     }
 
-    /**
-     * Initializes the UI state
-     *
-     * @return the JPanel of the UI state
-     */
+    // MODIFIES: this
+    // EFFECTS: initializes the UI with panel
     protected JPanel initWin() {
         panel.setVisible(true);
         return panel;
     }
 
-    /*protected static void initActiveState() {
-        states.put(loginUI.getClass().getSimpleName(), true);
-        states.put(mainMenuUI.getClass().getSimpleName(), false);
-        states.put(createListingUI.getClass().getSimpleName(), false);
-        states.put(viewListingsUI.getClass().getSimpleName(), false);
-        states.put(viewYourListingsUI.getClass().getSimpleName(), false);
-        states.put(createAccountUI.getClass().getSimpleName(), false);
-        states.put(viewBidsUI.getClass().getSimpleName(), false);
-        states.put(viewWonUI.getClass().getSimpleName(), false);
-    }
-
-    protected static void setActiveState(String activeState) {
-        for (String stateName : states.keySet()) {
-            if (stateName.equals(activeState)) {
-                states.put(stateName, true);
-            } else {
-                states.put(stateName, false);
-            }
-        }
-    }
-
-    protected static void setStateButtons() {
-        for (String state : states.keySet()) {
-            if (states.get(state)) {
-
-            }
-
-        }
-    }*/
-
-    /**
-     * Sets the attributes of the buttons
-     *
-     * @param buttons the buttons to set the attributes of
-     */
+    // MODIFIES: this
+    // EFFECTS: sets the attributes of the buttons
     protected void setAttrButtons(ArrayList<JButton> buttons) {
         for (JButton button : buttons) {
             button.setBackground(new Color(99, 102, 241));
@@ -142,6 +103,8 @@ public abstract class UiState {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the attributes of the buttons
     protected static void loadFont() {
         try {
             File fontFile = new File("./data/Roboto/Roboto-Regular.ttf");
@@ -155,10 +118,8 @@ public abstract class UiState {
 
     protected abstract JPanel loadPanel();
 
-    protected static void updateListingPanel() {
-        viewListingsPanel = viewListingsUI.initWin();
-    }
-
+    // MODIFIES: this
+    // EFFECTS: saves data of program to JSON_STORE
     public static void save() {
         try {
             jsonWriter.open();
@@ -175,6 +136,8 @@ public abstract class UiState {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads data of program from JSON_STORE
     protected static void load() {
         if (!loaded) {
             try {
@@ -205,10 +168,14 @@ public abstract class UiState {
         // implement method
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets appropriate JSON reader and writer
     protected static void init() {
         setReadAndWrite();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the frame
     protected static void initFrame() {
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
@@ -221,6 +188,8 @@ public abstract class UiState {
         setFrameListener();
     }
 
+    // MODIFIES: this
+    // EFFECTS: applies appropriate window listener to frame
     protected static void setFrameListener() {
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -234,6 +203,8 @@ public abstract class UiState {
         });
     }
 
+    // REQUIRES: exitConfirmation is either JOptionPane.YES_OPTION or JOptionPane.NO_OPTION
+    // EFFECTS: determines if user wants to exit program
     private static void handleExit(int exitConfirmation) {
         if (loggedIn) {
             if (exitConfirmation == JOptionPane.YES_OPTION) {
@@ -253,6 +224,8 @@ public abstract class UiState {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the size of the frame
     protected static void setScreen() {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
@@ -262,6 +235,8 @@ public abstract class UiState {
         frame.setSize(winWidth, winHeight);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the initial state of the program
     protected static void initUIState() {
         currentUser = new User();
         listedCars = new Cars();
@@ -271,17 +246,23 @@ public abstract class UiState {
         userMap = new HashMap<>();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the appropriate JSON reader and writer
     protected static void setReadAndWrite() {
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads users from JSON_STORE
     protected static void initUsers() throws IOException {
         currentUser = new User();
         users = jsonReader.readUsers();
         userMap = jsonReader.getUserMap();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the panels
     protected static void initPanels() {
         loginPanel = loginUI.initWin();
         mainMenuPanel = mainMenuUI.initWin();
@@ -293,6 +274,8 @@ public abstract class UiState {
         viewWonPanel = viewWonUI.initWin();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds the panels to the cards
     protected static void addCards() {
         cards.add(loginPanel, "loginMenu");
         cards.add(mainMenuPanel, "mainMenu");
@@ -304,6 +287,8 @@ public abstract class UiState {
         cards.add(viewWonPanel, "viewWon");
     }
 
+    // MODIFIES: this
+    // EFFECTS: helper function for creating common buttons found in all states
     protected void addButton(String option) {
         String optionName = option.substring(0, 1).toUpperCase() + option.substring(1);
         JButton optionButton = new JButton(optionName);
@@ -323,6 +308,9 @@ public abstract class UiState {
         buttons.add(optionButton);
     }
 
+    // REQUIRES: buttons is not null, ignoreButton is not null
+    // MODIFIES: this
+    // EFFECTS: helper function for creating common buttons found in all states
     protected void setStateButtons(ArrayList<JComponent> buttons, JButton ignoreButton) {
         int i = 0;
         for (JComponent button : buttons) {
@@ -340,6 +328,9 @@ public abstract class UiState {
         setAttrButtons(toSetButtons);
     }
 
+    // REQUIRES: button is not null
+    // MODIFIES: this
+    // EFFECTS: sets the attributes of the current, active button
     protected void setCurrentButton(JButton button) {
         button.setBackground(new java.awt.Color(30, 41, 59));
         button.setFocusPainted(false);

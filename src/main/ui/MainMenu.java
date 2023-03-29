@@ -13,19 +13,13 @@ public class MainMenu extends UiState {
         super();
     }
 
-    /**
-     * Initializes the UI for the MainMenu state
-     * @return JPanel of the MainMenu UI
-     */
     protected JPanel initWin() {
         super.initWin();
         return loadPanel();
     }
 
-    /**
-     * Loads the UI for the MainMenu state
-     * @return JPanel containing all components needed for UI
-     */
+    // MODIFIES: UiState
+    // EFFECTS: loads the UI for the MainMenu state
     protected JPanel loadPanel() {
         panel.setLayout(null);
         panel.setBackground(new java.awt.Color(15, 23, 42));
@@ -33,10 +27,8 @@ public class MainMenu extends UiState {
         return panel;
     }
 
-    /**
-     * Gets the list of JButtons for the MainMenu state
-     * @return ArrayList of JButtons
-     */
+    // MODIFIES: UiState
+    // EFFECTS: initializes the buttons for the MainMenu state
     @SuppressWarnings("methodlength")
     private ArrayList<JComponent> getJButtons() {
         JButton createListing = new JButton("Create Listing");
