@@ -1,109 +1,109 @@
 {
-    "date": "29-03-2023 01:04:49",
-    "users": [
+  "date": "29-03-2023 01:04:49",
+  "users": [
+    {
+      "password": "1234",
+      "wonCars": [],
+      "biddedCars": [],
+      "listedCars": [
         {
-            "password": "1234",
-            "wonCars": [],
-            "biddedCars": [],
-            "listedCars": [
-                {
-                    "timeLeftInSeconds": 675,
-                    "year": 1994,
-                    "driveType": "FWD",
-                    "description": "Like new",
-                    "colour": "Blue",
-                    "condition": "Excellent",
-                    "transmission": "Automatic",
-                    "expired": false,
-                    "price": 2000,
-                    "model": "Civic",
-                    "id": 2,
-                    "make": "Honda",
-                    "mileage": 150000
-                },
-              {
-                "timeLeftInSeconds": 0,
-                "year": 0,
-                "driveType": "FWD",
-                "description": "Good",
-                "colour": "Blue",
-                "condition": "Broken",
-                "transmission": "Manual",
-                "expired": true,
-                "price": 2000,
-                "model": "WRX STI",
-                "id": 1,
-                "make": "Subaru",
-                "mileage": 150000
-              },
-                {
-                    "timeLeftInSeconds": 99715,
-                    "year": 1998,
-                    "driveType": "FWD",
-                    "description": "Good",
-                    "colour": "Blue",
-                    "condition": "Good",
-                    "transmission": "Automatic",
-                    "expired": false,
-                    "price": 1000,
-                    "model": "Skyline R34 GTR",
-                    "id": 3,
-                    "make": "Nissan",
-                    "mileage": 200000
-                }
-            ],
-            "username": "Adrian"
+          "timeLeftInSeconds": 675,
+          "year": 1994,
+          "driveType": "FWD",
+          "description": "Like new",
+          "colour": "Blue",
+          "condition": "Excellent",
+          "transmission": "Automatic",
+          "expired": false,
+          "price": 2000,
+          "model": "Civic",
+          "id": 2,
+          "make": "Honda",
+          "mileage": 150000
         },
         {
-            "password": "1234",
-            "wonCars": [],
-            "biddedCars": [
-                {
-                    "car": {
-                        "timeLeftInSeconds": 675,
-                        "year": 1994,
-                        "driveType": "FWD",
-                        "description": "Like new",
-                        "colour": "Blue",
-                        "condition": "Excellent",
-                        "transmission": "Automatic",
-                        "expired": false,
-                        "price": 2000,
-                        "model": "Civic",
-                        "id": 2,
-                        "make": "Honda",
-                        "mileage": 150000
-                    },
-                    "bidAmount": 1000
-                },
-                {
-                    "car": {
-                        "timeLeftInSeconds": 99715,
-                        "year": 1998,
-                        "driveType": "FWD",
-                        "description": "Good",
-                        "colour": "Blue",
-                        "condition": "Good",
-                        "transmission": "Automatic",
-                        "expired": false,
-                        "price": 1000,
-                        "model": "Skyline R34 GTR",
-                        "id": 3,
-                        "make": "Nissan",
-                        "mileage": 200000
-                    },
-                    "bidAmount": 1000
-                }
-            ],
-            "listedCars": [],
-            "username": "Adrian2"
+          "timeLeftInSeconds": 0,
+          "year": 0,
+          "driveType": "FWD",
+          "description": "Good",
+          "colour": "Blue",
+          "condition": "Broken",
+          "transmission": "Manual",
+          "expired": true,
+          "price": 2000,
+          "model": "WRX STI",
+          "id": 1,
+          "make": "Subaru",
+          "mileage": 150000
         },
         {
-            "password": "enjoythisgui",
-            "wonCars": [],
-            "biddedCars": [],
-            "listedCars": [],
-            "username": "210grader"
+          "timeLeftInSeconds": 99715,
+          "year": 1998,
+          "driveType": "FWD",
+          "description": "Good",
+          "colour": "Blue",
+          "condition": "Good",
+          "transmission": "Automatic",
+          "expired": false,
+          "price": 1000,
+          "model": "Skyline R34 GTR",
+          "id": 3,
+          "make": "Nissan",
+          "mileage": 200000
         }
-    ]
+      ],
+      "username": "Adrian"
+    },
+    {
+      "password": "1234",
+      "wonCars": [],
+      "biddedCars": [
+        {
+          "car": {
+            "timeLeftInSeconds": 675,
+            "year": 1994,
+            "driveType": "FWD",
+            "description": "Like new",
+            "colour": "Blue",
+            "condition": "Excellent",
+            "transmission": "Automatic",
+            "expired": false,
+            "price": 2000,
+            "model": "Civic",
+            "id": 2,
+            "make": "Honda",
+            "mileage": 150000
+          },
+          "bidAmount": 1000
+        },
+        {
+          "car": {
+            "timeLeftInSeconds": 99715,
+            "year": 1998,
+            "driveType": "FWD",
+            "description": "Good",
+            "colour": "Blue",
+            "condition": "Good",
+            "transmission": "Automatic",
+            "expired": false,
+            "price": 1000,
+            "model": "Skyline R34 GTR",
+            "id": 3,
+            "make": "Nissan",
+            "mileage": 200000
+          },
+          "bidAmount": 1000
+        }
+      ],
+      "listedCars": [],
+      "username": "Adrian2"
+    },
+    {
+      "password": "enjoythisgui",
+      "wonCars": [],
+      "biddedCars": [],
+      "listedCars": [],
+      "username": "210grader"
+    }
+  ]
 }

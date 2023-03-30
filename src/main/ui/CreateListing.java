@@ -231,7 +231,6 @@ public class CreateListing extends UiState {
 
         JButton viewListings = new JButton("View Listings");
         viewListings.addActionListener(e -> {
-            System.out.println("Entering view listings");
             cards.remove(viewListingsPanel);
             viewListingsUI = new ViewListings();
             viewListingsPanel = viewListingsUI.initWin();

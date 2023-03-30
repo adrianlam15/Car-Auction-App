@@ -11,11 +11,13 @@ public class AuctionAppUI extends UiState {
     // MODIFIES: UiState
     // EFFECTS: starts the Auction App
     public AuctionAppUI() throws IOException {
+        System.out.println("logs:\n");
         init();
         initFrame();
         initUIState();
         try {
             initUsers();
+            System.out.println("Successfully imported users and user mapping");
         } catch (IOException e) {
             System.out.println("Failed to import users and userMap");
         }
@@ -43,6 +45,7 @@ public class AuctionAppUI extends UiState {
         viewWonUI = new ViewWon();
         initPanels();
         addCards();
+        System.out.println("Successfully initialized UI");
         cardLayout.show(cards, "loginMenu");
     }
 

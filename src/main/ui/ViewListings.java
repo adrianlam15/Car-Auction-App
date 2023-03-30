@@ -236,7 +236,6 @@ public class ViewListings extends UiState {
             message = message + "Highest bid: $" + car.getHighestBid().getBidAmount();
         }
         JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println(currentUser.getUsername());
         placeBid(car);
     }
 
@@ -289,7 +288,6 @@ public class ViewListings extends UiState {
             createListingUI = new CreateListing();
             createListingPanel = createListingUI.initWin();
             cards.add(createListingPanel, "createListing");
-            System.out.println(UiState.listedCars.getCars().size());
             cardLayout.show(cards, "createListing");
         });
         buttons.add(createListing);
@@ -311,8 +309,6 @@ public class ViewListings extends UiState {
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
             cards.remove(viewBidsPanel);
-            System.out.println(currentUser.getUsername());
-            System.out.println(currentUser.getBids().size());
             viewBidsUI = new ViewBids();
             viewBidsPanel = viewBidsUI.initWin();
             cards.add(viewBidsPanel, "viewBids");

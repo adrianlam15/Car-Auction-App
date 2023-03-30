@@ -68,7 +68,6 @@ public class ViewBids extends UiState {
         ArrayList<JComponent> bids = new ArrayList<>();
         int i = 2;
         Border border = BorderFactory.createLineBorder(new Color(30, 41, 59), 2);
-        System.out.println("bids: " + currentUser.getBids().size());
         for (Bid bid : currentUser.getBids()) {
             String bidInfo = "Car: " + bid.getCar().getMake() + " " + bid.getCar().getModel()
                     + " " + bid.getCar().getYear() + " | Bid: $" + bid.getBidAmount();

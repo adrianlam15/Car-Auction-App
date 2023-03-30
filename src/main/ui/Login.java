@@ -273,7 +273,6 @@ public class Login extends UiState {
                         currentUser = user;
                     }
                     System.out.println("Logged in as " + currentUser.getUsername());
-
                     cardLayout.show(cards, "mainMenu");
                     usernameTextField.setText("");
                     passwordTextField.setText("");
