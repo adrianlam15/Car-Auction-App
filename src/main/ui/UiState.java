@@ -300,6 +300,9 @@ public abstract class UiState {
             } else if (option.equals("logout")) {
                 loggedIn = false;
                 currentUser = new User();
+                cards.remove(loginPanel);
+                loginPanel = loginUI.initWin();
+                cards.add(loginPanel, "loginMenu");
                 cardLayout.show(cards, "loginMenu");
             } else {
                 throw new UnsupportedOperationException("Invalid option");
