@@ -151,6 +151,10 @@ public class CreateAccount extends UiState {
                     "Account Created", JOptionPane.INFORMATION_MESSAGE);
             userMap.put(username, password);
             users.add(currentUser);
+            cards.remove(mainMenuPanel);
+            mainMenuUI = new MainMenu();
+            mainMenuPanel = mainMenuUI.initWin();
+            cards.add(mainMenuPanel, "mainMenu");
             cardLayout.show(cards, "mainMenu");
         } else {
             JOptionPane.showMessageDialog(frame, "Your passwords do not match",

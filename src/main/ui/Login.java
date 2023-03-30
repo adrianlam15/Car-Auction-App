@@ -266,8 +266,12 @@ public class Login extends UiState {
         if (loggedIn) {
             for (User user : users.getUsers()) {
                 if (user.getUsername().equals(username)) {
-                    currentUser = new User();
-                    currentUser.createUser(user.getUsername(), user.getPassword(), user.getPassword());
+                    if (!loaded) {
+                        currentUser = new User();
+                        currentUser.createUser(user.getUsername(), user.getPassword(), user.getPassword());
+                    } else {
+                        currentUser = user;
+                    }
                     System.out.println("Logged in as " + currentUser.getUsername());
 
                     cardLayout.show(cards, "mainMenu");

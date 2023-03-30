@@ -76,7 +76,7 @@ public class ViewListings extends UiState {
             JButton listing = new JButton(carInfo);
             setAttrListing(listing, buttonFont, i);
             setListeners(listing);
-            handleExpiredOrOwn(car, listing);
+            handleBidAbility(car, listing);
             listings.add(listing);
             car.setId(i);
             i++;
@@ -86,16 +86,20 @@ public class ViewListings extends UiState {
 
     // MODIFIES, User, Car, Cars, UiState
     // EFFECTS: handles if car is expired or current user owns it
-    private void handleExpiredOrOwn(Car car, JButton listing) {
-        if (car.isExpired() || (currentUser.getCars().contains(car))) {
-            if (car.isExpired() && currentUser.getCars().contains(car)) {
+    private void handleBidAbility(Car car, JButton listing) {
+        if (car.isExpired()) {
+            if (currentUser.getCars().contains(car)) {
                 removeCarOption(listing, car);
-            } else if (!currentUser.getCars().contains(car)) {
+            } else {
+                handleCarBidError(listing, car);
+            }
+        } else {
+            if (currentUser.getCars().contains(car)) {
+                handleCarBidError(listing, car);
+            } else {
                 listing.addActionListener(e -> {
                     showCarInfo(car);
                 });
-            } else {
-                handleCarBidError(listing, car);
             }
         }
     }
@@ -232,6 +236,7 @@ public class ViewListings extends UiState {
             message = message + "Highest bid: $" + car.getHighestBid().getBidAmount();
         }
         JOptionPane.showMessageDialog(frame, message, "Car Information", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println(currentUser.getUsername());
         placeBid(car);
     }
 
@@ -251,7 +256,7 @@ public class ViewListings extends UiState {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            handleDuplicateBid(car, bidAmount);
+            handleBid(car, bidAmount);
             JOptionPane.showMessageDialog(frame, "Your bid of $" + bidAmount + " has been placed.",
                     "Bid Placed", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
@@ -262,8 +267,8 @@ public class ViewListings extends UiState {
 
     // REQUIRES: car is not null, bidAmount is not null
     // MODIFIES, User, Car, Cars, UiState
-    // EFFECTS: removes the previous bid on the car and places a new bid
-    private void handleDuplicateBid(Car car, int bidAmount) {
+    // EFFECTS: removes the previous bid on the car (if applicable) and places a new bid
+    private void handleBid(Car car, int bidAmount) {
         for (Bid bid : currentUser.getBids()) {
             if (bid.getCar() == car) {
                 currentUser.getBids().remove(bid);
@@ -271,6 +276,7 @@ public class ViewListings extends UiState {
                 break;
             }
         }
+        currentUser.placeBid(car.getId(), bidAmount, listedCars);
     }
 
     // MODIFIES: UiState
@@ -305,6 +311,8 @@ public class ViewListings extends UiState {
         JButton viewCurrentBids = new JButton("View Current Bids");
         viewCurrentBids.addActionListener(e -> {
             cards.remove(viewBidsPanel);
+            System.out.println(currentUser.getUsername());
+            System.out.println(currentUser.getBids().size());
             viewBidsUI = new ViewBids();
             viewBidsPanel = viewBidsUI.initWin();
             cards.add(viewBidsPanel, "viewBids");
