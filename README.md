@@ -34,3 +34,4 @@ This application will be built using Java.
 - The visual component that was added to my proejct can be found on the home screen of the application.
 - The user can save the state of the application to file after logging in, then there will be a "Save" button in the bottom left to save the current state of the application.
 - The user can load the state of the application to file after logging in, then there will be a "Load" button in the bottom left to load the previous state of the application.
+- **IMPORTANT**: The music may be annoying so on the login page there is a small square button underneath the "sign up" button which can be clicked to toggle mute the song (if you enjoy the song though its from Initial D, ZA-ZA - GIVE ME LOVE AND MONEY)
