@@ -146,6 +146,10 @@ public class CreateAccount extends UiState {
                 return;
             }
         }
+        createAccount();
+    }
+
+    private void createAccount() {
         if (currentUser.createUser(username, password, retypePassword)) {
             JOptionPane.showMessageDialog(frame, "Account created successfully",
                     "Account Created", JOptionPane.INFORMATION_MESSAGE);
