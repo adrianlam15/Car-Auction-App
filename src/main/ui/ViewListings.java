@@ -132,11 +132,13 @@ public class ViewListings extends UiState {
     // EFFECTS: sets the mouse listeners for the error in bidding
     private void setMouseListener(JButton listing, JLabel hoverText, String listingText) {
         listing.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 listing.setText("");
                 listing.add(hoverText);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 listing.remove(hoverText);
