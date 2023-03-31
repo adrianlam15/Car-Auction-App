@@ -33,11 +33,11 @@ public abstract class UiState {
     protected static Font robotoFont;
     protected static HashMap<String, String> userMap;
     protected ArrayList<JButton> toSetButtons;
-    protected static volatile Login loginUI;
-    protected static volatile MainMenu mainMenuUI;
-    protected static volatile CreateListing createListingUI;
-    protected static volatile ViewListings viewListingsUI;
-    protected static volatile ViewYourListings viewYourListingsUI;
+    protected static Login loginUI;
+    protected static MainMenu mainMenuUI;
+    protected static CreateListing createListingUI;
+    protected static ViewListings viewListingsUI;
+    protected static ViewYourListings viewYourListingsUI;
     protected static CreateAccount createAccountUI;
     protected static ViewBids viewBidsUI;
     protected static ViewWon viewWonUI;

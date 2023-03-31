@@ -356,3 +356,4 @@ public class CreateListing extends UiState {
         carToCreate.setDescription(carDescription.getText());
     }
 }
+
