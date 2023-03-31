@@ -50,8 +50,6 @@ public abstract class UiState {
     protected static JPanel viewBidsPanel;
     protected static JPanel viewWonPanel;
     protected ArrayList<JComponent> buttons;
-    protected static HashMap<String, Boolean> activeClass = new HashMap<>();
-    protected static ArrayList<JComponent> timers = new ArrayList<>();
     protected ArrayList<JComponent> inputFields = new ArrayList<>();
     protected static boolean loaded = false;
     protected static double width;
