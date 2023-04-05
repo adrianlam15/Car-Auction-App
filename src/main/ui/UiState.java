@@ -21,6 +21,7 @@ import java.util.HashMap;
 /**
  * UiState class (including UI) for the Car Auction application
  */
+// use singleton design pattern for simplifying static variables
 public abstract class UiState {
     protected static JFrame frame;
     protected static CardLayout cardLayout;
