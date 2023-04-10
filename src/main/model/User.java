@@ -38,10 +38,8 @@ public class User implements Writable {
         if (pwd.equals(checkPwd)) {
             this.username = usr;
             this.password = pwd;
-            EventLog.getInstance().logEvent(new Event("User " + usr + " created"));
             return true;
         } else {
-            EventLog.getInstance().logEvent(new Event("User " + usr + " failed to create"));
             return false;
         }
     }

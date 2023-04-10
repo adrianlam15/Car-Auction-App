@@ -137,6 +137,7 @@ public abstract class UiState {
 
     // MODIFIES: this
     // EFFECTS: loads data of program from JSON_STORE
+    // SIDE NOTE: program no longer lazy-loads
     protected static void load() {
         if (!loaded) {
             try {
@@ -212,12 +213,16 @@ public abstract class UiState {
                 if (saveConfirmation == JOptionPane.YES_OPTION) {
                     save();
                 }
-                // (1) - implement loggin method
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event.getDate() + ": " + event.getDescription());
+                }
                 System.exit(0);
             }
         } else {
             if (exitConfirmation == JOptionPane.YES_OPTION) {
-                // (2) - implement logging method
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event.getDate() + ": " + event.getDescription());
+                }
                 System.exit(0);
             }
         }
