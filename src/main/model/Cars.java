@@ -16,6 +16,7 @@ public class Cars {
     // EFFECTS: adds a car to the list of cars for sale
     public void addCar(Car car) {
         cars.add(car);
+        EventLog.getInstance().logEvent(new Event("Car added to list: " + car.getListingCar()));
     }
 
     // REQUIRES: car must be non-null and must be in list
@@ -23,6 +24,7 @@ public class Cars {
     // EFFECTS: removes a car from the list of cars for sale
     public void removeCar(Car car) {
         cars.remove(car);
+        EventLog.getInstance().logEvent(new Event("Car removed from list: " + car.getListingCar()));
     }
 
     public ArrayList<Car> getCars() {
@@ -31,6 +33,7 @@ public class Cars {
 
     public JSONArray toJson() {
         JSONArray json = carsToJson();
+        EventLog.getInstance().logEvent(new Event("Cars converted to JSON: " + json));
         return json;
     }
 

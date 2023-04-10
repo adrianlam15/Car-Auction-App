@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * Login class (including UI) for the Car Auction application
  */
 public class Login extends UiState {
+    // implement singleton for this class
     private final JTextField usernameTextField;
     private final JPasswordField passwordTextField;
     private String username;

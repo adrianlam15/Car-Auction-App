@@ -18,6 +18,7 @@ public class Users {
     // EFFECTS: adds a user to the list of users
     public void add(User user) {
         users.add(user);
+        EventLog.getInstance().logEvent(new Event("User added to list of users: " + user.getUsername()));
     }
 
     // REQUIRES: i must be a valid index
@@ -31,6 +32,7 @@ public class Users {
     // EFFECTS: removes a user from the list of users
     public void remove(User user) {
         users.remove(user);
+        EventLog.getInstance().logEvent(new Event("User removed from list of users: " + user.getUsername()));
     }
 
     // EFFECTS: returns the size of the list of users
@@ -46,6 +48,7 @@ public class Users {
     // EFFECTS: returns the list of users as a JSON array
     public JSONArray toJson() {
         JSONArray json = usersToJson();
+        EventLog.getInstance().logEvent(new Event("Users converted to JSON: " + json));
         return json;
     }
 

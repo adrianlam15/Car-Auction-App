@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -34,6 +35,7 @@ public abstract class UiState {
     protected static Font robotoFont;
     protected static HashMap<String, String> userMap;
     protected ArrayList<JButton> toSetButtons;
+
     protected static Login loginUI;
     protected static MainMenu mainMenuUI;
     protected static CreateListing createListingUI;
@@ -127,10 +129,8 @@ public abstract class UiState {
             String formattedNow = zonedTime.format(formatter);
             jsonWriter.write(formattedNow, users);
             jsonWriter.close();
-            System.out.println("Saved date from " + formattedNow + " to " + JSON_STORE);
             JOptionPane.showMessageDialog(frame, "Data saved successfully!");
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
             JOptionPane.showMessageDialog(frame, "Unable to write to file: " + JSON_STORE);
         }
     }
@@ -151,10 +151,8 @@ public abstract class UiState {
                         currentUser = user;
                     }
                 }
-                System.out.println("Loaded data from " + JSON_STORE + " from " + date);
                 JOptionPane.showMessageDialog(frame, "Data loaded successfully!");
             } catch (IOException e) {
-                System.out.println("Unable to read from file: " + JSON_STORE);
                 JOptionPane.showMessageDialog(frame, "Unable to read from file: " + JSON_STORE);
             }
         } else {
@@ -214,10 +212,12 @@ public abstract class UiState {
                 if (saveConfirmation == JOptionPane.YES_OPTION) {
                     save();
                 }
+                // (1) - implement loggin method
                 System.exit(0);
             }
         } else {
             if (exitConfirmation == JOptionPane.YES_OPTION) {
+                // (2) - implement logging method
                 System.exit(0);
             }
         }

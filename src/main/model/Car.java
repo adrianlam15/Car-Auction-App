@@ -310,6 +310,7 @@ public class Car implements Writable {
         json.put("id", id);
         json.put("expired", expired);
         json.put("timeLeftInSeconds", timeLeftInSeconds);
+        EventLog.getInstance().logEvent(new Event("Car " + id + " saved to JSON file"));
         return json;
     }
 }

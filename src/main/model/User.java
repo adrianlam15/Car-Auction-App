@@ -22,9 +22,11 @@ public class User implements Writable {
     public boolean login(String usr, String pwd, HashMap<String, String> users) {
         for (String user : users.keySet()) {
             if (user.equals(usr) && users.get(user).equals(pwd)) {
+                EventLog.getInstance().logEvent(new Event("User " + usr + " logged in"));
                 return true;
             }
         }
+        EventLog.getInstance().logEvent(new Event("User " + usr + " failed to log in"));
         return false;
     }
 
@@ -36,8 +38,10 @@ public class User implements Writable {
         if (pwd.equals(checkPwd)) {
             this.username = usr;
             this.password = pwd;
+            EventLog.getInstance().logEvent(new Event("User " + usr + " created"));
             return true;
         } else {
+            EventLog.getInstance().logEvent(new Event("User " + usr + " failed to create"));
             return false;
         }
     }
@@ -48,6 +52,7 @@ public class User implements Writable {
     public void createCar(Car carToCreate) {
         this.car = carToCreate;
         this.listedCars.addCar(car);
+        EventLog.getInstance().logEvent(new Event("Car added to list: " + car.getListingCar()));
     }
 
     // REQUIRES: id must be > 0
@@ -57,9 +62,11 @@ public class User implements Writable {
         for (Car car : listedCars.getCars()) {
             if (car.getId() == id) {
                 listedCars.removeCar(car);
+                EventLog.getInstance().logEvent(new Event("Car removed from list: " + car.getListingCar()));
                 return car;
             }
         }
+        EventLog.getInstance().logEvent(new Event("User requested delete car that does not exist"));
         return null;
     }
 
@@ -86,9 +93,12 @@ public class User implements Writable {
             if (car.getId() == id) {
                 biddedCars.add(new Bid(this, car, bid));
                 car.bid(this, bid);
+                EventLog.getInstance().logEvent(new Event("User " + username + " placed bid on car: "
+                        + car.getListingCar()));
                 return true;
             }
         }
+        EventLog.getInstance().logEvent(new Event("User " + username + " failed to place bid on car"));
         return false;
     }
 
@@ -124,6 +134,7 @@ public class User implements Writable {
         json.put("listedCars", listedCars.toJson());
         json.put("wonCars", wonCars.toJson());
         json.put("biddedCars", bidCarsToJson());
+        EventLog.getInstance().logEvent(new Event("Succesfully converted user info to JSON"));
         return json;
     }
 
@@ -132,6 +143,7 @@ public class User implements Writable {
         for (Bid bid : biddedCars) {
             jsonArray.put(bid.toJson());
         }
+        EventLog.getInstance().logEvent(new Event("Succesfully converted bidded cars to JSON"));
         return jsonArray;
     }
 }
