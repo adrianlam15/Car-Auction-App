@@ -44,3 +44,9 @@ Mon Apr 10 06:57:03 PDT 2023: User Adrian2 placed bid on car: [Good condition] A
 	Time remaining: 99555 seconds.
 Mon Apr 10 06:57:07 PDT 2023: User Adrian logged in
 ```
+
+### | **Phase 4: Task 3 / Future implementations**
+If I had more time to work on the project, I would try to implement the Singleton design pattern, the Observer design pattern, and further refactor common code through a helper function.
+First I would implement the Singleton design pattern by making only one possible instance of each of the subclasses that extend UiState, as there does not need to be multiple instances of them.
+Second, I would implement the Observer design pattern by making the UiState the observer and each of the subclasses of UiState a subject, so that I am able to push updates to a certain
+UI state just from the UiState class. Currently, the program updates UI states by reinitializing classes and JPanels.
