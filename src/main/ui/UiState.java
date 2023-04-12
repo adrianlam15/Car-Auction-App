@@ -53,7 +53,7 @@ public abstract class UiState {
     protected static JPanel viewBidsPanel;
     protected static JPanel viewWonPanel;
     protected ArrayList<JComponent> buttons;
-    protected ArrayList<JComponent> inputFields = new ArrayList<>();
+    protected ArrayList<JComponent> inputFields;
     protected static boolean loaded = false;
     protected static double width;
     protected static double height;
@@ -64,7 +64,6 @@ public abstract class UiState {
     protected static boolean loggedIn = false;
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private static ZoneId zoneId = ZoneId.of("America/Los_Angeles");
-    protected static HashMap<String, Boolean> states = new HashMap<>();
 
     public UiState() {
         toSetButtons = new ArrayList<>();
