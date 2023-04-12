@@ -18,6 +18,7 @@ public class AuctionAppUI extends UiState {
         try {
             initUsers();
         } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         runAuctionApp();
     }
