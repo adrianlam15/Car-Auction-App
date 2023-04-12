@@ -17,8 +17,8 @@ import java.util.ArrayList;
  */
 public class Login extends UiState {
     // implement singleton for this class
-    private final JTextField usernameTextField;
-    private final JPasswordField passwordTextField;
+    private JTextField usernameTextField;
+    private JPasswordField passwordTextField;
     private String username;
     private String password;
     private Clip clip;

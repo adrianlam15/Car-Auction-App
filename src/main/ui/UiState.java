@@ -62,9 +62,9 @@ public abstract class UiState {
     protected static final String JSON_STORE = "./data/data.json";
     private static Dimension screenSize;
     protected static boolean loggedIn = false;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    private static final ZoneId zoneId = ZoneId.of("America/Los_Angeles");
-    protected static final HashMap<String, Boolean> states = new HashMap<>();
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private static ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+    protected static HashMap<String, Boolean> states = new HashMap<>();
 
     public UiState() {
         toSetButtons = new ArrayList<>();

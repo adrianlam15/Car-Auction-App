@@ -23,9 +23,9 @@ public class Car implements Writable {
     private int timeLeftInSeconds;
     private int highestBid = 0;
 
-    private final ArrayList<Bid> bids;
+    private ArrayList<Bid> bids;
 
-    private final Timer timer;
+    private Timer timer;
 
     private boolean expired;
 

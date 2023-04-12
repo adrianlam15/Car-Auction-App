@@ -11,8 +11,8 @@ import java.util.ArrayList;
  * CreateListing class (including UI) for the Car Auction application
  */
 public class CreateListing extends UiState {
-    private final ArrayList<JComponent> inputFields;
-    private final Car carToCreate;
+    private ArrayList<JComponent> inputFields;
+    private Car carToCreate;
     private JTextField carMake;
     private JTextField carModel;
     private JTextField carColour;

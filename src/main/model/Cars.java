@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 public class Cars {
-    private final ArrayList<Car> cars;
+    private ArrayList<Car> cars;
 
     public Cars() {
         this.cars = new ArrayList<Car>();

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 // class representing a list of users
 public class Users {
-    private final ArrayList<User> users;
+    private ArrayList<User> users;
 
     // EFFECTS: creates a new list of users
     public Users() {
